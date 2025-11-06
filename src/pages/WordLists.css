@@ -38,8 +38,8 @@
 .create-list-button {
   padding: 8px 16px;
   font-size: 14px;
-  background: #6600FF;
-  color: white;
+  background: white;
+  color: black;
   border: none;
   border-radius: 8px;
   font-weight: 600;
@@ -51,7 +51,8 @@
 }
 
 .create-list-button:hover {
-  background: #9900FF;
+  background: #F0F8FF;
+  color: #9909E0;
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(13, 94, 175, 0.6);
 }
@@ -145,6 +146,7 @@
 }
 
 .list-card {
+  margin: 5px;
   background: white;
   border-radius: 8px;
   padding: 12px;
@@ -154,6 +156,7 @@
 }
 
 .list-card:hover {
+  margin: 5px;
   border-color: #005BAE;
   box-shadow: 0 4px 12px rgba(13, 94, 175, 0.2);
   transform: translateY(-2px);

@@ -65,8 +65,8 @@
 
 .create-list-header-button {
   padding: 12px 24px;
-  background: white;
-  color: #FFFFFF;
+  background: #F0F8FF;
+  color: #000000;
   border: 2px solid #0D5EAF;
   border-radius: 8px;
   font-weight: 600;
@@ -77,7 +77,7 @@
 
 .create-list-header-button:hover {
   background: #F0F8FF;
-  color: #000000;
+  color: #9909E0;
   border-color: #F0F8FF;
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(13, 94, 175, 0.4);
@@ -175,6 +175,7 @@
 }
 
 .list-card {
+  margin: 5px;
   background: white;
   border-radius: 16px;
   padding: 30px;
@@ -186,6 +187,7 @@
 }
 
 .list-card:hover {
+  margin: 5px;
   transform: translateY(-5px);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
   background: rgba(255, 255, 255, 0.9);
