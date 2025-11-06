@@ -68,11 +68,6 @@ const Dictionary = () => {
 
   return (
     <div className="dictionary">
-      <div className="dictionary-header">
-        <GreekDecoration type="scroll" size="small" />
-        <h1 className="page-title">Dictionary</h1>
-        <GreekDecoration type="scroll" size="small" />
-      </div>
       <div className="dictionary-search">
         <input
           ref={inputRef}
