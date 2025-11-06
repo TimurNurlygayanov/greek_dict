@@ -17,6 +17,7 @@ const Dictionary = () => {
       .filter(
         (word) =>
           word.greek.toLowerCase().includes(term) ||
+          (word.greek_normalized && word.greek_normalized.toLowerCase().includes(term)) ||
           word.english.toLowerCase().includes(term)
       )
       .slice(0, 10)
@@ -58,6 +59,9 @@ const Dictionary = () => {
                 onClick={() => handleSuggestionClick(word)}
               >
                 <div className="suggestion-greek">{word.greek}</div>
+                {word.pos && (
+                  <div className="suggestion-pos">{word.pos}</div>
+                )}
                 <div className="suggestion-english">{word.english}</div>
               </div>
             ))}
@@ -68,6 +72,9 @@ const Dictionary = () => {
       {selectedWord && (
         <div className="word-result">
           <div className="word-result-greek">{selectedWord.greek}</div>
+          {selectedWord.pos && (
+            <div className="word-result-pos">{selectedWord.pos}</div>
+          )}
           <div className="word-result-english">{selectedWord.english}</div>
         </div>
       )}

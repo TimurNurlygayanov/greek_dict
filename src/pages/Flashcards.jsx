@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import dictionaryData from '../dictionary.json'
-import { incrementTodayExercises, addMemorizedWord } from '../utils/storage'
+import { incrementTodayExercises, addMemorizedWord, getUserId } from '../utils/storage'
+import AuthModal from '../components/AuthModal'
 import './Flashcards.css'
 
 const MODES = {
@@ -16,6 +17,15 @@ const Flashcards = () => {
   const [multipleChoiceOptions, setMultipleChoiceOptions] = useState([])
   const [selectedAnswer, setSelectedAnswer] = useState(null)
   const [isCorrect, setIsCorrect] = useState(null)
+  const [showAuthModal, setShowAuthModal] = useState(false)
+
+  useEffect(() => {
+    // Show auth modal when component mounts if not authenticated
+    const userId = getUserId()
+    if (!userId || userId.startsWith('user_')) {
+      setShowAuthModal(true)
+    }
+  }, [])
 
   const getRandomWord = () => {
     const randomIndex = Math.floor(Math.random() * dictionaryData.length)
@@ -120,16 +130,7 @@ const Flashcards = () => {
 
   return (
     <div className="flashcards">
-      <div className="flashcards-header">
-        <button className="back-button" onClick={() => setMode(null)}>
-          ← Back to modes
-        </button>
-        <h1 className="page-title">
-          {mode === MODES.GREEK_TO_ENGLISH && 'Greek → English'}
-          {mode === MODES.ENGLISH_TO_GREEK && 'English → Greek'}
-          {mode === MODES.MULTIPLE_CHOICE && 'Multiple Choice'}
-        </h1>
-      </div>
+      {showAuthModal && <AuthModal onClose={() => setShowAuthModal(false)} />}
 
       {mode === MODES.MULTIPLE_CHOICE ? (
         <div className="multiple-choice-card">

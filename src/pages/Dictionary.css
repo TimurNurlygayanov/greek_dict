@@ -67,6 +67,13 @@
   margin-bottom: 4px;
 }
 
+.suggestion-pos {
+  font-size: 12px;
+  color: #999;
+  font-style: italic;
+  margin-bottom: 2px;
+}
+
 .suggestion-english {
   font-size: 16px;
   color: #666;
@@ -85,7 +92,14 @@
   font-size: 32px;
   font-weight: bold;
   color: #667eea;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
+}
+
+.word-result-pos {
+  font-size: 16px;
+  color: #999;
+  font-style: italic;
+  margin-bottom: 15px;
 }
 
 .word-result-english {

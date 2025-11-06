@@ -2,14 +2,25 @@ import { useState, useEffect } from 'react'
 import dictionaryData from '../dictionary.json'
 import {
   getTodayExercises,
-  getMemorizedWords
+  getMemorizedWords,
+  getUserId
 } from '../utils/storage'
+import AuthModal from '../components/AuthModal'
 import './Progress.css'
 
 const Progress = () => {
   const [exercisesToday, setExercisesToday] = useState(0)
   const [memorizedCount, setMemorizedCount] = useState(0)
+  const [showAuthModal, setShowAuthModal] = useState(false)
   const totalWords = dictionaryData.length
+
+  useEffect(() => {
+    // Show auth modal when component mounts if not authenticated
+    const userId = getUserId()
+    if (!userId || userId.startsWith('user_')) {
+      setShowAuthModal(true)
+    }
+  }, [])
 
   useEffect(() => {
     const updateProgress = async () => {
@@ -31,6 +42,7 @@ const Progress = () => {
 
   return (
     <div className="progress">
+      {showAuthModal && <AuthModal onClose={() => setShowAuthModal(false)} />}
       <h1 className="page-title">Your Progress</h1>
       
       <div className="progress-cards">

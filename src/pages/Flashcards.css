@@ -3,30 +3,6 @@
   margin: 0 auto;
 }
 
-.flashcards-header {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  margin-bottom: 30px;
-  flex-wrap: wrap;
-}
-
-.back-button {
-  background: rgba(255, 255, 255, 0.2);
-  color: white;
-  border: 2px solid white;
-  padding: 10px 20px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: all 0.3s;
-}
-
-.back-button:hover {
-  background: white;
-  color: #667eea;
-}
-
 .mode-selection {
   text-align: center;
 }
@@ -244,11 +220,6 @@
   .option-button {
     padding: 16px;
     font-size: 18px;
-  }
-
-  .flashcards-header {
-    flex-direction: column;
-    align-items: flex-start;
   }
 
   .page-title {
