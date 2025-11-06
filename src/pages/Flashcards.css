@@ -3,6 +3,16 @@
   margin: 0 auto;
 }
 
+.page-title {
+  font-size: 48px;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+  margin-bottom: 40px;
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  letter-spacing: 1px;
+}
+
 .back-button {
   background: rgba(255, 255, 255, 0.2);
   color: white;
@@ -17,7 +27,7 @@
 
 .back-button:hover {
   background: white;
-  color: #667eea;
+  color: #0D5EAF;
 }
 
 .flashcard-header {
@@ -56,8 +66,8 @@
 .create-list-header-button {
   padding: 12px 24px;
   background: white;
-  color: #667eea;
-  border: none;
+  color: #0D5EAF;
+  border: 2px solid #0D5EAF;
   border-radius: 8px;
   font-weight: 600;
   cursor: pointer;
@@ -66,13 +76,15 @@
 }
 
 .create-list-header-button:hover {
-  background: #f0f0f0;
+  background: #0D5EAF;
+  color: white;
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 12px rgba(13, 94, 175, 0.4);
 }
 
 .create-list-modal {
   background: white;
+  border: 3px solid #0D5EAF;
   border-radius: 12px;
   padding: 20px;
   margin-bottom: 30px;
@@ -118,12 +130,12 @@
 }
 
 .submit-button-inline {
-  background: #667eea;
+  background: #0D5EAF;
   color: white;
 }
 
 .submit-button-inline:hover:not(:disabled) {
-  background: #764ba2;
+  background: #005BAE;
 }
 
 .submit-button-inline:disabled {
@@ -142,6 +154,7 @@
 
 .no-lists-message {
   background: white;
+  border: 3px solid #0D5EAF;
   border-radius: 16px;
   padding: 40px;
   text-align: center;
@@ -166,7 +179,8 @@
   padding: 30px;
   cursor: pointer;
   transition: all 0.3s;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  border: 3px solid #0D5EAF;
   position: relative;
 }
 
@@ -176,14 +190,15 @@
 }
 
 .list-card.default-list {
-  border: 2px solid #667eea;
+  border: 3px solid #0D5EAF;
+  box-shadow: 0 6px 20px rgba(13, 94, 175, 0.3);
 }
 
 .default-badge {
   position: absolute;
   top: 10px;
   right: 10px;
-  background: #667eea;
+  background: #0D5EAF;
   color: white;
   padding: 4px 8px;
   border-radius: 4px;
@@ -193,7 +208,7 @@
 
 .list-card-name {
   font-size: 20px;
-  color: #667eea;
+  color: #0D5EAF;
   margin-bottom: 15px;
   font-weight: 600;
 }
@@ -208,6 +223,7 @@
 
 .no-words-message {
   background: white;
+  border: 3px solid #0D5EAF;
   border-radius: 16px;
   padding: 40px;
   text-align: center;
@@ -269,7 +285,8 @@
   padding: 40px 30px;
   cursor: pointer;
   transition: all 0.3s;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  border: 3px solid #0D5EAF;
 }
 
 .mode-card:hover {
@@ -279,7 +296,7 @@
 
 .mode-card h3 {
   font-size: 24px;
-  color: #667eea;
+  color: #0D5EAF;
   margin-bottom: 15px;
 }
 
@@ -291,6 +308,7 @@
 
 .flashcard {
   background: white;
+  border: 3px solid #0D5EAF;
   border-radius: 20px;
   min-height: 400px;
   display: flex;
@@ -338,6 +356,7 @@
 
 .multiple-choice-card {
   background: white;
+  border: 3px solid #0D5EAF;
   border-radius: 20px;
   padding: 50px 40px;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
@@ -346,7 +365,7 @@
 .question-word {
   font-size: 42px;
   font-weight: bold;
-  color: #667eea;
+  color: #0D5EAF;
   text-align: center;
   margin-bottom: 50px;
   word-break: break-word;
@@ -362,17 +381,20 @@
 .option-button {
   padding: 20px;
   font-size: 20px;
-  border: 2px solid #e0e0e0;
+  border: 3px solid #0D5EAF;
   border-radius: 12px;
   background: white;
   cursor: pointer;
   transition: all 0.3s;
   text-align: left;
+  color: #1a1a1a;
+  font-weight: 600;
 }
 
 .option-button:hover:not(:disabled) {
-  border-color: #667eea;
-  background: #f8f9ff;
+  border-color: #005BAE;
+  background: rgba(13, 94, 175, 0.1);
+  transform: translateX(5px);
 }
 
 .option-button.correct {
@@ -433,18 +455,19 @@
   padding: 16px;
   font-size: 18px;
   font-weight: 600;
-  background: #667eea;
+  background: #0D5EAF;
   color: white;
   border: none;
   border-radius: 12px;
   cursor: pointer;
   transition: all 0.3s;
+  box-shadow: 0 4px 12px rgba(13, 94, 175, 0.4);
 }
 
 .next-button:hover {
-  background: #764ba2;
+  background: #005BAE;
   transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 6px 20px rgba(13, 94, 175, 0.6);
 }
 
 @keyframes fadeIn {

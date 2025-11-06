@@ -7,24 +7,19 @@
 .page-title {
   font-size: 48px;
   font-weight: bold;
-  color: #8b4513;
+  color: white;
   text-align: center;
   margin-bottom: 40px;
-  text-shadow: 
-    2px 2px 4px rgba(255, 255, 255, 0.8),
-    4px 4px 8px rgba(0, 0, 0, 0.1);
-  font-family: 'Georgia', serif;
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   letter-spacing: 1px;
 }
 
 .word-lists-content {
-  background: rgba(255, 255, 255, 0.98);
+  background: white;
   border-radius: 20px;
   padding: 30px;
-  box-shadow: 
-    0 4px 15px rgba(0, 0, 0, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.5);
-  border: 1px solid rgba(184, 134, 11, 0.2);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  border: 3px solid #0D5EAF;
 }
 
 .word-lists-header {
@@ -44,7 +39,7 @@
 
 .create-list-button {
   padding: 12px 24px;
-  background: #667eea;
+  background: #0D5EAF;
   color: white;
   border: none;
   border-radius: 8px;
@@ -52,20 +47,22 @@
   cursor: pointer;
   transition: all 0.3s;
   font-size: 16px;
+  box-shadow: 0 4px 12px rgba(13, 94, 175, 0.4);
 }
 
 .create-list-button:hover {
-  background: #764ba2;
+  background: #005BAE;
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 6px 20px rgba(13, 94, 175, 0.6);
 }
 
 .create-list-form-card {
-  background: #f8f9fa;
+  background: white;
   border-radius: 12px;
   padding: 20px;
   margin-bottom: 30px;
-  border: 2px solid #e0e0e0;
+  border: 3px solid #0D5EAF;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .create-list-form-card form {
@@ -80,14 +77,15 @@
   min-width: 200px;
   padding: 12px;
   font-size: 16px;
-  border: 2px solid #e0e0e0;
+  border: 2px solid #0D5EAF;
   border-radius: 8px;
   outline: none;
   transition: border-color 0.3s;
 }
 
 .list-name-input:focus {
-  border-color: #667eea;
+  border-color: #005BAE;
+  box-shadow: 0 0 0 3px rgba(13, 94, 175, 0.1);
 }
 
 .form-actions {
@@ -107,12 +105,12 @@
 }
 
 .submit-button {
-  background: #667eea;
+  background: #0D5EAF;
   color: white;
 }
 
 .submit-button:hover:not(:disabled) {
-  background: #764ba2;
+  background: #005BAE;
 }
 
 .submit-button:disabled {
@@ -147,16 +145,18 @@
 }
 
 .list-card {
-  background: #f8f9fa;
+  background: white;
   border-radius: 8px;
   padding: 12px;
-  border: 1px solid #e0e0e0;
+  border: 2px solid #0D5EAF;
   transition: all 0.3s;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .list-card:hover {
-  border-color: #667eea;
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.1);
+  border-color: #005BAE;
+  box-shadow: 0 4px 12px rgba(13, 94, 175, 0.2);
+  transform: translateY(-2px);
 }
 
 .list-card-header {
@@ -181,7 +181,7 @@
 }
 
 .default-badge {
-  background: #667eea;
+  background: #0D5EAF;
   color: white;
   padding: 4px 8px;
   border-radius: 4px;
@@ -296,8 +296,8 @@
 }
 
 .word-item:hover {
-  border-color: #667eea;
-  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.1);
+  border-color: #0D5EAF;
+  box-shadow: 0 2px 8px rgba(13, 94, 175, 0.2);
 }
 
 .word-item.learned {

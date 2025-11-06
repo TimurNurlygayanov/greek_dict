@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo, useRef } from 'react'
 import dictionaryData from '../dictionary.json'
 import AddToListModal from '../components/AddToListModal'
+import GreekDecoration from '../components/GreekDecoration'
 import { addWordToList } from '../utils/wordLists'
 import { getUserId } from '../utils/storage'
 import './Dictionary.css'
@@ -67,7 +68,11 @@ const Dictionary = () => {
 
   return (
     <div className="dictionary">
-      <h1 className="page-title">Dictionary</h1>
+      <div className="dictionary-header">
+        <GreekDecoration type="scroll" size="small" />
+        <h1 className="page-title">Dictionary</h1>
+        <GreekDecoration type="scroll" size="small" />
+      </div>
       <div className="dictionary-search">
         <input
           ref={inputRef}

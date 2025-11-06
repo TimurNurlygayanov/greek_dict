@@ -27,6 +27,7 @@ const Flashcards = () => {
   useEffect(() => {
     // Show auth modal when component mounts if not authenticated
     const userId = getUserId()
+    console.log('Flashcards mount - userId:', userId)
     if (!userId || userId.startsWith('user_')) {
       setShowAuthModal(true)
     } else {
@@ -48,19 +49,43 @@ const Flashcards = () => {
   const handleAuthModalClose = () => {
     setShowAuthModal(false)
     const userId = getUserId()
+    console.log('Auth modal closed - userId:', userId)
     if (userId && !userId.startsWith('user_')) {
       loadLists()
     }
   }
 
   const loadLists = async () => {
-    const userLists = await getUserLists()
-    // Show all lists, including default ones (even if empty)
-    // Default lists should always be shown
-    const defaultLists = userLists.filter(list => list.isDefault || list.id === 'unstudied' || list.id === 'learned')
-    const customLists = userLists.filter(list => !list.isDefault && list.id !== 'unstudied' && list.id !== 'learned')
-    // Show default lists always, and custom lists if they have words
-    setLists([...defaultLists, ...customLists.filter(list => list.words.length > 0)])
+    try {
+      const userLists = await getUserLists()
+      console.log('Loaded lists:', userLists)
+      
+      if (!userLists || userLists.length === 0) {
+        console.log('No lists found')
+        setLists([])
+        return
+      }
+      
+      // Show all lists, including default ones (even if empty)
+      // Default lists should always be shown
+      const defaultLists = userLists.filter(list => 
+        list.isDefault || list.id === 'unstudied' || list.id === 'learned'
+      )
+      const customLists = userLists.filter(list => 
+        !list.isDefault && list.id !== 'unstudied' && list.id !== 'learned'
+      )
+      
+      // Show default lists always, and custom lists if they have words
+      const allLists = [...defaultLists, ...customLists.filter(list => 
+        list.words && list.words.length > 0
+      )]
+      
+      console.log('Setting lists:', allLists)
+      setLists(allLists)
+    } catch (error) {
+      console.error('Error loading lists:', error)
+      setLists([])
+    }
   }
 
   // Get available words (excluding learned ones)
@@ -110,10 +135,13 @@ const Flashcards = () => {
 
     try {
       const newList = await createList(newListName.trim())
-      setLists([...lists, newList])
+      console.log('Created new list:', newList)
+      // Reload all lists to ensure we have the latest data
+      await loadLists()
       setNewListName('')
       setShowCreateListModal(false)
     } catch (error) {
+      console.error('Error creating list:', error)
       alert(error.message || 'Failed to create list')
     }
   }

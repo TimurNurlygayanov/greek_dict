@@ -1,53 +1,85 @@
-import { useState } from 'react'
-import { setUserId } from '../utils/storage'
+import { useState, useEffect } from 'react'
+import { useGoogleLogin } from '@react-oauth/google'
+import { setUserId, getUserId } from '../utils/storage'
 import './GoogleAuth.css'
 
-// Placeholder component for Google OAuth integration
-// To implement: Add Google OAuth client ID and integrate with authentication service
 const GoogleAuth = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [user, setUser] = useState(null)
+  const [userProfile, setUserProfile] = useState(null)
 
-  const handleGoogleSignIn = () => {
-    // TODO: Implement Google OAuth flow
-    // This is a placeholder for future implementation
-    console.log('Google Sign In clicked - OAuth integration needed')
-    
-    // Example structure for future implementation:
-    // window.gapi.load('auth2', () => {
-    //   window.gapi.auth2.init({
-    //     client_id: 'YOUR_GOOGLE_CLIENT_ID'
-    //   }).then(() => {
-    //     const authInstance = window.gapi.auth2.getAuthInstance()
-    //     authInstance.signIn().then((googleUser) => {
-    //       const profile = googleUser.getBasicProfile()
-    //       setUser({
-    //         name: profile.getName(),
-    //         email: profile.getEmail(),
-    //         imageUrl: profile.getImageUrl()
-    //       })
-    //       setIsAuthenticated(true)
-    //       // Store user ID for progress tracking
-    //       setUserId(profile.getId())
-    //     })
-    //   })
-    // })
-  }
+  // Check if user is already authenticated on mount
+  useEffect(() => {
+    const userId = getUserId()
+    // If userId doesn't start with 'user_', it's a Google ID (authenticated)
+    if (userId && !userId.startsWith('user_')) {
+      setIsAuthenticated(true)
+      // Try to get user profile from localStorage
+      const storedProfile = localStorage.getItem('ellinaki_user_profile')
+      if (storedProfile) {
+        try {
+          setUserProfile(JSON.parse(storedProfile))
+        } catch (e) {
+          console.error('Error parsing stored profile:', e)
+        }
+      }
+    }
+  }, [])
+
+  // Get user profile from Google
+  useEffect(() => {
+    if (user) {
+      fetch(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
+        headers: {
+          Authorization: `Bearer ${user.access_token}`,
+          Accept: 'application/json'
+        }
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setUserProfile(data)
+          // Store profile in localStorage
+          localStorage.setItem('ellinaki_user_profile', JSON.stringify(data))
+          // Use Google ID as userId
+          setUserId(data.id)
+          setIsAuthenticated(true)
+        })
+        .catch((err) => {
+          console.error('Error fetching user profile:', err)
+        })
+    }
+  }, [user])
+
+  const handleGoogleSignIn = useGoogleLogin({
+    onSuccess: (tokenResponse) => {
+      setUser(tokenResponse)
+    },
+    onError: (error) => {
+      console.error('Google login error:', error)
+      alert('Failed to sign in with Google. Please try again.')
+    }
+  })
 
   const handleSignOut = () => {
-    // TODO: Implement sign out
     setIsAuthenticated(false)
     setUser(null)
+    setUserProfile(null)
+    // Clear stored data
+    localStorage.removeItem('ellinaki_user_profile')
+    // Reset to temporary user ID
+    localStorage.removeItem('ellinaki_user_id')
+    // Reload page to reset state
+    window.location.reload()
   }
 
-  if (isAuthenticated && user) {
+  if (isAuthenticated && userProfile) {
     return (
       <div className="google-auth">
         <div className="user-info">
-          {user.imageUrl && (
-            <img src={user.imageUrl} alt={user.name} className="user-avatar" />
+          {userProfile.picture && (
+            <img src={userProfile.picture} alt={userProfile.name} className="user-avatar" />
           )}
-          <span className="user-name">{user.name}</span>
+          <span className="user-name">{userProfile.name || userProfile.email}</span>
         </div>
         <button onClick={handleSignOut} className="google-sign-out">
           Sign Out

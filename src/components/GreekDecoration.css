@@ -1,0 +1,21 @@
+.greek-decoration {
+  opacity: 0.4;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+
+.decoration-small {
+  width: 40px;
+  height: auto;
+}
+
+.decoration-medium {
+  width: 80px;
+  height: auto;
+}
+
+.decoration-large {
+  width: 120px;
+  height: auto;
+}
+

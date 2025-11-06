@@ -18,6 +18,7 @@ A modern web application for learning Greek words, designed to help you prepare 
 
 - Node.js (v16 or higher)
 - npm or yarn
+- Google Cloud Console account (for OAuth setup - optional)
 
 ### Installation
 
@@ -26,12 +27,18 @@ A modern web application for learning Greek words, designed to help you prepare 
 npm install
 ```
 
-2. Start the development server:
+2. (Optional) Set up Google OAuth:
+   - See [Google OAuth Setup](#google-oauth-setup) section below
+   - Create `.env` file with `VITE_GOOGLE_CLIENT_ID`
+
+3. Start the development server:
 ```bash
 npm run dev
 ```
 
-3. Open your browser and navigate to `http://localhost:5173`
+4. Open your browser and navigate to `http://localhost:5173`
+
+**Note**: The app works without Google OAuth, but user progress will only be stored locally. For cross-device sync, set up Google OAuth.
 
 ### Building for Production
 
@@ -94,11 +101,66 @@ greek_dict/
 └── vite.config.js      # Vite configuration
 ```
 
-## Future Enhancements
+## Google OAuth Setup
 
-- Google OAuth integration for user authentication
-- Cloud-based progress synchronization
-- User accounts and cross-device progress sync
+To enable Google authentication, you need to set up OAuth 2.0 credentials:
+
+### Step 1: Create OAuth 2.0 Credentials in Google Cloud Console
+
+1. Go to [Google Cloud Console](https://console.cloud.google.com/)
+2. Create a new project or select an existing one
+3. Enable the Google+ API:
+   - Go to "APIs & Services" → "Library"
+   - Search for "Google+ API" and enable it
+4. Create OAuth 2.0 credentials:
+   - Go to "APIs & Services" → "Credentials"
+   - Click "Create Credentials" → "OAuth client ID"
+   - If prompted, configure the OAuth consent screen first:
+     - Choose "External" user type
+     - Fill in the required information (App name, User support email, Developer contact)
+     - Add scopes: `email`, `profile`
+     - Add test users if needed (for testing before publishing)
+   - Application type: "Web application"
+   - Name: "Ellinaki Web Client" (or any name)
+   - Authorized JavaScript origins:
+     - For development: `http://localhost:5173`
+     - For production: `https://your-domain.onrender.com` (your Render.com URL)
+   - Authorized redirect URIs:
+     - For development: `http://localhost:5173`
+     - For production: `https://your-domain.onrender.com`
+   - Click "Create"
+5. Copy the **Client ID** (it looks like: `123456789-abcdefghijklmnop.apps.googleusercontent.com`)
+
+### Step 2: Configure Environment Variables
+
+1. Create a `.env` file in the project root:
+```bash
+cp .env.example .env
+```
+
+2. Edit `.env` and add your Client ID:
+```
+VITE_GOOGLE_CLIENT_ID=your-google-client-id-here
+```
+
+3. For production on Render.com:
+   - Go to your service settings in Render.com dashboard
+   - Navigate to "Environment" section
+   - Add environment variable:
+     - Key: `VITE_GOOGLE_CLIENT_ID`
+     - Value: your Google Client ID
+
+### Step 3: Restart the Application
+
+- For development: restart `npm run dev`
+- For production: redeploy on Render.com
+
+### Important Notes
+
+- The `.env` file is already in `.gitignore` and won't be committed
+- Never commit your Client ID to version control
+- Make sure to add both development and production URLs to authorized origins in Google Console
+- The app will work without Google Auth (using temporary user IDs), but progress won't sync across devices
 
 ## Technologies Used
 

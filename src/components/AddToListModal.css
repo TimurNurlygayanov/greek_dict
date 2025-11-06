@@ -22,6 +22,7 @@
   overflow-y: auto;
   position: relative;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  border: 3px solid #0D5EAF;
   animation: slideUp 0.3s;
 }
 
@@ -57,7 +58,7 @@
 
 .modal-word {
   font-size: 20px;
-  color: #667eea;
+  color: #0D5EAF;
   font-weight: 600;
   text-align: center;
   margin-bottom: 25px;
@@ -90,12 +91,12 @@
 }
 
 .lists-container::-webkit-scrollbar-thumb {
-  background: #667eea;
+  background: #0D5EAF;
   border-radius: 4px;
 }
 
 .lists-container::-webkit-scrollbar-thumb:hover {
-  background: #764ba2;
+  background: #005BAE;
 }
 
 .list-item {
@@ -110,17 +111,17 @@
 }
 
 .list-item:hover {
-  border-color: #667eea;
-  background: #f8f9ff;
+  border-color: #0D5EAF;
+  background: rgba(13, 94, 175, 0.05);
 }
 
 .list-item.default-list-item {
-  border-color: #667eea;
-  background: #f8f9ff;
+  border-color: #0D5EAF;
+  background: rgba(13, 94, 175, 0.05);
 }
 
 .default-badge-inline {
-  background: #667eea;
+  background: #0D5EAF;
   color: white;
   padding: 2px 6px;
   border-radius: 4px;
@@ -147,7 +148,7 @@
 
 .add-button {
   padding: 8px 20px;
-  background: #667eea;
+  background: #0D5EAF;
   color: white;
   border: none;
   border-radius: 8px;
@@ -157,7 +158,7 @@
 }
 
 .add-button:hover:not(:disabled) {
-  background: #764ba2;
+  background: #005BAE;
   transform: translateY(-2px);
 }
 
@@ -178,7 +179,7 @@
   width: 100%;
   padding: 12px;
   font-size: 16px;
-  border: 2px solid #e0e0e0;
+  border: 2px solid #0D5EAF;
   border-radius: 8px;
   margin-bottom: 15px;
   outline: none;
@@ -186,7 +187,8 @@
 }
 
 .list-name-input:focus {
-  border-color: #667eea;
+  border-color: #005BAE;
+  box-shadow: 0 0 0 3px rgba(13, 94, 175, 0.1);
 }
 
 .form-actions {
@@ -206,12 +208,14 @@
 }
 
 .submit-button {
-  background: #667eea;
+  background: #0D5EAF;
   color: white;
+  box-shadow: 0 4px 12px rgba(13, 94, 175, 0.4);
 }
 
 .submit-button:hover:not(:disabled) {
-  background: #764ba2;
+  background: #005BAE;
+  box-shadow: 0 6px 20px rgba(13, 94, 175, 0.6);
 }
 
 .submit-button:disabled {
@@ -231,7 +235,7 @@
 .create-list-button {
   width: 100%;
   padding: 12px;
-  background: #667eea;
+  background: #0D5EAF;
   color: white;
   border: none;
   border-radius: 8px;
@@ -239,20 +243,22 @@
   cursor: pointer;
   transition: all 0.3s;
   margin-top: 10px;
+  box-shadow: 0 4px 12px rgba(13, 94, 175, 0.4);
 }
 
 .create-list-button:hover {
-  background: #764ba2;
+  background: #005BAE;
+  box-shadow: 0 6px 20px rgba(13, 94, 175, 0.6);
 }
 
 .create-list-button.secondary {
   background: transparent;
-  border: 2px solid #667eea;
-  color: #667eea;
+  border: 2px solid #0D5EAF;
+  color: #0D5EAF;
 }
 
 .create-list-button.secondary:hover {
-  background: #667eea;
+  background: #0D5EAF;
   color: white;
 }
 

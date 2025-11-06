@@ -11,22 +11,32 @@ const apiRequest = async (endpoint, options = {}) => {
       }
     })
     if (!response.ok) {
+      const errorText = await response.text()
+      console.error(`API request failed: ${response.status} ${response.statusText}`, errorText)
       throw new Error(`API request failed: ${response.statusText}`)
     }
-    return await response.json()
+    const data = await response.json()
+    return data
   } catch (error) {
-    console.error('API request error:', error)
-    return null
+    console.error('API request error:', error, 'Endpoint:', endpoint)
+    throw error
   }
 }
 
 export const getUserLists = async () => {
   const userId = getUserId()
-  if (!userId) return []
+  if (!userId) {
+    console.log('getUserLists: No userId')
+    return []
+  }
   
   try {
+    console.log('getUserLists: Fetching lists for userId:', userId)
     const data = await apiRequest(`/api/lists/${userId}`)
-    return data?.lists || []
+    console.log('getUserLists: API response:', data)
+    const lists = data?.lists || []
+    console.log('getUserLists: Returning lists:', lists)
+    return lists
   } catch (error) {
     console.error('Error fetching lists:', error)
     return []

@@ -11,15 +11,13 @@
 }
 
 .progress-card {
-  background: rgba(255, 255, 255, 0.98);
+  background: white;
   border-radius: 20px;
   padding: 40px;
-  box-shadow: 
-    0 4px 15px rgba(0, 0, 0, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
   text-align: center;
   transition: transform 0.3s;
-  border: 1px solid rgba(184, 134, 11, 0.2);
+  border: 3px solid #0D5EAF;
 }
 
 .progress-card:hover {
@@ -63,7 +61,7 @@
 
 .progress-bar-fill {
   height: 100%;
-  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(90deg, #0D5EAF 0%, #005BAE 100%);
   border-radius: 15px;
   display: flex;
   align-items: center;
@@ -75,14 +73,12 @@
 }
 
 .lists-progress {
-  background: rgba(255, 255, 255, 0.98);
+  background: white;
   border-radius: 20px;
   padding: 30px;
-  box-shadow: 
-    0 4px 15px rgba(0, 0, 0, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
   margin-bottom: 30px;
-  border: 1px solid rgba(184, 134, 11, 0.2);
+  border: 3px solid #0D5EAF;
 }
 
 .lists-progress-title {
@@ -107,8 +103,8 @@
 }
 
 .list-progress-card:hover {
-  border-color: #667eea;
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.1);
+  border-color: #0D5EAF;
+  box-shadow: 0 4px 12px rgba(13, 94, 175, 0.2);
 }
 
 .list-progress-header {
@@ -126,7 +122,7 @@
 }
 
 .default-badge-small {
-  background: #667eea;
+  background: #0D5EAF;
   color: white;
   padding: 2px 6px;
   border-radius: 4px;
@@ -167,7 +163,7 @@
 
 .list-progress-bar-fill {
   height: 100%;
-  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(90deg, #0D5EAF 0%, #005BAE 100%);
   border-radius: 10px;
   display: flex;
   align-items: center;
@@ -179,13 +175,11 @@
 }
 
 .progress-stats {
-  background: rgba(255, 255, 255, 0.98);
+  background: white;
   border-radius: 20px;
   padding: 30px;
-  box-shadow: 
-    0 4px 15px rgba(0, 0, 0, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.5);
-  border: 1px solid rgba(184, 134, 11, 0.2);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  border: 3px solid #0D5EAF;
 }
 
 .stat-item {

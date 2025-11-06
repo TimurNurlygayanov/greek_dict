@@ -6,10 +6,8 @@ const About = () => {
       <h1 className="page-title">About</h1>
       <div className="about-content">
         <div className="about-card">
-          <h2>Ellinaki</h2>
           <p className="about-description">
-            A web application designed to help you learn Greek words easily. 
-            This app contains all the Greek words you should know for B2 Greek exams.
+            Learn Greek words easily. All the words you need to know for B2 Greek exams.
           </p>
           
           <div className="about-section">
@@ -22,21 +20,6 @@ const About = () => {
                 className="about-link"
               >
                 Timur Nurlygaianov
-              </a>
-            </p>
-          </div>
-
-          <div className="about-section">
-            <h3>Hosting</h3>
-            <p>
-              This application is hosted on{' '}
-              <a 
-                href="https://render.com" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="about-link"
-              >
-                render.com
               </a>
             </p>
           </div>
