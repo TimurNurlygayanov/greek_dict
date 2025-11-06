@@ -1,6 +1,7 @@
 .dictionary {
   max-width: 800px;
   margin: 0 auto;
+  padding-top: 20px;
 }
 
 .dictionary-header {
@@ -38,6 +39,7 @@
 .dictionary-search {
   position: relative;
   margin-bottom: 30px;
+  margin-top: 0;
 }
 
 .dictionary-input {
