@@ -30,26 +30,29 @@
 }
 
 .create-list-button {
-  padding: 8px 16px;
-  font-size: 14px;
-  background: #2C3FF2;
-  color: white;
-  border: none;
-  border-radius: 20px;
+  width: 50px;
+  height: 50px;
+  padding: 0;
+  font-size: 32px;
+  background: white;
+  color: #0D5EAF;
+  border: 3px solid #0D5EAF;
+  border-radius: 50%;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s;
-  box-shadow: 0 4px 12px rgba(13, 94, 175, 0.4);
-  max-width: 200px;
-  width: auto;
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  box-shadow: 0 4px 12px rgba(13, 94, 175, 0.3);
 }
 
 .create-list-button:hover {
-  background: #4178f0;
+  background: #0D5EAF;
   color: white;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(13, 94, 175, 0.6);
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 6px 20px rgba(13, 94, 175, 0.5);
 }
 
 .create-list-form-card {
@@ -356,6 +359,103 @@
 .remove-word-button:hover {
   background: #fee;
   transform: scale(1.2);
+}
+
+.list-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  animation: fadeIn 0.3s;
+}
+
+.list-modal-content {
+  background: white;
+  border-radius: 20px;
+  padding: 30px;
+  max-width: 600px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  border: 3px solid #0D5EAF;
+  animation: slideUp 0.3s;
+}
+
+.list-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.list-modal-header h2 {
+  font-size: 24px;
+  color: #333;
+  margin: 0;
+}
+
+.list-modal-close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 32px;
+  color: #999;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.3s;
+  line-height: 1;
+}
+
+.list-modal-close:hover {
+  background: #f0f0f0;
+  color: #333;
+}
+
+.list-modal-body {
+  max-height: calc(80vh - 120px);
+  overflow-y: auto;
+  padding-right: 5px;
+}
+
+.list-modal-body .words-list {
+  max-height: calc(80vh - 120px);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @media (max-width: 768px) {

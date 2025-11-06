@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { getUserLists, createList, deleteList, removeWordFromList } from '../utils/wordLists'
+import { getUserLists, createList, deleteList, removeWordFromList, unmarkWordAsLearned } from '../utils/wordLists'
 import { getUserId } from '../utils/storage'
 import AuthModal from '../components/AuthModal'
 import './WordLists.css'
@@ -11,7 +11,7 @@ const WordLists = () => {
   const [newListName, setNewListName] = useState('')
   const [editingListId, setEditingListId] = useState(null)
   const [editingListName, setEditingListName] = useState('')
-  const [expandedListId, setExpandedListId] = useState(null)
+  const [selectedListModal, setSelectedListModal] = useState(null)
 
   useEffect(() => {
     const userId = getUserId()
@@ -133,24 +133,47 @@ const WordLists = () => {
   }
 
   const handleRemoveWord = async (listId, wordGreek) => {
-    if (!confirm('Remove this word from the list?')) {
+    const list = lists.find(l => l.id === listId)
+    const isLearnedList = listId === 'learned'
+    
+    if (!confirm(isLearnedList ? 'Remove this word from learned words? (This will unlearn it)' : 'Remove this word from the list?')) {
       return
     }
 
     try {
       await removeWordFromList(listId, wordGreek)
+      
+      // If removing from "Learned Words" list, unmark as learned in all lists
+      if (isLearnedList) {
+        const allLists = await getUserLists()
+        for (const list of allLists) {
+          if (list.learnedWords.includes(wordGreek)) {
+            await unmarkWordAsLearned(list.id, wordGreek)
+          }
+        }
+      }
+      
       await loadLists()
-      // If list was expanded, keep it expanded
-      if (expandedListId === listId) {
-        setExpandedListId(listId)
+      // Update modal if it's open
+      if (selectedListModal?.id === listId) {
+        const updatedLists = await getUserLists()
+        const updatedList = updatedLists.find(l => l.id === listId)
+        if (updatedList) {
+          setSelectedListModal(updatedList)
+        }
       }
     } catch (error) {
       alert(error.message || 'Failed to remove word')
     }
   }
 
-  const toggleListExpanded = (listId) => {
-    setExpandedListId(expandedListId === listId ? null : listId)
+  const handleListClick = async (list) => {
+    // Load fresh list data
+    const allLists = await getUserLists()
+    const freshList = allLists.find(l => l.id === list.id)
+    if (freshList) {
+      setSelectedListModal(freshList)
+    }
   }
 
   return (
@@ -158,14 +181,12 @@ const WordLists = () => {
       {showAuthModal && <AuthModal onClose={handleAuthModalClose} />}
       <div className="word-lists-header">
         <h2>Your Lists</h2>
-        {!showCreateForm && (
-          <button 
-            className="create-list-button"
-            onClick={() => setShowCreateForm(true)}
-          >
-            +
-          </button>
-        )}
+        <button 
+          className="create-list-button"
+          onClick={() => setShowCreateForm(true)}
+        >
+          +
+        </button>
       </div>
 
       {showCreateForm && (
@@ -218,10 +239,14 @@ const WordLists = () => {
               .map((list) => {
               const isDefault = list.isDefault || list.id === 'unstudied' || list.id === 'learned'
               const isEditing = editingListId === list.id
-              const isExpanded = expandedListId === list.id
 
               return (
-                <div key={list.id} className="list-card">
+                <div 
+                  key={list.id} 
+                  className="list-card"
+                  onClick={() => handleListClick(list)}
+                  style={{ cursor: 'pointer' }}
+                >
                   <div className="list-card-header">
                     <div className="list-card-title-section">
                       {isEditing ? (
@@ -239,6 +264,7 @@ const WordLists = () => {
                               handleCancelRename()
                             }
                           }}
+                          onClick={(e) => e.stopPropagation()}
                         />
                       ) : (
                         <h3 className="list-card-name">
@@ -255,7 +281,7 @@ const WordLists = () => {
                         )}
                       </div>
                     </div>
-                    <div className="list-card-actions">
+                    <div className="list-card-actions" onClick={(e) => e.stopPropagation()}>
                       {!isDefault && !isEditing && (
                         <>
                           <button
@@ -274,56 +300,63 @@ const WordLists = () => {
                           </button>
                         </>
                       )}
-                      <button
-                        className="action-button expand-button"
-                        onClick={() => toggleListExpanded(list.id)}
-                        title={isExpanded ? "Collapse" : "Expand"}
-                      >
-                        {isExpanded ? '▼' : '▶'}
-                      </button>
                     </div>
                   </div>
-
-                  {isExpanded && (
-                    <div className="list-words-section">
-                      {list.words.length === 0 ? (
-                        <div className="empty-list-message">
-                          This list is empty. Add words from the Dictionary!
-                        </div>
-                      ) : (
-                        <div className="words-list">
-                          {list.words.map((word, index) => {
-                            const isLearned = list.learnedWords.includes(word.greek)
-                            return (
-                              <div key={index} className={`word-item ${isLearned ? 'learned' : ''}`}>
-                                <div className="word-info">
-                                  <div className="word-greek">{word.greek}</div>
-                                  {word.pos && <div className="word-pos">{word.pos}</div>}
-                                  <div className="word-english">{word.english}</div>
-                                  {isLearned && <span className="learned-badge">✓ Learned</span>}
-                                </div>
-                                <button
-                                  className="remove-word-button"
-                                  onClick={() => handleRemoveWord(list.id, word.greek)}
-                                  title="Remove from list"
-                                >
-                                  ×
-                                </button>
-                              </div>
-                            )
-                          })}
-                        </div>
-                      )}
-                    </div>
-                  )}
                 </div>
               )
             })}
           </div>
         )}
+
+      {selectedListModal && (
+        <div className="list-modal-overlay" onClick={() => setSelectedListModal(null)}>
+          <div className="list-modal-content" onClick={(e) => e.stopPropagation()}>
+            <div className="list-modal-header">
+              <h2>{selectedListModal.name}</h2>
+              <button 
+                className="list-modal-close"
+                onClick={() => setSelectedListModal(null)}
+              >
+                ×
+              </button>
+            </div>
+            <div className="list-modal-body">
+              {selectedListModal.words.length === 0 ? (
+                <div className="empty-list-message">
+                  This list is empty. Add words from the Dictionary!
+                </div>
+              ) : (
+                <div className="words-list">
+                  {selectedListModal.words.map((word, index) => {
+                    const isLearned = selectedListModal.learnedWords.includes(word.greek)
+                    return (
+                      <div key={index} className={`word-item ${isLearned ? 'learned' : ''}`}>
+                        <div className="word-info">
+                          <div className="word-greek">{word.greek}</div>
+                          {word.pos && <div className="word-pos">{word.pos}</div>}
+                          <div className="word-english">{word.english}</div>
+                          {isLearned && <span className="learned-badge">✓ Learned</span>}
+                        </div>
+                        <button
+                          className="remove-word-button"
+                          onClick={() => handleRemoveWord(selectedListModal.id, word.greek)}
+                          title="Remove from list"
+                        >
+                          ×
+                        </button>
+                      </div>
+                    )
+                  })}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
 
 export default WordLists
+
 
