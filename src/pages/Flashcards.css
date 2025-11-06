@@ -440,6 +440,9 @@
   border-radius: 12px;
   cursor: pointer;
   transition: all 0.3s;
+  margin-top: 50px;
+  width: auto;
+  display: inline-block;
 }
 
 .learned-button:hover,
@@ -447,11 +450,6 @@
   background: #45a049;
   transform: translateY(-2px);
   box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4);
-}
-
-.learned-button-card {
-  margin-top: 20px;
-  width: 100%;
 }
 
 .next-button {
