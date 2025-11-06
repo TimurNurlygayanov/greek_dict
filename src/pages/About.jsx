@@ -48,8 +48,17 @@ const About = () => {
               <li>Three different flashcard game modes</li>
               <li>Progress tracking for daily exercises</li>
               <li>Word memorization statistics</li>
-              <li>Mobile-friendly responsive design</li>
             </ul>
+          </div>
+
+          <div className="about-section">
+            <h3>Authentication & Privacy</h3>
+            <p>
+              To track your learning progress and support creating word lists for study, 
+              we ask users to authenticate through their Google account. Your data will 
+              never be used for any purpose other than saving your learning progress. 
+              We will never send you emails or use your information in any other way.
+            </p>
           </div>
         </div>
       </div>

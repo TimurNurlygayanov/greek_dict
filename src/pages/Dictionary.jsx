@@ -1,11 +1,15 @@
 import { useState, useEffect, useMemo, useRef } from 'react'
 import dictionaryData from '../dictionary.json'
+import AddToListModal from '../components/AddToListModal'
+import { addWordToList } from '../utils/wordLists'
+import { getUserId } from '../utils/storage'
 import './Dictionary.css'
 
 const Dictionary = () => {
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedWord, setSelectedWord] = useState(null)
   const [suggestions, setSuggestions] = useState([])
+  const [showAddToListModal, setShowAddToListModal] = useState(false)
   const inputRef = useRef(null)
 
   const filteredSuggestions = useMemo(() => {
@@ -31,13 +35,26 @@ const Dictionary = () => {
     }
   }, [filteredSuggestions, selectedWord])
 
-  const handleSuggestionClick = (word) => {
+  const handleSuggestionClick = async (word) => {
     setSelectedWord(word)
     setSearchTerm(word.greek)
     setSuggestions([])
     // Remove focus from input field
     if (inputRef.current) {
       inputRef.current.blur()
+    }
+    
+    // Add word to "Unstudied Words" if user views it (tracks words user is interested in)
+    const userId = getUserId()
+    if (userId && !userId.startsWith('user_')) {
+      try {
+        // Check if word is already in any custom list by trying to add to unstudied
+        // Server will handle the logic
+        await addWordToList('unstudied', word)
+      } catch (error) {
+        // Silently fail - word might already be in lists
+        console.log('Word might already be in lists')
+      }
     }
   }
 
@@ -87,7 +104,23 @@ const Dictionary = () => {
             <div className="word-result-pos">{selectedWord.pos}</div>
           )}
           <div className="word-result-english">{selectedWord.english}</div>
+          <button 
+            className="add-to-list-button"
+            onClick={() => setShowAddToListModal(true)}
+          >
+            + Add to List
+          </button>
         </div>
+      )}
+
+      {showAddToListModal && selectedWord && (
+        <AddToListModal
+          word={selectedWord}
+          onClose={() => setShowAddToListModal(false)}
+          onSuccess={() => {
+            // Word added successfully
+          }}
+        />
       )}
 
       {!selectedWord && searchTerm && suggestions.length === 0 && (

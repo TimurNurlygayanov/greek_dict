@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import dictionaryData from '../dictionary.json'
-import { incrementTodayExercises, addMemorizedWord, getUserId } from '../utils/storage'
+import { incrementTodayExercises, getUserId } from '../utils/storage'
+import { getUserLists, markWordAsLearned } from '../utils/wordLists'
 import AuthModal from '../components/AuthModal'
 import './Flashcards.css'
 
@@ -10,7 +11,9 @@ const MODES = {
   MULTIPLE_CHOICE: 'multiple-choice'
 }
 
-const Flashcards = ({ isActive = false }) => {
+const Flashcards = () => {
+  const [lists, setLists] = useState([])
+  const [selectedList, setSelectedList] = useState(null)
   const [mode, setMode] = useState(null)
   const [currentWord, setCurrentWord] = useState(null)
   const [showTranslation, setShowTranslation] = useState(false)
@@ -20,30 +23,69 @@ const Flashcards = ({ isActive = false }) => {
   const [showAuthModal, setShowAuthModal] = useState(false)
 
   useEffect(() => {
-    // Show auth modal only when page is active and user is not authenticated
-    if (isActive) {
-      const userId = getUserId()
-      if (!userId || userId.startsWith('user_')) {
-        setShowAuthModal(true)
-      }
+    // Show auth modal when component mounts if not authenticated
+    const userId = getUserId()
+    if (!userId || userId.startsWith('user_')) {
+      setShowAuthModal(true)
     } else {
-      // Hide modal when page is not active
-      setShowAuthModal(false)
+      loadLists()
     }
-  }, [isActive])
+  }, [])
+
+  // Reload lists when auth modal is closed (user might have authenticated)
+  const handleAuthModalClose = () => {
+    setShowAuthModal(false)
+    const userId = getUserId()
+    if (userId && !userId.startsWith('user_')) {
+      loadLists()
+    }
+  }
+
+  const loadLists = async () => {
+    const userLists = await getUserLists()
+    // Show all lists, including default ones
+    setLists(userLists.filter(list => list.words.length > 0 || list.isDefault))
+  }
+
+  // Get available words (excluding learned ones)
+  const getAvailableWords = () => {
+    if (!selectedList) return []
+    return selectedList.words.filter(
+      word => !selectedList.learnedWords.includes(word.greek)
+    )
+  }
 
   const getRandomWord = () => {
-    const randomIndex = Math.floor(Math.random() * dictionaryData.length)
-    return dictionaryData[randomIndex]
+    const availableWords = getAvailableWords()
+    if (availableWords.length === 0) return null
+    const randomIndex = Math.floor(Math.random() * availableWords.length)
+    return availableWords[randomIndex]
   }
 
   const getRandomWords = (count, excludeWord) => {
-    const words = [...dictionaryData]
-    const shuffled = words.sort(() => 0.5 - Math.random())
-    return shuffled
+    const availableWords = getAvailableWords()
+    let shuffled = [...availableWords]
+      .sort(() => 0.5 - Math.random())
       .filter((w) => w.greek !== excludeWord.greek)
       .slice(0, count)
       .map((w) => w.english)
+    
+    // If not enough words in list, fill with random from dictionary
+    if (shuffled.length < count) {
+      const fromDictionary = [...dictionaryData]
+        .sort(() => 0.5 - Math.random())
+        .filter((w) => w.greek !== excludeWord.greek && !shuffled.includes(w.english))
+        .slice(0, count - shuffled.length)
+        .map((w) => w.english)
+      shuffled = [...shuffled, ...fromDictionary]
+    }
+    return shuffled
+  }
+
+  const handleListSelect = (list) => {
+    setSelectedList(list)
+    setMode(null)
+    setCurrentWord(null)
   }
 
   const startMode = (selectedMode) => {
@@ -52,6 +94,10 @@ const Flashcards = ({ isActive = false }) => {
     setSelectedAnswer(null)
     setIsCorrect(null)
     const word = getRandomWord()
+    if (!word) {
+      alert('No words available in this list!')
+      return
+    }
     setCurrentWord(word)
 
     if (selectedMode === MODES.MULTIPLE_CHOICE) {
@@ -68,8 +114,12 @@ const Flashcards = ({ isActive = false }) => {
       setShowTranslation(true)
       await incrementTodayExercises()
     } else {
-      // Move to next word (don't count as new exercise yet)
+      // Move to next word
       const word = getRandomWord()
+      if (!word) {
+        alert('No more words available!')
+        return
+      }
       setCurrentWord(word)
       setShowTranslation(false)
     }
@@ -82,14 +132,14 @@ const Flashcards = ({ isActive = false }) => {
     const correct = answer === currentWord.english
     setIsCorrect(correct)
     await incrementTodayExercises()
-
-    if (correct) {
-      await addMemorizedWord(currentWord.greek)
-    }
   }
 
   const handleNextQuestion = () => {
     const word = getRandomWord()
+    if (!word) {
+      alert('No more words available!')
+      return
+    }
     setCurrentWord(word)
     setShowTranslation(false)
     setSelectedAnswer(null)
@@ -99,12 +149,105 @@ const Flashcards = ({ isActive = false }) => {
     setMultipleChoiceOptions(options)
   }
 
-  if (!mode) {
+  const handleMarkAsLearned = async () => {
+    if (!selectedList || !currentWord) return
+    
+    try {
+      await markWordAsLearned(selectedList.id, currentWord.greek)
+      // Update selected list locally
+      const updatedList = {
+        ...selectedList,
+        learnedWords: [...selectedList.learnedWords, currentWord.greek]
+      }
+      setSelectedList(updatedList)
+      // Reload lists to sync
+      await loadLists()
+      // Move to next word
+      const word = getRandomWord()
+      if (!word) {
+        alert('No more words available!')
+        setCurrentWord(null)
+        return
+      }
+      setCurrentWord(word)
+      setShowTranslation(false)
+      setSelectedAnswer(null)
+      setIsCorrect(null)
+    } catch (error) {
+      console.error('Error marking word as learned:', error)
+    }
+  }
+
+  // Show list selection
+  if (!selectedList) {
     return (
       <div className="flashcards">
+        {showAuthModal && <AuthModal onClose={handleAuthModalClose} />}
         <h1 className="page-title">Flashcards</h1>
+        <div className="list-selection">
+          <h2 className="list-selection-title">Choose a word list:</h2>
+          {lists.length === 0 ? (
+            <div className="no-lists-message">
+              <p>You don't have any word lists yet.</p>
+              <p>Go to Dictionary and add words to lists to start practicing!</p>
+            </div>
+          ) : (
+            <div className="lists-grid">
+              {lists.map((list) => {
+                const availableCount = list.words.filter(
+                  w => !list.learnedWords.includes(w.greek)
+                ).length
+                const isDefault = list.isDefault || list.id === 'unstudied' || list.id === 'learned'
+                return (
+                  <div
+                    key={list.id}
+                    className={`list-card ${isDefault ? 'default-list' : ''}`}
+                    onClick={() => handleListSelect(list)}
+                  >
+                    {isDefault && <span className="default-badge">Default</span>}
+                    <h3 className="list-card-name">{list.name}</h3>
+                    <div className="list-card-stats">
+                      <span>{availableCount} words to learn</span>
+                      <span>{list.words.length} total words</span>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          )}
+        </div>
+      </div>
+    )
+  }
+
+  // Show mode selection
+  if (!mode) {
+    const availableWords = getAvailableWords()
+    if (availableWords.length === 0) {
+      return (
+        <div className="flashcards">
+          <button className="back-button" onClick={() => setSelectedList(null)}>
+            ← Back to lists
+          </button>
+          <div className="no-words-message">
+            <h2>All words in this list are learned!</h2>
+            <p>Great job! You've mastered all words in "{selectedList.name}"</p>
+            <button className="back-to-lists-button" onClick={() => setSelectedList(null)}>
+              Choose Another List
+            </button>
+          </div>
+        </div>
+      )
+    }
+
+    return (
+      <div className="flashcards">
+        <button className="back-button" onClick={() => setSelectedList(null)}>
+          ← Back to lists
+        </button>
         <div className="mode-selection">
           <h2 className="mode-selection-title">Choose a game mode:</h2>
+          <p className="list-info">Playing with: {selectedList.name} ({getAvailableWords().length} words)</p>
           <div className="mode-cards">
             <div
               className="mode-card"
@@ -133,9 +276,30 @@ const Flashcards = ({ isActive = false }) => {
     )
   }
 
+  // Show game
+  if (!currentWord) {
+    return (
+      <div className="flashcards">
+        <button className="back-button" onClick={() => setMode(null)}>
+          ← Back to modes
+        </button>
+        <div className="no-words-message">
+          <h2>No words available!</h2>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="flashcards">
-      {showAuthModal && <AuthModal onClose={() => setShowAuthModal(false)} />}
+      <div className="flashcard-header">
+        <button className="back-button" onClick={() => setMode(null)}>
+          ← Back to modes
+        </button>
+        <div className="flashcard-info">
+          {selectedList.name} • {getAvailableWords().length} words left
+        </div>
+      </div>
 
       {mode === MODES.MULTIPLE_CHOICE ? (
         <div className="multiple-choice-card">
@@ -161,9 +325,14 @@ const Flashcards = ({ isActive = false }) => {
             ))}
           </div>
           {selectedAnswer !== null && (
-            <button className="next-button" onClick={handleNextQuestion}>
-              Next Question →
-            </button>
+            <div className="card-actions">
+              <button className="learned-button" onClick={handleMarkAsLearned}>
+                ✓ Mark as Learned
+              </button>
+              <button className="next-button" onClick={handleNextQuestion}>
+                Next Question →
+              </button>
+            </div>
           )}
         </div>
       ) : (
@@ -173,18 +342,40 @@ const Flashcards = ({ isActive = false }) => {
               <>
                 <div className="flashcard-main">{currentWord.greek}</div>
                 {showTranslation && (
-                  <div className="flashcard-translation">
-                    {currentWord.english}
-                  </div>
+                  <>
+                    <div className="flashcard-translation">
+                      {currentWord.english}
+                    </div>
+                    <button 
+                      className="learned-button-card"
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        handleMarkAsLearned()
+                      }}
+                    >
+                      ✓ Mark as Learned
+                    </button>
+                  </>
                 )}
               </>
             ) : (
               <>
                 <div className="flashcard-main">{currentWord.english}</div>
                 {showTranslation && (
-                  <div className="flashcard-translation">
-                    {currentWord.greek}
-                  </div>
+                  <>
+                    <div className="flashcard-translation">
+                      {currentWord.greek}
+                    </div>
+                    <button 
+                      className="learned-button-card"
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        handleMarkAsLearned()
+                      }}
+                    >
+                      ✓ Mark as Learned
+                    </button>
+                  </>
                 )}
               </>
             )}
@@ -199,4 +390,3 @@ const Flashcards = ({ isActive = false }) => {
 }
 
 export default Flashcards
-

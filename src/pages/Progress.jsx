@@ -5,27 +5,31 @@ import {
   getMemorizedWords,
   getUserId
 } from '../utils/storage'
+import { getUserLists } from '../utils/wordLists'
 import AuthModal from '../components/AuthModal'
 import './Progress.css'
 
-const Progress = ({ isActive = false }) => {
+const Progress = () => {
   const [exercisesToday, setExercisesToday] = useState(0)
   const [memorizedCount, setMemorizedCount] = useState(0)
   const [showAuthModal, setShowAuthModal] = useState(false)
+  const [lists, setLists] = useState([])
   const totalWords = dictionaryData.length
 
   useEffect(() => {
-    // Show auth modal only when page is active and user is not authenticated
-    if (isActive) {
-      const userId = getUserId()
-      if (!userId || userId.startsWith('user_')) {
-        setShowAuthModal(true)
-      }
+    // Show auth modal when component mounts if not authenticated
+    const userId = getUserId()
+    if (!userId || userId.startsWith('user_')) {
+      setShowAuthModal(true)
     } else {
-      // Hide modal when page is not active
-      setShowAuthModal(false)
+      loadLists()
     }
-  }, [isActive])
+  }, [])
+
+  const loadLists = async () => {
+    const userLists = await getUserLists()
+    setLists(userLists)
+  }
 
   useEffect(() => {
     const updateProgress = async () => {
@@ -41,13 +45,26 @@ const Progress = ({ isActive = false }) => {
     return () => clearInterval(interval)
   }, [])
 
+  // Reload lists when auth modal is closed
+  const handleAuthModalClose = () => {
+    setShowAuthModal(false)
+    const userId = getUserId()
+    if (userId && !userId.startsWith('user_')) {
+      loadLists()
+    }
+  }
+
   const memorizedPercentage = totalWords > 0 
     ? Math.round((memorizedCount / totalWords) * 100) 
     : 0
 
+  // Get default lists
+  const unstudiedList = lists.find(l => l.id === 'unstudied')
+  const learnedList = lists.find(l => l.id === 'learned')
+
   return (
     <div className="progress">
-      {showAuthModal && <AuthModal onClose={() => setShowAuthModal(false)} />}
+      {showAuthModal && <AuthModal onClose={handleAuthModalClose} />}
       <h1 className="page-title">Your Progress</h1>
       
       <div className="progress-cards">
@@ -80,11 +97,75 @@ const Progress = ({ isActive = false }) => {
         </div>
       </div>
 
+      {lists.length > 0 && (
+        <div className="lists-progress">
+          <h2 className="lists-progress-title">Progress by Lists</h2>
+          <div className="lists-progress-grid">
+            {lists.map((list) => {
+              const totalInList = list.words.length
+              const learnedInList = list.learnedWords.length
+              const toLearn = totalInList - learnedInList
+              const percentage = totalInList > 0 
+                ? Math.round((learnedInList / totalInList) * 100) 
+                : 0
+              const isDefault = list.isDefault || list.id === 'unstudied' || list.id === 'learned'
+              
+              return (
+                <div key={list.id} className="list-progress-card">
+                  <div className="list-progress-header">
+                    <h3 className="list-progress-name">
+                      {list.name}
+                      {isDefault && <span className="default-badge-small">Default</span>}
+                    </h3>
+                  </div>
+                  <div className="list-progress-stats">
+                    <div className="list-stat">
+                      <span className="list-stat-label">Learned:</span>
+                      <span className="list-stat-value">{learnedInList}</span>
+                    </div>
+                    <div className="list-stat">
+                      <span className="list-stat-label">To learn:</span>
+                      <span className="list-stat-value">{toLearn}</span>
+                    </div>
+                    <div className="list-stat">
+                      <span className="list-stat-label">Total:</span>
+                      <span className="list-stat-value">{totalInList}</span>
+                    </div>
+                  </div>
+                  {totalInList > 0 && (
+                    <div className="list-progress-bar-container">
+                      <div 
+                        className="list-progress-bar-fill"
+                        style={{ width: `${percentage}%` }}
+                      >
+                        {percentage}%
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      )}
+
       <div className="progress-stats">
         <div className="stat-item">
           <span className="stat-label">Total words in dictionary:</span>
           <span className="stat-value">{totalWords}</span>
         </div>
+        {unstudiedList && (
+          <div className="stat-item">
+            <span className="stat-label">Unstudied words:</span>
+            <span className="stat-value">{unstudiedList.words.length}</span>
+          </div>
+        )}
+        {learnedList && (
+          <div className="stat-item">
+            <span className="stat-label">Learned words:</span>
+            <span className="stat-value">{learnedList.words.length}</span>
+          </div>
+        )}
         <div className="stat-item">
           <span className="stat-label">Words to learn:</span>
           <span className="stat-value">{totalWords - memorizedCount}</span>

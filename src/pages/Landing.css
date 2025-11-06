@@ -2,9 +2,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: calc(100vh - 100px);
+  min-height: 100vh;
+  height: 100vh;
   text-align: center;
   padding: 40px 20px;
+  overflow: hidden;
 }
 
 .landing-content {
