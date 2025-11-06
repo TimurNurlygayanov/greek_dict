@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
-import { getUserLists, createList, deleteList, removeWordFromList, getUserId } from '../utils/wordLists'
+import { getUserLists, createList, deleteList, removeWordFromList } from '../utils/wordLists'
+import { getUserId } from '../utils/storage'
 import AuthModal from '../components/AuthModal'
 import './WordLists.css'
 
