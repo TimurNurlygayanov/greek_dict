@@ -66,7 +66,7 @@
 .create-list-header-button {
   padding: 12px 24px;
   background: white;
-  color: #0D5EAF;
+  color: #FFFFFF;
   border: 2px solid #0D5EAF;
   border-radius: 8px;
   font-weight: 600;
@@ -76,9 +76,9 @@
 }
 
 .create-list-header-button:hover {
-  background: rgba(13, 94, 175, 0.1);
-  color: #0D5EAF;
-  border-color: #005BAE;
+  background: #F0F8FF;
+  color: #000000;
+  border-color: #F0F8FF;
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(13, 94, 175, 0.4);
 }
