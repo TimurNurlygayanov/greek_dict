@@ -1,5 +1,6 @@
 import { Link, useLocation } from 'react-router-dom'
 import './Navigation.css'
+import GoogleAuth from './GoogleAuth'
 
 const Navigation = () => {
   const location = useLocation()
@@ -44,6 +45,7 @@ const Navigation = () => {
             About
           </Link>
         </div>
+        <GoogleAuth />
       </div>
     </nav>
   )
