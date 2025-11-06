@@ -4,6 +4,7 @@ dist
 *.log
 
 # Python
+.idea
 .venv
 venv/
 env/
