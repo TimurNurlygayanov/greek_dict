@@ -1,0 +1,150 @@
+.dictionary {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.page-title {
+  font-size: 36px;
+  color: white;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.dictionary-search {
+  position: relative;
+  margin-bottom: 30px;
+}
+
+.dictionary-input {
+  width: 100%;
+  padding: 20px;
+  font-size: 18px;
+  border: none;
+  border-radius: 12px;
+  background: white;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  outline: none;
+  transition: box-shadow 0.3s;
+}
+
+.dictionary-input:focus {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.suggestions-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border-radius: 12px;
+  margin-top: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  max-height: 400px;
+  overflow-y: auto;
+  z-index: 100;
+}
+
+.suggestion-item {
+  padding: 16px 20px;
+  cursor: pointer;
+  border-bottom: 1px solid #f0f0f0;
+  transition: background 0.2s;
+}
+
+.suggestion-item:last-child {
+  border-bottom: none;
+}
+
+.suggestion-item:hover {
+  background: #f8f9fa;
+}
+
+.suggestion-greek {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 4px;
+}
+
+.suggestion-english {
+  font-size: 16px;
+  color: #666;
+}
+
+.word-result {
+  background: white;
+  border-radius: 12px;
+  padding: 40px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  animation: fadeIn 0.3s;
+}
+
+.word-result-greek {
+  font-size: 32px;
+  font-weight: bold;
+  color: #667eea;
+  margin-bottom: 20px;
+}
+
+.word-result-english {
+  font-size: 24px;
+  color: #333;
+}
+
+.no-results {
+  text-align: center;
+  color: white;
+  font-size: 18px;
+  padding: 40px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .page-title {
+    font-size: 28px;
+  }
+
+  .dictionary-input {
+    padding: 16px;
+    font-size: 16px;
+  }
+
+  .suggestion-item {
+    padding: 12px 16px;
+  }
+
+  .suggestion-greek {
+    font-size: 16px;
+  }
+
+  .suggestion-english {
+    font-size: 14px;
+  }
+
+  .word-result {
+    padding: 30px 20px;
+  }
+
+  .word-result-greek {
+    font-size: 24px;
+  }
+
+  .word-result-english {
+    font-size: 20px;
+  }
+}
+

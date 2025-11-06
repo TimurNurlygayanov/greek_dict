@@ -1,0 +1,61 @@
+import './About.css'
+
+const About = () => {
+  return (
+    <div className="about">
+      <h1 className="page-title">About</h1>
+      <div className="about-content">
+        <div className="about-card">
+          <h2>Ellinaki</h2>
+          <p className="about-description">
+            A web application designed to help you learn Greek words easily. 
+            This app contains all the Greek words you should know for B2 Greek exams.
+          </p>
+          
+          <div className="about-section">
+            <h3>Created by</h3>
+            <p>
+              <a 
+                href="https://www.linkedin.com/in/timur-nurlygaianov/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="about-link"
+              >
+                Timur Nurlygaianov
+              </a>
+            </p>
+          </div>
+
+          <div className="about-section">
+            <h3>Hosting</h3>
+            <p>
+              This application is hosted on{' '}
+              <a 
+                href="https://render.com" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="about-link"
+              >
+                render.com
+              </a>
+            </p>
+          </div>
+
+          <div className="about-section">
+            <h3>Features</h3>
+            <ul className="about-features">
+              <li>Interactive dictionary with search functionality</li>
+              <li>Three different flashcard game modes</li>
+              <li>Progress tracking for daily exercises</li>
+              <li>Word memorization statistics</li>
+              <li>Mobile-friendly responsive design</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export default About
+

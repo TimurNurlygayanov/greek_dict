@@ -1,0 +1,10 @@
+node_modules
+.git
+.env
+*.log
+dist
+src
+dict.pdf
+parse_words.py
+requirements.txt
+
