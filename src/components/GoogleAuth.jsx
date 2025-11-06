@@ -74,15 +74,12 @@ const GoogleAuth = () => {
 
   if (isAuthenticated && userProfile) {
     return (
-      <div className="google-auth">
-        <div className="user-info">
-          {userProfile.picture && (
-            <img src={userProfile.picture} alt={userProfile.name} className="user-avatar" />
-          )}
-          <span className="user-name">{userProfile.name || userProfile.email}</span>
-        </div>
-        <button onClick={handleSignOut} className="google-sign-out">
-          Sign Out
+      <div className="google-auth compact">
+        {userProfile.picture && (
+          <img src={userProfile.picture} alt="Profile" className="user-avatar" />
+        )}
+        <button onClick={handleSignOut} className="google-sign-out compact" title="Sign Out">
+          Logout
         </button>
       </div>
     )

@@ -25,6 +25,16 @@
   margin: 0;
 }
 
+.dictionary-title {
+  font-size: 48px;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+  margin-bottom: 20px;
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  letter-spacing: 1px;
+}
+
 .dictionary-search {
   position: relative;
   margin-bottom: 30px;
