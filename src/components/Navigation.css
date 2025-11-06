@@ -26,6 +26,7 @@
   transition: all 0.3s;
   cursor: pointer;
   text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
+  margin-left: -20px;  // Offset the container padding
 }
 
 .nav-logo:hover {

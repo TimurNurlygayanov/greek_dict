@@ -105,7 +105,11 @@ const AddToListModal = ({ word, onClose, onSuccess }) => {
                 const isWordInList = list.words.some(w => w.greek === word.greek)
                 const isDefault = list.isDefault || list.id === 'unstudied' || list.id === 'learned'
                 return (
-                  <div key={list.id} className={`list-item ${isDefault ? 'default-list-item' : ''}`}>
+                  <div 
+                    key={list.id} 
+                    className={`list-item ${isDefault ? 'default-list-item' : ''} ${isWordInList ? 'added' : ''}`}
+                    onClick={() => !isWordInList && handleAddToList(list.id)}
+                  >
                     <div className="list-info">
                       <div className="list-name">
                         {list.name}
@@ -113,23 +117,19 @@ const AddToListModal = ({ word, onClose, onSuccess }) => {
                       </div>
                       <div className="list-count">{list.words.length} words</div>
                     </div>
-                    <button
-                      className={`add-button ${isWordInList ? 'added' : ''}`}
-                      onClick={() => !isWordInList && handleAddToList(list.id)}
-                      disabled={isWordInList || loading}
-                    >
-                      {isWordInList ? '✓ Added' : 'Add'}
-                    </button>
+                    {isWordInList && <span className="added-check">✓</span>}
                   </div>
                 )
               })}
+              <div 
+                className="list-item create-item"
+                onClick={() => setShowCreateForm(true)}
+              >
+                <div className="list-info">
+                  <div className="list-name">+ Create New List</div>
+                </div>
+              </div>
             </div>
-            <button 
-              className="create-list-button secondary"
-              onClick={() => setShowCreateForm(true)}
-            >
-              + Create New List
-            </button>
           </>
         )}
       </div>
