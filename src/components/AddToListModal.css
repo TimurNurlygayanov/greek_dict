@@ -74,9 +74,28 @@
 }
 
 .lists-container {
-  max-height: 300px;
+  max-height: 400px;
   overflow-y: auto;
   margin-bottom: 20px;
+  padding-right: 5px;
+}
+
+.lists-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.lists-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.lists-container::-webkit-scrollbar-thumb {
+  background: #667eea;
+  border-radius: 4px;
+}
+
+.lists-container::-webkit-scrollbar-thumb:hover {
+  background: #764ba2;
 }
 
 .list-item {

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import dictionaryData from '../dictionary.json'
 import { incrementTodayExercises, getUserId } from '../utils/storage'
-import { getUserLists, markWordAsLearned } from '../utils/wordLists'
+import { getUserLists, markWordAsLearned, createList } from '../utils/wordLists'
 import AuthModal from '../components/AuthModal'
 import './Flashcards.css'
 
@@ -21,6 +21,8 @@ const Flashcards = () => {
   const [selectedAnswer, setSelectedAnswer] = useState(null)
   const [isCorrect, setIsCorrect] = useState(null)
   const [showAuthModal, setShowAuthModal] = useState(false)
+  const [showCreateListModal, setShowCreateListModal] = useState(false)
+  const [newListName, setNewListName] = useState('')
 
   useEffect(() => {
     // Show auth modal when component mounts if not authenticated
@@ -31,6 +33,16 @@ const Flashcards = () => {
       loadLists()
     }
   }, [])
+
+  // Reload lists when returning to list selection
+  useEffect(() => {
+    if (!selectedList) {
+      const userId = getUserId()
+      if (userId && !userId.startsWith('user_')) {
+        loadLists()
+      }
+    }
+  }, [selectedList])
 
   // Reload lists when auth modal is closed (user might have authenticated)
   const handleAuthModalClose = () => {
@@ -43,8 +55,12 @@ const Flashcards = () => {
 
   const loadLists = async () => {
     const userLists = await getUserLists()
-    // Show all lists, including default ones
-    setLists(userLists.filter(list => list.words.length > 0 || list.isDefault))
+    // Show all lists, including default ones (even if empty)
+    // Default lists should always be shown
+    const defaultLists = userLists.filter(list => list.isDefault || list.id === 'unstudied' || list.id === 'learned')
+    const customLists = userLists.filter(list => !list.isDefault && list.id !== 'unstudied' && list.id !== 'learned')
+    // Show default lists always, and custom lists if they have words
+    setLists([...defaultLists, ...customLists.filter(list => list.words.length > 0)])
   }
 
   // Get available words (excluding learned ones)
@@ -86,6 +102,20 @@ const Flashcards = () => {
     setSelectedList(list)
     setMode(null)
     setCurrentWord(null)
+  }
+
+  const handleCreateList = async (e) => {
+    e?.preventDefault()
+    if (!newListName.trim()) return
+
+    try {
+      const newList = await createList(newListName.trim())
+      setLists([...lists, newList])
+      setNewListName('')
+      setShowCreateListModal(false)
+    } catch (error) {
+      alert(error.message || 'Failed to create list')
+    }
   }
 
   const startMode = (selectedMode) => {
@@ -154,14 +184,14 @@ const Flashcards = () => {
     
     try {
       await markWordAsLearned(selectedList.id, currentWord.greek)
-      // Update selected list locally
-      const updatedList = {
-        ...selectedList,
-        learnedWords: [...selectedList.learnedWords, currentWord.greek]
-      }
-      setSelectedList(updatedList)
-      // Reload lists to sync
+      // Reload lists to get updated data
       await loadLists()
+      // Update selected list from reloaded lists
+      const updatedLists = await getUserLists()
+      const updatedList = updatedLists.find(l => l.id === selectedList.id)
+      if (updatedList) {
+        setSelectedList(updatedList)
+      }
       // Move to next word
       const word = getRandomWord()
       if (!word) {
@@ -185,7 +215,47 @@ const Flashcards = () => {
         {showAuthModal && <AuthModal onClose={handleAuthModalClose} />}
         <h1 className="page-title">Flashcards</h1>
         <div className="list-selection">
-          <h2 className="list-selection-title">Choose a word list:</h2>
+          <div className="list-selection-header">
+            <h2 className="list-selection-title">Choose a word list:</h2>
+            <button 
+              className="create-list-header-button"
+              onClick={() => setShowCreateListModal(true)}
+            >
+              + Create New List
+            </button>
+          </div>
+          
+          {showCreateListModal && (
+            <div className="create-list-modal">
+              <form onSubmit={handleCreateList} className="create-list-form-inline">
+                <input
+                  type="text"
+                  placeholder="List name"
+                  value={newListName}
+                  onChange={(e) => setNewListName(e.target.value)}
+                  className="list-name-input-inline"
+                  autoFocus
+                  maxLength={50}
+                />
+                <div className="form-actions-inline">
+                  <button type="submit" className="submit-button-inline" disabled={!newListName.trim()}>
+                    Create
+                  </button>
+                  <button 
+                    type="button" 
+                    className="cancel-button-inline"
+                    onClick={() => {
+                      setShowCreateListModal(false)
+                      setNewListName('')
+                    }}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </form>
+            </div>
+          )}
+
           {lists.length === 0 ? (
             <div className="no-lists-message">
               <p>You don't have any word lists yet.</p>

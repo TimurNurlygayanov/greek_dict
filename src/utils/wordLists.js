@@ -126,3 +126,19 @@ export const unmarkWordAsLearned = async (listId, wordGreek) => {
   }
 }
 
+export const updateListName = async (listId, newName) => {
+  const userId = getUserId()
+  if (!userId) return null
+  
+  try {
+    const data = await apiRequest(`/api/lists/${userId}/${listId}`, {
+      method: 'PUT',
+      body: JSON.stringify({ name: newName })
+    })
+    return data?.list || null
+  } catch (error) {
+    console.error('Error updating list name:', error)
+    throw error
+  }
+}
+

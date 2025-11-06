@@ -32,6 +32,12 @@ const Navigation = () => {
             Progress
           </Link>
           <Link
+            to="/word-lists"
+            className={`nav-link ${isActive('/word-lists') ? 'active' : ''}`}
+          >
+            Lists
+          </Link>
+          <Link
             to="/about"
             className={`nav-link ${isActive('/about') ? 'active' : ''}`}
           >

@@ -5,10 +5,11 @@ import Landing from './pages/Landing'
 import Dictionary from './pages/Dictionary'
 import Flashcards from './pages/Flashcards'
 import Progress from './pages/Progress'
+import WordLists from './pages/WordLists'
 import About from './pages/About'
 import './App.css'
 
-const pageRoutes = ['/', '/dictionary', '/flashcards', '/progress', '/about']
+const pageRoutes = ['/', '/dictionary', '/flashcards', '/progress', '/word-lists', '/about']
 
 function ScrollHandler() {
   const navigate = useNavigate()
@@ -26,7 +27,9 @@ function ScrollHandler() {
       const isScrollableElement = target.tagName === 'INPUT' || 
                                   target.tagName === 'TEXTAREA' ||
                                   target.closest('.suggestions-list') ||
-                                  target.closest('.scrollable-content')
+                                  target.closest('.scrollable-content') ||
+                                  target.closest('.lists-container') ||
+                                  target.closest('.words-list')
       
       if (isScrollableElement) {
         // Allow normal scrolling inside these elements
@@ -82,6 +85,7 @@ function App() {
             <Route path="/dictionary" element={<Dictionary />} />
             <Route path="/flashcards" element={<Flashcards />} />
             <Route path="/progress" element={<Progress />} />
+            <Route path="/word-lists" element={<WordLists />} />
             <Route path="/about" element={<About />} />
           </Routes>
         </main>

@@ -247,6 +247,40 @@ app.post('/api/lists/:userId', (req, res) => {
   res.json({ list: newList })
 })
 
+app.put('/api/lists/:userId/:listId', (req, res) => {
+  const { userId, listId } = req.params
+  const { name } = req.body
+  const lists = readWordLists()
+  
+  if (!lists[userId]) {
+    return res.status(404).json({ error: 'User not found' })
+  }
+  
+  const list = lists[userId].find(l => l.id === listId)
+  if (!list) {
+    return res.status(404).json({ error: 'List not found' })
+  }
+  
+  // Prevent renaming default lists
+  if (list.isDefault || listId === 'unstudied' || listId === 'learned') {
+    return res.status(400).json({ error: 'Cannot rename default list' })
+  }
+  
+  if (!name || !name.trim()) {
+    return res.status(400).json({ error: 'List name is required' })
+  }
+  
+  // Check if list with same name exists (excluding current list)
+  if (lists[userId].some(l => l.id !== listId && l.name === name.trim())) {
+    return res.status(400).json({ error: 'List with this name already exists' })
+  }
+  
+  list.name = name.trim()
+  writeWordLists(lists)
+  
+  res.json({ list })
+})
+
 app.delete('/api/lists/:userId/:listId', (req, res) => {
   const { userId, listId } = req.params
   const lists = readWordLists()

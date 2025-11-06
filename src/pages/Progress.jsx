@@ -28,6 +28,7 @@ const Progress = () => {
 
   const loadLists = async () => {
     const userLists = await getUserLists()
+    // Always show all lists, including default ones
     setLists(userLists)
   }
 

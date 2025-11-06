@@ -38,10 +38,106 @@
   text-align: center;
 }
 
+.list-selection-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
 .list-selection-title {
   font-size: 28px;
   color: white;
-  margin-bottom: 40px;
+  margin: 0;
+}
+
+.create-list-header-button {
+  padding: 12px 24px;
+  background: white;
+  color: #667eea;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-size: 16px;
+}
+
+.create-list-header-button:hover {
+  background: #f0f0f0;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.create-list-modal {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.create-list-form-inline {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.list-name-input-inline {
+  flex: 1;
+  min-width: 200px;
+  padding: 12px;
+  font-size: 16px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.list-name-input-inline:focus {
+  border-color: #667eea;
+}
+
+.form-actions-inline {
+  display: flex;
+  gap: 10px;
+}
+
+.submit-button-inline,
+.cancel-button-inline {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-size: 14px;
+}
+
+.submit-button-inline {
+  background: #667eea;
+  color: white;
+}
+
+.submit-button-inline:hover:not(:disabled) {
+  background: #764ba2;
+}
+
+.submit-button-inline:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.cancel-button-inline {
+  background: #f0f0f0;
+  color: #333;
+}
+
+.cancel-button-inline:hover {
+  background: #e0e0e0;
 }
 
 .no-lists-message {

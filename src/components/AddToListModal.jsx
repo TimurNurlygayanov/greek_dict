@@ -21,6 +21,8 @@ const AddToListModal = ({ word, onClose, onSuccess }) => {
     setLoading(true)
     try {
       await addWordToList(listId, word)
+      // Reload lists to get updated data
+      await loadLists()
       if (onSuccess) onSuccess()
       onClose()
     } catch (error) {
