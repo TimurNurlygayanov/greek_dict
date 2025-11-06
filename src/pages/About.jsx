@@ -3,11 +3,10 @@ import './About.css'
 const About = () => {
   return (
     <div className="about">
-      <h1 className="page-title">About</h1>
       <div className="about-content">
         <div className="about-card">
           <p className="about-description">
-            Learn Greek words easily. All the words you need to know for B2 Greek exams.
+            Ellinaki helps you to learn Greek words, required for B2 level exams
           </p>
           
           <div className="about-section">

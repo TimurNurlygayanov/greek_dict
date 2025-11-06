@@ -156,8 +156,6 @@ const WordLists = () => {
   return (
     <div className="word-lists">
       {showAuthModal && <AuthModal onClose={handleAuthModalClose} />}
-      <h1 className="page-title">Word Lists</h1>
-
       <div className="word-lists-content">
         <div className="word-lists-header">
           <h2>Your Lists</h2>

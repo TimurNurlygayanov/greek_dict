@@ -46,6 +46,8 @@
   cursor: pointer;
   transition: all 0.3s;
   box-shadow: 0 4px 12px rgba(13, 94, 175, 0.4);
+  max-width: 200px;
+  width: auto;
 }
 
 .create-list-button:hover {
@@ -137,8 +139,8 @@
 }
 
 .lists-container {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   gap: 20px;
 }
 

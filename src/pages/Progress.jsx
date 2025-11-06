@@ -81,7 +81,6 @@ const Progress = () => {
   return (
     <div className="progress">
       {showAuthModal && <AuthModal onClose={handleAuthModalClose} />}
-      <h1 className="page-title">Your Progress</h1>
       
       <div className="progress-cards">
         <div className="progress-card">

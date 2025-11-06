@@ -35,6 +35,20 @@ const Flashcards = () => {
     }
   }, [])
 
+  useEffect(() => {
+    const checkAuth = () => {
+      const userId = getUserId()
+      if (userId && !userId.startsWith('user_')) {
+        setShowAuthModal(false)
+        loadLists()
+      }
+    }
+
+    checkAuth()
+    window.addEventListener('storage', checkAuth)
+    return () => window.removeEventListener('storage', checkAuth)
+  }, [])
+
   // Reload lists when returning to list selection
   useEffect(() => {
     if (!selectedList) {
@@ -244,10 +258,9 @@ const Flashcards = () => {
     return (
       <div className="flashcards">
         {showAuthModal && <AuthModal onClose={handleAuthModalClose} />}
-        <h1 className="page-title">Flashcards</h1>
         <div className="list-selection">
           <div className="list-selection-header">
-            <h2 className="list-selection-title">Choose a word list:</h2>
+            <h2 className="list-selection-title">Choose what words you want to practice:</h2>
             <button 
               className="create-list-header-button"
               onClick={() => setShowCreateListModal(true)}
