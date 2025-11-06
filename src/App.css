@@ -2,6 +2,7 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 
 .main-content {
@@ -11,6 +12,8 @@
   width: 100%;
   margin: 0 auto;
   padding-bottom: 100px;
+  position: relative;
+  z-index: 2;
 }
 
 @media (max-width: 768px) {

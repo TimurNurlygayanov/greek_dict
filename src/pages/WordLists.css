@@ -4,11 +4,27 @@
   padding: 20px;
 }
 
+.page-title {
+  font-size: 48px;
+  font-weight: bold;
+  color: #8b4513;
+  text-align: center;
+  margin-bottom: 40px;
+  text-shadow: 
+    2px 2px 4px rgba(255, 255, 255, 0.8),
+    4px 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: 'Georgia', serif;
+  letter-spacing: 1px;
+}
+
 .word-lists-content {
-  background: white;
+  background: rgba(255, 255, 255, 0.98);
   border-radius: 20px;
   padding: 30px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 
+    0 4px 15px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(184, 134, 11, 0.2);
 }
 
 .word-lists-header {
@@ -132,8 +148,8 @@
 
 .list-card {
   background: #f8f9fa;
-  border-radius: 12px;
-  padding: 20px;
+  border-radius: 8px;
+  padding: 12px;
   border: 1px solid #e0e0e0;
   transition: all 0.3s;
 }
@@ -155,13 +171,13 @@
 }
 
 .list-card-name {
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 600;
   color: #333;
-  margin: 0 0 8px 0;
+  margin: 0 0 4px 0;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
 }
 
 .default-badge {
@@ -174,11 +190,11 @@
 }
 
 .list-card-stats {
-  font-size: 14px;
+  font-size: 12px;
   color: #666;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
 }
 
 .learned-count {
@@ -229,8 +245,8 @@
 }
 
 .list-words-section {
-  margin-top: 20px;
-  padding-top: 20px;
+  margin-top: 12px;
+  padding-top: 12px;
   border-top: 1px solid #e0e0e0;
 }
 
@@ -272,9 +288,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px;
+  padding: 8px;
   background: white;
-  border-radius: 8px;
+  border-radius: 6px;
   border: 1px solid #e0e0e0;
   transition: all 0.3s;
 }
@@ -294,10 +310,10 @@
 }
 
 .word-greek {
-  font-size: 18px;
+  font-size: 14px;
   font-weight: 600;
   color: #333;
-  margin-bottom: 4px;
+  margin-bottom: 2px;
 }
 
 .word-pos {
@@ -308,7 +324,7 @@
 }
 
 .word-english {
-  font-size: 14px;
+  font-size: 12px;
   color: #666;
 }
 

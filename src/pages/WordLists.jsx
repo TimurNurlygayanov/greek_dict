@@ -22,6 +22,16 @@ const WordLists = () => {
     }
   }, [])
 
+  // Reload lists when auth modal is closed
+  useEffect(() => {
+    if (!showAuthModal) {
+      const userId = getUserId()
+      if (userId && !userId.startsWith('user_')) {
+        loadLists()
+      }
+    }
+  }, [showAuthModal])
+
   const loadLists = async () => {
     const userLists = await getUserLists()
     setLists(userLists)
@@ -185,7 +195,16 @@ const WordLists = () => {
           </div>
         ) : (
           <div className="lists-container">
-            {lists.map((list) => {
+            {lists
+              .sort((a, b) => {
+                // Sort: custom lists first, then default lists
+                const aIsDefault = a.isDefault || a.id === 'unstudied' || a.id === 'learned'
+                const bIsDefault = b.isDefault || b.id === 'unstudied' || b.id === 'learned'
+                if (aIsDefault && !bIsDefault) return 1
+                if (!aIsDefault && bIsDefault) return -1
+                return 0
+              })
+              .map((list) => {
               const isDefault = list.isDefault || list.id === 'unstudied' || list.id === 'learned'
               const isEditing = editingListId === list.id
               const isExpanded = expandedListId === list.id
