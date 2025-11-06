@@ -93,9 +93,10 @@ const Flashcards = () => {
         !list.isDefault && list.id !== 'unstudied' && list.id !== 'learned'
       )
       
-      const allLists = [...defaultLists, ...customLists.filter(list => 
+      // Show custom lists first, then default lists
+      const allLists = [...customLists.filter(list => 
         list.words && list.words.length > 0
-      )]
+      ), ...defaultLists]
       
       console.log('Setting lists:', allLists)
       setLists(allLists)

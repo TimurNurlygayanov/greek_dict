@@ -156,57 +156,56 @@ const WordLists = () => {
   return (
     <div className="word-lists">
       {showAuthModal && <AuthModal onClose={handleAuthModalClose} />}
-      <div className="word-lists-content">
-        <div className="word-lists-header">
-          <h2>Your Lists</h2>
-          {!showCreateForm && (
-            <button 
-              className="create-list-button"
-              onClick={() => setShowCreateForm(true)}
-            >
-              +
-            </button>
-          )}
-        </div>
-
-        {showCreateForm && (
-          <div className="create-list-form-card">
-            <form onSubmit={handleCreateList}>
-              <input
-                type="text"
-                placeholder="List name"
-                value={newListName}
-                onChange={(e) => setNewListName(e.target.value)}
-                className="list-name-input"
-                autoFocus
-                maxLength={50}
-              />
-              <div className="form-actions">
-                <button type="submit" className="submit-button" disabled={!newListName.trim()}>
-                  Create
-                </button>
-                <button 
-                  type="button" 
-                  className="cancel-button"
-                  onClick={() => {
-                    setShowCreateForm(false)
-                    setNewListName('')
-                  }}
-                >
-                  Cancel
-                </button>
-              </div>
-            </form>
-          </div>
+      <div className="word-lists-header">
+        <h2>Your Lists</h2>
+        {!showCreateForm && (
+          <button 
+            className="create-list-button"
+            onClick={() => setShowCreateForm(true)}
+          >
+            +
+          </button>
         )}
+      </div>
 
-        {lists.length === 0 ? (
-          <div className="no-lists-message">
-            <p>You don't have any word lists yet.</p>
-            <p>Create your first list to start organizing words!</p>
-          </div>
-        ) : (
-          <div className="lists-container">
+      {showCreateForm && (
+        <div className="create-list-form-card">
+          <form onSubmit={handleCreateList}>
+            <input
+              type="text"
+              placeholder="List name"
+              value={newListName}
+              onChange={(e) => setNewListName(e.target.value)}
+              className="list-name-input"
+              autoFocus
+              maxLength={50}
+            />
+            <div className="form-actions">
+              <button type="submit" className="submit-button" disabled={!newListName.trim()}>
+                Create
+              </button>
+              <button 
+                type="button" 
+                className="cancel-button"
+                onClick={() => {
+                  setShowCreateForm(false)
+                  setNewListName('')
+                }}
+              >
+                Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+      )}
+
+      {lists.length === 0 ? (
+        <div className="no-lists-message">
+          <p>You don't have any word lists yet.</p>
+          <p>Create your first list to start organizing words!</p>
+        </div>
+      ) : (
+        <div className="lists-container">
             {lists
               .sort((a, b) => {
                 // Sort: custom lists first, then default lists
@@ -322,7 +321,6 @@ const WordLists = () => {
             })}
           </div>
         )}
-      </div>
     </div>
   )
 }
