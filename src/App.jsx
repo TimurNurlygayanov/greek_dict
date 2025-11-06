@@ -100,7 +100,7 @@ function App() {
         >
           {pages.map((PageComponent, index) => (
             <section key={index} className="scroll-section">
-              <PageComponent />
+              <PageComponent isActive={index === currentPage} />
             </section>
           ))}
         </div>

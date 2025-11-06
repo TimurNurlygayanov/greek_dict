@@ -10,7 +10,7 @@ const MODES = {
   MULTIPLE_CHOICE: 'multiple-choice'
 }
 
-const Flashcards = () => {
+const Flashcards = ({ isActive = false }) => {
   const [mode, setMode] = useState(null)
   const [currentWord, setCurrentWord] = useState(null)
   const [showTranslation, setShowTranslation] = useState(false)
@@ -20,12 +20,17 @@ const Flashcards = () => {
   const [showAuthModal, setShowAuthModal] = useState(false)
 
   useEffect(() => {
-    // Show auth modal when component mounts if not authenticated
-    const userId = getUserId()
-    if (!userId || userId.startsWith('user_')) {
-      setShowAuthModal(true)
+    // Show auth modal only when page is active and user is not authenticated
+    if (isActive) {
+      const userId = getUserId()
+      if (!userId || userId.startsWith('user_')) {
+        setShowAuthModal(true)
+      }
+    } else {
+      // Hide modal when page is not active
+      setShowAuthModal(false)
     }
-  }, [])
+  }, [isActive])
 
   const getRandomWord = () => {
     const randomIndex = Math.floor(Math.random() * dictionaryData.length)

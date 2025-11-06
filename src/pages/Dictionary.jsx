@@ -25,8 +25,11 @@ const Dictionary = () => {
   }, [searchTerm])
 
   useEffect(() => {
-    setSuggestions(filteredSuggestions)
-  }, [filteredSuggestions])
+    // Don't update suggestions if a word is selected
+    if (!selectedWord) {
+      setSuggestions(filteredSuggestions)
+    }
+  }, [filteredSuggestions, selectedWord])
 
   const handleSuggestionClick = (word) => {
     setSelectedWord(word)
@@ -41,6 +44,8 @@ const Dictionary = () => {
   const handleInputChange = (e) => {
     setSearchTerm(e.target.value)
     setSelectedWord(null)
+    // Clear suggestions when user starts typing again
+    setSuggestions([])
   }
 
   return (
@@ -56,7 +61,7 @@ const Dictionary = () => {
           onChange={handleInputChange}
           autoFocus
         />
-        {suggestions.length > 0 && (
+        {suggestions.length > 0 && !selectedWord && (
           <div className="suggestions-list">
             {suggestions.map((word, index) => (
               <div

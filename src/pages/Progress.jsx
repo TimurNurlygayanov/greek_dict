@@ -8,19 +8,24 @@ import {
 import AuthModal from '../components/AuthModal'
 import './Progress.css'
 
-const Progress = () => {
+const Progress = ({ isActive = false }) => {
   const [exercisesToday, setExercisesToday] = useState(0)
   const [memorizedCount, setMemorizedCount] = useState(0)
   const [showAuthModal, setShowAuthModal] = useState(false)
   const totalWords = dictionaryData.length
 
   useEffect(() => {
-    // Show auth modal when component mounts if not authenticated
-    const userId = getUserId()
-    if (!userId || userId.startsWith('user_')) {
-      setShowAuthModal(true)
+    // Show auth modal only when page is active and user is not authenticated
+    if (isActive) {
+      const userId = getUserId()
+      if (!userId || userId.startsWith('user_')) {
+        setShowAuthModal(true)
+      }
+    } else {
+      // Hide modal when page is not active
+      setShowAuthModal(false)
     }
-  }, [])
+  }, [isActive])
 
   useEffect(() => {
     const updateProgress = async () => {
