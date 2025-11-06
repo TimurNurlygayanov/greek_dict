@@ -164,7 +164,7 @@ const WordLists = () => {
               className="create-list-button"
               onClick={() => setShowCreateForm(true)}
             >
-              + Create New List
+              +
             </button>
           )}
         </div>

@@ -265,7 +265,7 @@ const Flashcards = () => {
               className="create-list-header-button"
               onClick={() => setShowCreateListModal(true)}
             >
-              + Create New List
+              Add List
             </button>
           </div>
           
