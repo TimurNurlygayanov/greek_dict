@@ -261,44 +261,7 @@ const Flashcards = () => {
         <div className="list-selection">
           <div className="list-selection-header">
             <h2 className="list-selection-title">Choose what words you want to practice:</h2>
-            <button 
-              className="create-list-header-button"
-              onClick={() => setShowCreateListModal(true)}
-            >
-              Add List
-            </button>
           </div>
-          
-          {showCreateListModal && (
-            <div className="create-list-modal">
-              <form onSubmit={handleCreateList} className="create-list-form-inline">
-                <input
-                  type="text"
-                  placeholder="List name"
-                  value={newListName}
-                  onChange={(e) => setNewListName(e.target.value)}
-                  className="list-name-input-inline"
-                  autoFocus
-                  maxLength={50}
-                />
-                <div className="form-actions-inline">
-                  <button type="submit" className="submit-button-inline" disabled={!newListName.trim()}>
-                    Create
-                  </button>
-                  <button 
-                    type="button" 
-                    className="cancel-button-inline"
-                    onClick={() => {
-                      setShowCreateListModal(false)
-                      setNewListName('')
-                    }}
-                  >
-                    Cancel
-                  </button>
-                </div>
-              </form>
-            </div>
-          )}
 
           {lists.length === 0 ? (
             <div className="no-lists-message">
