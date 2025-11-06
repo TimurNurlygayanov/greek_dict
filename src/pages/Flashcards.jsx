@@ -46,12 +46,12 @@ const Flashcards = () => {
     }
   }
 
-  const handleCardClick = () => {
+  const handleCardClick = async () => {
     if (mode === MODES.MULTIPLE_CHOICE) return
 
     if (!showTranslation) {
       setShowTranslation(true)
-      incrementTodayExercises()
+      await incrementTodayExercises()
     } else {
       // Move to next word (don't count as new exercise yet)
       const word = getRandomWord()
@@ -60,16 +60,16 @@ const Flashcards = () => {
     }
   }
 
-  const handleAnswerClick = (answer) => {
+  const handleAnswerClick = async (answer) => {
     if (selectedAnswer !== null) return // Already answered
 
     setSelectedAnswer(answer)
     const correct = answer === currentWord.english
     setIsCorrect(correct)
-    incrementTodayExercises()
+    await incrementTodayExercises()
 
     if (correct) {
-      addMemorizedWord(currentWord.greek)
+      await addMemorizedWord(currentWord.greek)
     }
   }
 

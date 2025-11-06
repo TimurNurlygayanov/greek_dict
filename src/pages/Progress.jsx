@@ -12,9 +12,11 @@ const Progress = () => {
   const totalWords = dictionaryData.length
 
   useEffect(() => {
-    const updateProgress = () => {
-      setExercisesToday(getTodayExercises())
-      setMemorizedCount(getMemorizedWords().length)
+    const updateProgress = async () => {
+      const exercises = await getTodayExercises()
+      const memorized = await getMemorizedWords()
+      setExercisesToday(exercises)
+      setMemorizedCount(memorized.length)
     }
 
     updateProgress()

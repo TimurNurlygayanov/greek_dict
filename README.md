@@ -69,8 +69,14 @@ The application will be automatically deployed and you'll get a URL like `https:
 ### Important Notes
 
 - The app uses Express server to handle React Router client-side routing
+- **Persistent Storage**: User progress is stored on a persistent disk at `/data` (configured in `render.yaml`)
+  - The disk is automatically mounted when using Blueprint deployment
+  - For manual setup, add a disk in Render.com dashboard: Settings → Disks → Add Disk
+    - Mount path: `/data`
+    - Size: 1GB (or more if needed)
 - Environment variables can be set in Render.com dashboard under "Environment"
 - The `dictionary.json` file is included in the build, so no additional setup is needed
+- Progress data is stored in `/data/progress.json` and persists across deployments
 
 ## Project Structure
 
