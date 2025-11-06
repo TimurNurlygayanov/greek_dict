@@ -25,8 +25,8 @@ const apiRequest = async (endpoint, options = {}) => {
 
 export const getUserLists = async () => {
   const userId = getUserId()
-  if (!userId) {
-    console.log('getUserLists: No userId')
+  if (!userId || userId.startsWith('user_')) {
+    console.log('Temporary user - no persistent lists')
     return []
   }
   
@@ -45,7 +45,7 @@ export const getUserLists = async () => {
 
 export const createList = async (name) => {
   const userId = getUserId()
-  if (!userId) return null
+  if (!userId || userId.startsWith('user_')) return null
   
   try {
     const data = await apiRequest(`/api/lists/${userId}`, {
@@ -61,7 +61,7 @@ export const createList = async (name) => {
 
 export const deleteList = async (listId) => {
   const userId = getUserId()
-  if (!userId) return false
+  if (!userId || userId.startsWith('user_')) return false
   
   try {
     await apiRequest(`/api/lists/${userId}/${listId}`, {
@@ -76,7 +76,7 @@ export const deleteList = async (listId) => {
 
 export const addWordToList = async (listId, word) => {
   const userId = getUserId()
-  if (!userId) return null
+  if (!userId || userId.startsWith('user_')) return null
   
   try {
     const data = await apiRequest(`/api/lists/${userId}/${listId}/words`, {
@@ -92,7 +92,7 @@ export const addWordToList = async (listId, word) => {
 
 export const removeWordFromList = async (listId, wordGreek) => {
   const userId = getUserId()
-  if (!userId) return null
+  if (!userId || userId.startsWith('user_')) return null
   
   try {
     const data = await apiRequest(`/api/lists/${userId}/${listId}/words/${encodeURIComponent(wordGreek)}`, {
@@ -107,7 +107,7 @@ export const removeWordFromList = async (listId, wordGreek) => {
 
 export const markWordAsLearned = async (listId, wordGreek) => {
   const userId = getUserId()
-  if (!userId) return null
+  if (!userId || userId.startsWith('user_')) return null
   
   try {
     const data = await apiRequest(`/api/lists/${userId}/${listId}/learned`, {
@@ -123,7 +123,7 @@ export const markWordAsLearned = async (listId, wordGreek) => {
 
 export const unmarkWordAsLearned = async (listId, wordGreek) => {
   const userId = getUserId()
-  if (!userId) return null
+  if (!userId || userId.startsWith('user_')) return null
   
   try {
     const data = await apiRequest(`/api/lists/${userId}/${listId}/learned/${encodeURIComponent(wordGreek)}`, {
@@ -138,7 +138,7 @@ export const unmarkWordAsLearned = async (listId, wordGreek) => {
 
 export const updateListName = async (listId, newName) => {
   const userId = getUserId()
-  if (!userId) return null
+  if (!userId || userId.startsWith('user_')) return null
   
   try {
     const data = await apiRequest(`/api/lists/${userId}/${listId}`, {

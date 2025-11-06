@@ -61,13 +61,17 @@ const Flashcards = () => {
       console.log('Loaded lists:', userLists)
       
       if (!userLists || userLists.length === 0) {
-        console.log('No lists found')
-        setLists([])
-        return
+        console.log('No lists found - server should create defaults');
+        setLists([]);
+        return;
       }
       
-      // Show all lists, including default ones (even if empty)
-      // Default lists should always be shown
+      // Log if unstudied is empty
+      const unstudied = userLists.find(l => l.id === 'unstudied');
+      if (unstudied && unstudied.words.length === 0) {
+        console.log('Unstudied list is empty - should be populated by server');
+      }
+      
       const defaultLists = userLists.filter(list => 
         list.isDefault || list.id === 'unstudied' || list.id === 'learned'
       )
@@ -75,7 +79,6 @@ const Flashcards = () => {
         !list.isDefault && list.id !== 'unstudied' && list.id !== 'learned'
       )
       
-      // Show default lists always, and custom lists if they have words
       const allLists = [...defaultLists, ...customLists.filter(list => 
         list.words && list.words.length > 0
       )]

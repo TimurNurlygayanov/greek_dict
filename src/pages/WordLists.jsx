@@ -15,6 +15,7 @@ const WordLists = () => {
 
   useEffect(() => {
     const userId = getUserId()
+    console.log('WordLists mount - userId:', userId)
     if (!userId || userId.startsWith('user_')) {
       setShowAuthModal(true)
     } else {
@@ -26,6 +27,7 @@ const WordLists = () => {
   useEffect(() => {
     if (!showAuthModal) {
       const userId = getUserId()
+      console.log('Auth modal closed - userId:', userId)
       if (userId && !userId.startsWith('user_')) {
         loadLists()
       }
@@ -33,13 +35,25 @@ const WordLists = () => {
   }, [showAuthModal])
 
   const loadLists = async () => {
-    const userLists = await getUserLists()
-    setLists(userLists)
+    try {
+      const userLists = await getUserLists()
+      console.log('Loaded lists:', userLists)
+      
+      // Sort: custom first, then default
+      const customLists = userLists.filter(list => !list.isDefault).sort((a, b) => a.name.localeCompare(b.name))
+      const defaultLists = userLists.filter(list => list.isDefault).sort((a, b) => a.name.localeCompare(b.name))
+      
+      setLists([...customLists, ...defaultLists])
+    } catch (error) {
+      console.error('Error loading lists:', error)
+      setLists([])
+    }
   }
 
   const handleAuthModalClose = () => {
     setShowAuthModal(false)
     const userId = getUserId()
+    console.log('Auth modal closed - userId:', userId)
     if (userId && !userId.startsWith('user_')) {
       loadLists()
     }

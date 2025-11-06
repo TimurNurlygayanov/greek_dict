@@ -27,9 +27,24 @@ const Progress = () => {
   }, [])
 
   const loadLists = async () => {
-    const userLists = await getUserLists()
-    // Always show all lists, including default ones
-    setLists(userLists)
+    try {
+      const userLists = await getUserLists()
+      console.log('Loaded lists:', userLists)
+      
+      if (userLists.length === 0) {
+        console.log('No lists found')
+      }
+      
+      const unstudied = userLists.find(l => l.id === 'unstudied')
+      if (unstudied && unstudied.words.length === 0) {
+        console.log('Unstudied is empty - should be populated by server')
+      }
+      
+      setLists(userLists)
+    } catch (error) {
+      console.error('Error loading lists:', error)
+      setLists([])
+    }
   }
 
   useEffect(() => {

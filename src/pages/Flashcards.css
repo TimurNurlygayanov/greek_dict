@@ -76,8 +76,9 @@
 }
 
 .create-list-header-button:hover {
-  background: #0D5EAF;
-  color: white;
+  background: rgba(13, 94, 175, 0.1);
+  color: #0D5EAF;
+  border-color: #005BAE;
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(13, 94, 175, 0.4);
 }
