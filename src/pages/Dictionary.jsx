@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo, useRef } from 'react'
 import dictionaryData from '../dictionary.json'
 import './Dictionary.css'
 
@@ -6,6 +6,7 @@ const Dictionary = () => {
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedWord, setSelectedWord] = useState(null)
   const [suggestions, setSuggestions] = useState([])
+  const inputRef = useRef(null)
 
   const filteredSuggestions = useMemo(() => {
     if (!searchTerm.trim()) {
@@ -31,6 +32,10 @@ const Dictionary = () => {
     setSelectedWord(word)
     setSearchTerm(word.greek)
     setSuggestions([])
+    // Remove focus from input field
+    if (inputRef.current) {
+      inputRef.current.blur()
+    }
   }
 
   const handleInputChange = (e) => {
@@ -43,6 +48,7 @@ const Dictionary = () => {
       <h1 className="page-title">Dictionary</h1>
       <div className="dictionary-search">
         <input
+          ref={inputRef}
           type="text"
           className="dictionary-input"
           placeholder="Start typing a word in Greek or English..."

@@ -8,20 +8,20 @@ import About from './pages/About'
 import './App.css'
 
 function App() {
+  // Always start with Landing page
   const [currentPage, setCurrentPage] = useState(0)
   const pages = [Landing, Dictionary, Flashcards, Progress, About]
+
+  // Sync URL on mount
+  useEffect(() => {
+    window.history.replaceState({}, '', '/')
+  }, [])
 
   useEffect(() => {
     let isScrolling = false
     let scrollTimeout
-    let lastScrollTime = 0
 
     const handleWheel = (e) => {
-      // Throttle scroll events
-      const now = Date.now()
-      if (now - lastScrollTime < 100) return
-      lastScrollTime = now
-
       if (isScrolling) return
 
       // Check if we're scrolling inside a scrollable section
@@ -29,20 +29,26 @@ function App() {
       const scrollSection = target.closest('.scroll-section')
       if (scrollSection) {
         const { scrollTop, scrollHeight, clientHeight } = scrollSection
-        const isAtTop = scrollTop === 0
-        const isAtBottom = scrollTop + clientHeight >= scrollHeight - 10
+        const isAtTop = scrollTop <= 5
+        const isAtBottom = scrollTop + clientHeight >= scrollHeight - 5
 
         // Only trigger page change if at boundaries
-        if (e.deltaY > 0 && !isAtBottom) return // Scrolling down but not at bottom
-        if (e.deltaY < 0 && !isAtTop) return // Scrolling up but not at top
+        if (e.deltaY > 0 && !isAtBottom) {
+          // Allow normal scrolling inside section
+          return
+        }
+        if (e.deltaY < 0 && !isAtTop) {
+          // Allow normal scrolling inside section
+          return
+        }
       }
 
-      // Prevent default scroll behavior
+      // Prevent default scroll behavior for page switching
       e.preventDefault()
 
-      // Determine scroll direction
+      // Determine scroll direction - make it very sensitive
       const delta = e.deltaY
-      const threshold = 50 // Minimum scroll amount to trigger page change
+      const threshold = 10 // Very low threshold for quick switching
 
       if (Math.abs(delta) < threshold) return
 
@@ -56,10 +62,10 @@ function App() {
         setCurrentPage((prev) => prev - 1)
       }
 
-      // Reset scrolling flag after animation
+      // Reset scrolling flag after animation (faster)
       scrollTimeout = setTimeout(() => {
         isScrolling = false
-      }, 800)
+      }, 500)
     }
 
     const handleNavigate = (e) => {
