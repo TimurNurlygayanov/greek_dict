@@ -1,9 +1,9 @@
 [
   {
-    "greek": ", o",
-    "greek_normalized": ", o",
+    "greek": "πίνακας, o",
+    "greek_normalized": "πινακας, o",
     "pos": "in a classroom",
-    "english": "black­ board",
+    "english": "blackboard",
     "level": "A1"
   },
   {
@@ -15491,8 +15491,8 @@
     "level": "A2"
   },
   {
-    "greek": "το",
-    "greek_normalized": "το",
+    "greek": "ΚΕΠ, το",
+    "greek_normalized": "ΚΕΠ, το",
     "pos": "",
     "english": "Citizen Service Centre",
     "level": "A2"
@@ -23135,8 +23135,8 @@
     "level": "B1"
   },
   {
-    "greek": "η",
-    "greek_normalized": "η",
+    "greek": "αυτοκράτορας, ο",
+    "greek_normalized": "αυτοκρατορας, ο",
     "pos": "",
     "english": "emperor",
     "level": "B1"
