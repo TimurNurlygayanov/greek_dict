@@ -49,10 +49,12 @@
 }
 
 .create-list-button:hover {
-  background: #0D5EAF;
-  color: white;
-  transform: translateY(-2px) scale(1.05);
-  box-shadow: 0 6px 20px rgba(13, 94, 175, 0.5);
+  background: white;
+  color: #0D5EAF;
+  border-color: white;
+  border-width: 4px;
+  transform: translateY(-2px) scale(1.1);
+  box-shadow: 0 6px 24px rgba(255, 255, 255, 0.6), 0 0 0 4px rgba(255, 255, 255, 0.3);
 }
 
 .create-list-form-card {
