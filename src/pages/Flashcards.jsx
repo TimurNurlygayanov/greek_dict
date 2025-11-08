@@ -3,6 +3,7 @@ import dictionaryData from '../dictionary.json'
 import { incrementTodayExercises } from '../utils/storage'
 import { getUserLists, markWordAsLearned } from '../utils/wordLists'
 import AuthModal from '../components/AuthModal'
+import AddToListModal from '../components/AddToListModal'
 import Card from '../components/common/Card'
 import Button from '../components/common/Button'
 import Badge from '../components/common/Badge'
@@ -26,6 +27,7 @@ const Flashcards = () => {
   const [multipleChoiceOptions, setMultipleChoiceOptions] = useState([])
   const [selectedAnswer, setSelectedAnswer] = useState(null)
   const [isCorrect, setIsCorrect] = useState(null)
+  const [showAddToListModal, setShowAddToListModal] = useState(false)
 
   // Touch/Swipe state
   const [touchStart, setTouchStart] = useState(null)
@@ -458,14 +460,24 @@ const Flashcards = () => {
           </div>
 
           {selectedAnswer !== null && (
-            <div className="flex gap-4 mt-8 justify-center animate-fade-in">
+            <div className="flex gap-4 mt-8 justify-center flex-wrap animate-fade-in">
+              {isCorrect && (
+                <Button
+                  variant="success"
+                  size="lg"
+                  onClick={handleMarkAsLearned}
+                  icon={<span>✓</span>}
+                >
+                  Mark as Learned
+                </Button>
+              )}
               <Button
-                variant="success"
+                variant="outline"
                 size="lg"
-                onClick={handleMarkAsLearned}
-                icon={<span>✓</span>}
+                onClick={() => setShowAddToListModal(true)}
+                icon={<span>+</span>}
               >
-                Mark as Learned
+                Add to List
               </Button>
               <Button
                 variant="primary"
@@ -509,17 +521,30 @@ const Flashcards = () => {
                   <div className="text-4xl font-semibold mb-6 text-secondary">
                     {currentWord.english}
                   </div>
-                  <Button
-                    variant="success"
-                    size="lg"
-                    onClick={(e) => {
-                      e.stopPropagation()
-                      handleMarkAsLearned()
-                    }}
-                    icon={<span>✓</span>}
-                  >
-                    Mark as Learned
-                  </Button>
+                  <div className="flex gap-4 justify-center flex-wrap">
+                    <Button
+                      variant="success"
+                      size="lg"
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        handleMarkAsLearned()
+                      }}
+                      icon={<span>✓</span>}
+                    >
+                      Mark as Learned
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="lg"
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        setShowAddToListModal(true)
+                      }}
+                      icon={<span>+</span>}
+                    >
+                      Add to List
+                    </Button>
+                  </div>
                 </div>
               )}
             </>
@@ -533,17 +558,30 @@ const Flashcards = () => {
                   <div className="text-4xl font-semibold mb-6 text-secondary">
                     {currentWord.greek}
                   </div>
-                  <Button
-                    variant="success"
-                    size="lg"
-                    onClick={(e) => {
-                      e.stopPropagation()
-                      handleMarkAsLearned()
-                    }}
-                    icon={<span>✓</span>}
-                  >
-                    Mark as Learned
-                  </Button>
+                  <div className="flex gap-4 justify-center flex-wrap">
+                    <Button
+                      variant="success"
+                      size="lg"
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        handleMarkAsLearned()
+                      }}
+                      icon={<span>✓</span>}
+                    >
+                      Mark as Learned
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="lg"
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        setShowAddToListModal(true)
+                      }}
+                      icon={<span>+</span>}
+                    >
+                      Add to List
+                    </Button>
+                  </div>
                 </div>
               )}
             </>
@@ -559,6 +597,16 @@ const Flashcards = () => {
             </div>
           )}
         </Card>
+      )}
+
+      {showAddToListModal && currentWord && (
+        <AddToListModal
+          word={currentWord}
+          onClose={() => setShowAddToListModal(false)}
+          onSuccess={() => {
+            setShowAddToListModal(false)
+          }}
+        />
       )}
     </div>
   )

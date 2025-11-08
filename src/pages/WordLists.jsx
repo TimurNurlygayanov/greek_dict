@@ -143,6 +143,10 @@ const WordLists = () => {
     }
   }
 
+  // Separate custom and default lists
+  const customLists = lists.filter(l => !l.isDefault).sort((a, b) => a.name.localeCompare(b.name))
+  const defaultLists = lists.filter(l => l.isDefault).sort((a, b) => a.name.localeCompare(b.name))
+
   return (
     <div className="container" style={{ paddingTop: 'var(--space-6)', paddingBottom: 'var(--space-20)' }}>
       {showAuthModal && <AuthModal onClose={closeAuthModal} />}
@@ -200,15 +204,91 @@ const WordLists = () => {
           <p className="text-secondary">Create your first list to start organizing words!</p>
         </Card>
       ) : (
-        <div className="card-grid">
-          {lists
-            .sort((a, b) => {
-              // Sort: default lists first, then custom lists alphabetically
-              if (a.isDefault && !b.isDefault) return -1
-              if (!a.isDefault && b.isDefault) return 1
-              return a.name.localeCompare(b.name)
-            })
-            .map((list) => {
+        <>
+          {/* Custom Lists Section */}
+          {customLists.length > 0 && (
+            <>
+              <h3 className="text-xl font-semibold mb-4" style={{ color: 'white', margin: 0 }}>
+                My Lists
+              </h3>
+              <div className="card-grid mb-8">
+                {customLists.map((list) => {
+                  const totalWords = list.words.length
+                  const learnedWords = list.learnedWords.length
+                  const percentage = totalWords > 0 ? Math.round((learnedWords / totalWords) * 100) : 0
+
+                  return (
+                    <Card
+                      key={list.id}
+                      variant="elevated"
+                      padding="md"
+                      hoverable
+                      onClick={() => handleListClick(list)}
+                      className="animate-fade-in-up"
+                    >
+                      <div className="flex-between mb-3">
+                        <div className="flex-1">
+                          <div className="flex items-center gap-2 mb-2">
+                            <h3 className="text-lg font-semibold" style={{ margin: 0 }}>
+                              {list.name}
+                            </h3>
+                          </div>
+                          <div className="text-xs text-secondary mb-2">
+                            {learnedWords} / {totalWords} words learned
+                          </div>
+                          {/* Progress Bar */}
+                          <div style={{
+                            width: '100%',
+                            height: '8px',
+                            backgroundColor: 'var(--color-gray-200)',
+                            borderRadius: 'var(--radius-full)',
+                            overflow: 'hidden'
+                          }}>
+                            <div style={{
+                              width: `${percentage}%`,
+                              height: '100%',
+                              background: 'linear-gradient(90deg, var(--color-success-500), var(--color-success-600))',
+                              transition: 'width 0.3s ease'
+                            }} />
+                          </div>
+                          <div className="text-xs text-secondary mt-1">
+                            {percentage}% complete
+                          </div>
+                        </div>
+                        <div onClick={(e) => e.stopPropagation()} style={{ marginLeft: 'var(--space-3)' }}>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => handleDeleteList(list.id)}
+                            title="Delete list"
+                          >
+                            🗑️
+                          </Button>
+                        </div>
+                      </div>
+                    </Card>
+                  )
+                })}
+              </div>
+            </>
+          )}
+
+          {/* Separator */}
+          {customLists.length > 0 && defaultLists.length > 0 && (
+            <div style={{
+              borderTop: '2px solid rgba(255, 255, 255, 0.2)',
+              margin: 'var(--space-8) 0'
+            }} />
+          )}
+
+          {/* Default Lists Section */}
+          {defaultLists.length > 0 && (
+            <>
+              <h3 className="text-xl font-semibold mb-4" style={{ color: 'white', margin: 0 }}>
+                Level-Based Lists
+              </h3>
+              <div className="card-grid">
+                {defaultLists.map((list) => {
               const totalWords = list.words.length
               const learnedWords = list.learnedWords.length
               const percentage = totalWords > 0 ? Math.round((learnedWords / totalWords) * 100) : 0
@@ -269,7 +349,10 @@ const WordLists = () => {
               )
             })}
         </div>
-      )}
+      </>
+    )}
+  </>
+)}
 
       {selectedListModal && (
         <Modal

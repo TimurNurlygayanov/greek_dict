@@ -231,7 +231,7 @@ const Progress = () => {
 
   // Stat Card Component
   const StatCard = ({ title, value, subtitle, progress }) => (
-    <Card variant="glass" padding="lg" className="animate-scale-in">
+    <Card variant="elevated" padding="lg">
       <div className="text-sm font-medium text-secondary mb-2">{title}</div>
       <div className="text-5xl font-bold mb-2" style={{ color: 'white' }}>{value}</div>
       {subtitle && <div className="text-sm text-secondary mb-4">{subtitle}</div>}

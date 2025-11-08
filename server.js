@@ -82,9 +82,18 @@ try {
   console.error('Error loading dictionary:', error)
 }
 
-// Helper function to ensure default lists
+// Helper function to ensure default lists and clean up old ones
 const ensureDefaultLists = (userId, userLists) => {
   let updated = false
+
+  // Remove old deprecated lists (unstudied and learned) for all users
+  const oldListIds = ['unstudied', 'learned']
+  const beforeLength = userLists.length
+  userLists.splice(0, userLists.length, ...userLists.filter(list => !oldListIds.includes(list.id)))
+  if (userLists.length !== beforeLength) {
+    updated = true
+    console.log(`Removed deprecated lists for user ${userId}`)
+  }
 
   // Create level-based lists (A1, A2, B1, B2)
   const levels = ['A1', 'A2', 'B1', 'B2']
