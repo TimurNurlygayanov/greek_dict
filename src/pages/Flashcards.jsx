@@ -222,12 +222,6 @@ const Flashcards = () => {
       <div className="container" style={{ paddingTop: 'var(--space-8)', paddingBottom: 'var(--space-20)' }}>
         {showAuthModal && <AuthModal onClose={closeAuthModal} />}
 
-        <div className="mb-8">
-          <h1 className="text-5xl font-bold mb-2" style={{ color: 'white', margin: 0 }}>
-            Choose Your Practice List
-          </h1>
-        </div>
-
         {/* Daily Practice Widget */}
         {!showAuthModal && (
           <DailyPracticeWidget onSelectDailyPractice={handleListSelect} />

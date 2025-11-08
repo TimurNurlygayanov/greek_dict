@@ -231,11 +231,11 @@ const Progress = () => {
 
   // Stat Card Component
   const StatCard = ({ title, value, subtitle, progress }) => (
-    <Card variant="elevated" padding="lg">
-      <div className="text-sm font-medium text-secondary mb-2">{title}</div>
-      <div className="text-5xl font-bold mb-2 text-primary">{value}</div>
-      {subtitle && <div className="text-sm text-secondary mb-4">{subtitle}</div>}
-      {progress && <ProgressBar value={progress.value} max={progress.max} size="lg" />}
+    <Card variant="elevated" padding="md">
+      <div className="text-xs font-medium text-secondary mb-1">{title}</div>
+      <div className="text-2xl font-bold mb-1 text-primary">{value}</div>
+      {subtitle && <div className="text-xs text-secondary mb-2">{subtitle}</div>}
+      {progress && <ProgressBar value={progress.value} max={progress.max} size="md" />}
     </Card>
   )
 
@@ -244,7 +244,7 @@ const Progress = () => {
       {showAuthModal && <AuthModal onClose={closeAuthModal} />}
 
       {/* Main Stats Grid */}
-      <div className="grid grid-cols-2 gap-6 mb-8">
+      <div className="grid grid-cols-2 gap-4 mb-8">
         <StatCard
           title="EXERCISES TODAY"
           value={exercisesToday}
@@ -257,27 +257,6 @@ const Progress = () => {
           progress={{ value: memorizedCount, max: totalWords }}
         />
       </div>
-
-      {/* Quick Stats */}
-      <Card variant="elevated" padding="lg" className="mb-8">
-        <h2 className="text-2xl font-semibold mb-4" style={{ margin: 0 }}>Overview</h2>
-        <div className="grid grid-cols-3 gap-6">
-          <div>
-            <div className="text-sm text-secondary mb-1">Total Words</div>
-            <div className="text-3xl font-bold text-primary">{totalWords}</div>
-          </div>
-          <div>
-            <div className="text-sm text-secondary mb-1">Learned</div>
-            <div className="text-3xl font-bold" style={{ color: 'var(--color-success-600)' }}>
-              {memorizedCount}
-            </div>
-          </div>
-          <div>
-            <div className="text-sm text-secondary mb-1">To Learn</div>
-            <div className="text-3xl font-bold text-primary">{totalWords - memorizedCount}</div>
-          </div>
-        </div>
-      </Card>
 
       {/* Level Distribution */}
       <div className="mb-8">

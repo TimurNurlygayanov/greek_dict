@@ -151,8 +151,7 @@ const WordLists = () => {
     <div className="container" style={{ paddingTop: 'var(--space-6)', paddingBottom: 'var(--space-20)' }}>
       {showAuthModal && <AuthModal onClose={closeAuthModal} />}
 
-      <div className="flex-between mb-6">
-        <h2 className="text-4xl font-bold" style={{ color: 'white', margin: 0 }}>Your Lists</h2>
+      <div className="flex justify-end mb-6">
         <Button
           variant="primary"
           size="lg"

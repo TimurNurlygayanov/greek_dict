@@ -65,7 +65,7 @@ const Navigation = () => {
             className={`nav-link ${isActive('/word-lists') ? 'active' : ''}`}
             aria-current={isActive('/word-lists') ? 'page' : undefined}
           >
-            Lists
+            Words Lists
           </Link>
         </nav>
 
@@ -131,7 +131,7 @@ const Navigation = () => {
             className={`mobile-nav-link ${isActive('/word-lists') ? 'active' : ''}`}
           >
             <span className="mobile-nav-icon">📝</span>
-            Lists
+            Words Lists
           </Link>
         </nav>
       </div>
