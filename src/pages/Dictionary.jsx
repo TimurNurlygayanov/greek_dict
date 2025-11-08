@@ -19,6 +19,11 @@ const Dictionary = () => {
   const [highlightedIndex, setHighlightedIndex] = useState(-1)
   const [customWords, setCustomWords] = useState([])
   const inputRef = useRef(null)
+  const [showGuide, setShowGuide] = useState(() => {
+    // Check if user has seen the guide before
+    const hasSeenGuide = localStorage.getItem('hasSeenDictionaryGuide')
+    return !hasSeenGuide
+  })
 
   // Load custom words on mount
   useEffect(() => {
@@ -28,6 +33,11 @@ const Dictionary = () => {
     }
     loadCustomWords()
   }, [])
+
+  const handleDismissGuide = () => {
+    setShowGuide(false)
+    localStorage.setItem('hasSeenDictionaryGuide', 'true')
+  }
 
   const filteredSuggestions = useMemo(() => {
     if (!searchTerm.trim()) {
@@ -76,6 +86,10 @@ const Dictionary = () => {
     setHighlightedIndex(-1)
     // Clear suggestions when user starts typing again
     setSuggestions([])
+    // Hide guide when user starts typing
+    if (showGuide && e.target.value.trim()) {
+      handleDismissGuide()
+    }
   }
 
   const handleKeyDown = (e) => {
@@ -172,6 +186,84 @@ const Dictionary = () => {
           </div>
         )}
       </div>
+
+      {showGuide && !searchTerm && !selectedWord && (
+        <Card
+          variant="elevated"
+          padding="lg"
+          className="animate-fade-in-up"
+          style={{
+            maxWidth: '600px',
+            margin: '2rem auto 0 auto',
+            background: 'linear-gradient(135deg, #f8f9ff 0%, #e8f0ff 100%)',
+            border: '2px dashed #0066cc',
+            position: 'relative'
+          }}
+        >
+          <button
+            onClick={handleDismissGuide}
+            style={{
+              position: 'absolute',
+              top: '12px',
+              right: '12px',
+              background: 'transparent',
+              border: 'none',
+              cursor: 'pointer',
+              color: '#666',
+              fontSize: '24px',
+              padding: '4px 8px',
+              lineHeight: '1',
+              transition: 'color 0.2s'
+            }}
+            onMouseEnter={(e) => e.currentTarget.style.color = '#0066cc'}
+            onMouseLeave={(e) => e.currentTarget.style.color = '#666'}
+          >
+            ×
+          </button>
+
+          {/* Arrow pointing up */}
+          <div style={{ textAlign: 'center', marginBottom: '16px' }}>
+            <div style={{
+              fontSize: '3rem',
+              transform: 'rotate(180deg)',
+              display: 'inline-block',
+              animation: 'bounce 2s ease-in-out infinite'
+            }}>
+              ↓
+            </div>
+          </div>
+
+          <div style={{ textAlign: 'center', paddingRight: '20px' }}>
+            <div style={{
+              fontSize: '1.5rem',
+              fontFamily: '"Comic Sans MS", "Chalkboard SE", cursive',
+              color: '#0066cc',
+              marginBottom: '12px',
+              fontWeight: 'bold'
+            }}>
+              Start here! ✍️
+            </div>
+            <p style={{
+              fontSize: '1rem',
+              color: '#555',
+              lineHeight: '1.6',
+              margin: 0
+            }}>
+              Type any Greek or English word above to search the dictionary,
+              then add words to your lists and practice them with flashcards!
+            </p>
+          </div>
+
+          <style>
+            {`
+              @keyframes bounce {
+                0%, 100% { transform: rotate(180deg) translateY(0); }
+                50% { transform: rotate(180deg) translateY(-10px); }
+              }
+            `}
+          </style>
+        </Card>
+      )}
 
       {selectedWord && (
         <Card variant="elevated" padding="xl" className="word-result animate-scale-in">

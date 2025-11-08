@@ -151,52 +151,6 @@ const WordLists = () => {
     <div className="container" style={{ paddingTop: 'var(--space-6)', paddingBottom: 'var(--space-20)' }}>
       {showAuthModal && <AuthModal onClose={closeAuthModal} />}
 
-      <div className="flex justify-end mb-6">
-        <Button
-          variant="primary"
-          size="lg"
-          onClick={() => setShowCreateForm(true)}
-          style={{
-            width: '50px',
-            height: '50px',
-            borderRadius: 'var(--radius-full)',
-            fontSize: 'var(--text-3xl)',
-            padding: 0
-          }}
-        >
-          +
-        </Button>
-      </div>
-
-      {showCreateForm && (
-        <Card variant="elevated" padding="md" className="mb-6 animate-scale-in">
-          <form onSubmit={handleCreateList} className="flex gap-3">
-            <Input
-              type="text"
-              placeholder="List name"
-              value={newListName}
-              onChange={(e) => setNewListName(e.target.value)}
-              autoFocus
-              maxLength={50}
-              fullWidth
-            />
-            <Button type="submit" variant="primary" disabled={!newListName.trim()}>
-              Create
-            </Button>
-            <Button
-              type="button"
-              variant="secondary"
-              onClick={() => {
-                setShowCreateForm(false)
-                setNewListName('')
-              }}
-            >
-              Cancel
-            </Button>
-          </form>
-        </Card>
-      )}
-
       {lists.length === 0 ? (
         <Card variant="elevated" padding="lg" className="text-center">
           <p className="text-lg text-secondary mb-2">You don't have any word lists yet.</p>
@@ -205,75 +159,142 @@ const WordLists = () => {
       ) : (
         <>
           {/* Custom Lists Section */}
-          {customLists.length > 0 && (
-            <>
-              <h3 className="text-xl font-semibold mb-4" style={{ color: 'white', margin: 0 }}>
-                My Lists
-              </h3>
-              <div className="card-grid mb-8">
-                {customLists.map((list) => {
-                  const totalWords = list.words.length
-                  const learnedWords = list.learnedWords.length
-                  const percentage = totalWords > 0 ? Math.round((learnedWords / totalWords) * 100) : 0
+          <h3 className="text-xl font-semibold mb-6" style={{ color: 'white', margin: 0 }}>
+            My Lists
+          </h3>
+          <div className="card-grid mb-8">
+            {customLists.map((list) => {
+              const totalWords = list.words.length
+              const learnedWords = list.learnedWords.length
+              const percentage = totalWords > 0 ? Math.round((learnedWords / totalWords) * 100) : 0
 
-                  return (
-                    <Card
-                      key={list.id}
-                      variant="elevated"
-                      padding="md"
-                      hoverable
-                      onClick={() => handleListClick(list)}
-                      className="animate-fade-in-up"
-                    >
-                      <div className="flex-between mb-3">
-                        <div className="flex-1">
-                          <div className="flex items-center gap-2 mb-2">
-                            <h3 className="text-lg font-semibold" style={{ margin: 0 }}>
-                              {list.name}
-                            </h3>
-                          </div>
-                          <div className="text-xs text-secondary mb-2">
-                            {learnedWords} / {totalWords} words learned
-                          </div>
-                          {/* Progress Bar */}
-                          <div style={{
-                            width: '100%',
-                            height: '8px',
-                            backgroundColor: 'var(--color-gray-200)',
-                            borderRadius: 'var(--radius-full)',
-                            overflow: 'hidden'
-                          }}>
-                            <div style={{
-                              width: `${percentage}%`,
-                              height: '100%',
-                              background: 'linear-gradient(90deg, var(--color-success-500), var(--color-success-600))',
-                              transition: 'width 0.3s ease'
-                            }} />
-                          </div>
-                          <div className="text-xs text-secondary mt-1">
-                            {percentage}% complete
-                          </div>
-                        </div>
-                        <div onClick={(e) => e.stopPropagation()} style={{ marginLeft: 'var(--space-3)' }}>
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => handleDeleteList(list.id)}
-                            title="Delete list"
-                          >
-                            🗑️
-                          </Button>
-                        </div>
+              return (
+                <Card
+                  key={list.id}
+                  variant="elevated"
+                  padding="md"
+                  hoverable
+                  onClick={() => handleListClick(list)}
+                  className="animate-fade-in-up"
+                >
+                  <div className="flex-between mb-3">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-2">
+                        <h3 className="text-lg font-semibold" style={{ margin: 0 }}>
+                          {list.name}
+                        </h3>
                       </div>
-                    </Card>
-                  )
-                })}
-              </div>
-            </>
-          )}
+                      <div className="text-xs text-secondary mb-2">
+                        {learnedWords} / {totalWords} words learned
+                      </div>
+                      {/* Progress Bar */}
+                      <div style={{
+                        width: '100%',
+                        height: '8px',
+                        backgroundColor: 'var(--color-gray-200)',
+                        borderRadius: 'var(--radius-full)',
+                        overflow: 'hidden'
+                      }}>
+                        <div style={{
+                          width: `${percentage}%`,
+                          height: '100%',
+                          background: 'linear-gradient(90deg, var(--color-success-500), var(--color-success-600))',
+                          transition: 'width 0.3s ease'
+                        }} />
+                      </div>
+                      <div className="text-xs text-secondary mt-1">
+                        {percentage}% complete
+                      </div>
+                    </div>
+                    <div onClick={(e) => e.stopPropagation()} style={{ marginLeft: 'var(--space-3)' }}>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleDeleteList(list.id)}
+                        title="Delete list"
+                      >
+                        🗑️
+                      </Button>
+                    </div>
+                  </div>
+                </Card>
+              )
+            })}
+
+            {/* Create New List Widget */}
+            {showCreateForm ? (
+              <Card
+                variant="elevated"
+                padding="md"
+                className="animate-scale-in"
+                style={{
+                  background: 'transparent',
+                  border: '3px dashed rgba(255, 255, 255, 0.3)',
+                  boxShadow: 'none'
+                }}
+              >
+                <form onSubmit={handleCreateList} className="flex flex-col gap-3">
+                  <Input
+                    type="text"
+                    placeholder="Enter list name..."
+                    value={newListName}
+                    onChange={(e) => setNewListName(e.target.value)}
+                    autoFocus
+                    maxLength={50}
+                    fullWidth
+                  />
+                  <div className="flex gap-2">
+                    <Button type="submit" variant="primary" disabled={!newListName.trim()} fullWidth>
+                      Create
+                    </Button>
+                    <Button
+                      type="button"
+                      variant="secondary"
+                      onClick={() => {
+                        setShowCreateForm(false)
+                        setNewListName('')
+                      }}
+                    >
+                      Cancel
+                    </Button>
+                  </div>
+                </form>
+              </Card>
+            ) : (
+              <Card
+                variant="elevated"
+                padding="md"
+                hoverable
+                onClick={() => setShowCreateForm(true)}
+                className="animate-fade-in-up"
+                style={{
+                  background: 'transparent',
+                  border: '3px dashed rgba(255, 255, 255, 0.3)',
+                  boxShadow: 'none',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.5)'
+                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)'
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.3)'
+                  e.currentTarget.style.background = 'transparent'
+                }}
+              >
+                <div className="flex flex-col items-center justify-center" style={{ minHeight: '120px' }}>
+                  <div style={{ fontSize: '3rem', marginBottom: '8px', opacity: 0.5 }}>+</div>
+                  <div style={{ fontSize: '1rem', color: 'rgba(255, 255, 255, 0.7)', fontWeight: '500' }}>
+                    Create New List
+                  </div>
+                </div>
+              </Card>
+            )}
+          </div>
 
           {/* Separator */}
-          {customLists.length > 0 && defaultLists.length > 0 && (
+          {defaultLists.length > 0 && (
             <div style={{
               borderTop: '2px solid rgba(255, 255, 255, 0.2)',
               margin: 'var(--space-8) 0'
@@ -283,7 +304,7 @@ const WordLists = () => {
           {/* Default Lists Section */}
           {defaultLists.length > 0 && (
             <>
-              <h3 className="text-xl font-semibold mb-4" style={{ color: 'white', margin: 0 }}>
+              <h3 className="text-xl font-semibold mb-6" style={{ color: 'white', margin: 0 }}>
                 Level-Based Lists
               </h3>
               <div className="card-grid">
