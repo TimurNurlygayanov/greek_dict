@@ -259,10 +259,33 @@ const WordLists = () => {
             setModalListName('')
           }}
           size="lg"
-          title={!isRenamingModal ? selectedListModal.name : undefined}
+          title={
+            !isRenamingModal ? (
+              <div
+                onClick={() => {
+                  const isDefault = selectedListModal.isDefault || selectedListModal.id === 'unstudied' || selectedListModal.id === 'learned'
+                  if (!isDefault) {
+                    handleStartRenameModal()
+                  }
+                }}
+                style={{
+                  cursor: selectedListModal.isDefault || selectedListModal.id === 'unstudied' || selectedListModal.id === 'learned' ? 'default' : 'pointer',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '8px'
+                }}
+                title={selectedListModal.isDefault || selectedListModal.id === 'unstudied' || selectedListModal.id === 'learned' ? '' : 'Click to rename'}
+              >
+                {selectedListModal.name}
+                {!(selectedListModal.isDefault || selectedListModal.id === 'unstudied' || selectedListModal.id === 'learned') && (
+                  <span style={{ fontSize: '0.8em', opacity: 0.5 }}>✏️</span>
+                )}
+              </div>
+            ) : undefined
+          }
           showCloseButton={true}
         >
-          {isRenamingModal ? (
+          {isRenamingModal && (
             <div className="mb-4">
               <Input
                 type="text"
@@ -270,6 +293,7 @@ const WordLists = () => {
                 onChange={(e) => setModalListName(e.target.value)}
                 autoFocus
                 fullWidth
+                placeholder="List name"
                 onKeyDown={(e) => {
                   if (e.key === 'Enter') {
                     handleSaveRenameModal()
@@ -287,21 +311,6 @@ const WordLists = () => {
                 </Button>
               </div>
             </div>
-          ) : (
-            <>
-              {!selectedListModal.isDefault && selectedListModal.id !== 'unstudied' && selectedListModal.id !== 'learned' && (
-                <div className="mb-4">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={handleStartRenameModal}
-                    icon={<span>✏️</span>}
-                  >
-                    Rename
-                  </Button>
-                </div>
-              )}
-            </>
           )}
 
           <div>

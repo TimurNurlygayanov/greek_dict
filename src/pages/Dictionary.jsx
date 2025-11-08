@@ -15,7 +15,6 @@ const Dictionary = () => {
   const [selectedWord, setSelectedWord] = useState(null)
   const [suggestions, setSuggestions] = useState([])
   const [showAddToListModal, setShowAddToListModal] = useState(false)
-  const [selectedLevel, setSelectedLevel] = useState('ALL')
   const [highlightedIndex, setHighlightedIndex] = useState(-1)
   const inputRef = useRef(null)
 
@@ -33,14 +32,11 @@ const Dictionary = () => {
             (word.greek_normalized && word.greek_normalized.toLowerCase().includes(term)) ||
             word.english.toLowerCase().includes(term)
 
-          // Filter by level
-          const matchesLevel = selectedLevel === 'ALL' || word.level === selectedLevel
-
-          return matchesSearch && matchesLevel
+          return matchesSearch
         }
       )
       .slice(0, 10)
-  }, [searchTerm, selectedLevel])
+  }, [searchTerm])
 
   useEffect(() => {
     // Don't update suggestions if a word is selected
@@ -121,45 +117,6 @@ const Dictionary = () => {
 
   return (
     <div className="dictionary">
-      {/* Level Filter */}
-      <div className="mb-6 flex gap-3 flex-wrap" style={{ justifyContent: 'center' }}>
-        <Button
-          variant={selectedLevel === 'ALL' ? 'primary' : 'outline'}
-          size="md"
-          onClick={() => setSelectedLevel('ALL')}
-        >
-          All Levels
-        </Button>
-        <Button
-          variant={selectedLevel === 'A1' ? 'success' : 'outline'}
-          size="md"
-          onClick={() => setSelectedLevel('A1')}
-        >
-          A1
-        </Button>
-        <Button
-          variant={selectedLevel === 'A2' ? 'info' : 'outline'}
-          size="md"
-          onClick={() => setSelectedLevel('A2')}
-        >
-          A2
-        </Button>
-        <Button
-          variant={selectedLevel === 'B1' ? 'warning' : 'outline'}
-          size="md"
-          onClick={() => setSelectedLevel('B1')}
-        >
-          B1
-        </Button>
-        <Button
-          variant={selectedLevel === 'B2' ? 'danger' : 'outline'}
-          size="md"
-          onClick={() => setSelectedLevel('B2')}
-        >
-          B2
-        </Button>
-      </div>
-
       <div className="dictionary-search">
         <Input
           ref={inputRef}
