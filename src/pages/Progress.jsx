@@ -26,9 +26,19 @@ const Progress = () => {
     }
 
     updateProgress()
-    // Update every second to show real-time progress
-    const interval = setInterval(updateProgress, 1000)
-    return () => clearInterval(interval)
+
+    // Listen for visibility change to update when user returns to tab
+    const handleVisibilityChange = () => {
+      if (!document.hidden) {
+        updateProgress()
+      }
+    }
+
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange)
+    }
   }, [])
 
   // Calculate level-based statistics
