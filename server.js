@@ -9,6 +9,7 @@ const DATA_DIR = process.env.DATA_DIR || path.join(process.cwd(), 'data')
 const PROGRESS_FILE = path.join(DATA_DIR, 'progress.json')
 const LISTS_FILE = path.join(DATA_DIR, 'word-lists.json')
 const CUSTOM_WORDS_FILE = path.join(DATA_DIR, 'custom-words.json')
+const DAILY_PRACTICE_FILE = path.join(DATA_DIR, 'daily-practice.json')
 
 // Ensure data directory exists
 if (!fs.existsSync(DATA_DIR)) {
@@ -96,6 +97,29 @@ const writeCustomWords = (data) => {
   }
 }
 
+// Helper functions for reading/writing daily practice
+const readDailyPractice = () => {
+  if (!fs.existsSync(DAILY_PRACTICE_FILE)) {
+    return {}
+  }
+  try {
+    const data = fs.readFileSync(DAILY_PRACTICE_FILE, 'utf8')
+    return JSON.parse(data)
+  } catch (error) {
+    console.error('Error reading daily practice file:', error)
+    return {}
+  }
+}
+
+const writeDailyPractice = (data) => {
+  try {
+    fs.writeFileSync(DAILY_PRACTICE_FILE, JSON.stringify(data, null, 2), 'utf8')
+  } catch (error) {
+    console.error('Error writing daily practice file:', error)
+    throw error
+  }
+}
+
 // Load dictionary at server start
 let dictionary = []
 try {
@@ -104,6 +128,87 @@ try {
   console.log('Dictionary loaded successfully')
 } catch (error) {
   console.error('Error loading dictionary:', error)
+}
+
+// Helper function to group words by topic
+const groupWordsByTopic = (words) => {
+  const topics = {
+    'Numbers': ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'hundred', 'thousand', 'number'],
+    'Colors': ['red', 'blue', 'green', 'yellow', 'black', 'white', 'color', 'pink', 'purple', 'orange', 'grey', 'brown'],
+    'Family': ['mother', 'father', 'sister', 'brother', 'family', 'parent', 'child', 'son', 'daughter', 'grandmother', 'grandfather'],
+    'Food': ['food', 'bread', 'water', 'coffee', 'tea', 'milk', 'fruit', 'meat', 'fish', 'restaurant', 'eat', 'drink', 'breakfast', 'lunch', 'dinner'],
+    'Time': ['day', 'week', 'month', 'year', 'today', 'tomorrow', 'yesterday', 'hour', 'minute', 'morning', 'evening', 'night', 'time', 'clock'],
+    'Body': ['head', 'hand', 'foot', 'eye', 'ear', 'nose', 'mouth', 'body', 'hair', 'face', 'leg', 'arm'],
+    'Weather': ['weather', 'rain', 'sun', 'wind', 'cloud', 'snow', 'hot', 'cold', 'warm'],
+    'Places': ['house', 'school', 'shop', 'street', 'city', 'country', 'hospital', 'church', 'bank', 'office', 'home'],
+    'Transport': ['car', 'bus', 'train', 'plane', 'bicycle', 'taxi', 'station', 'airport', 'ticket'],
+    'Clothes': ['shirt', 'dress', 'shoes', 'pants', 'jacket', 'hat', 'clothes', 'wear']
+  }
+
+  const grouped = {}
+  words.forEach(word => {
+    const english = word.english.toLowerCase()
+    let assigned = false
+
+    for (const [topic, keywords] of Object.entries(topics)) {
+      if (keywords.some(keyword => english.includes(keyword))) {
+        if (!grouped[topic]) grouped[topic] = []
+        grouped[topic].push(word)
+        assigned = true
+        break
+      }
+    }
+
+    if (!assigned) {
+      if (!grouped['General']) grouped['General'] = []
+      grouped['General'].push(word)
+    }
+  })
+
+  return grouped
+}
+
+// Generate daily practice words for a user
+const generateDailyWords = (level, learnedWords = []) => {
+  // Get words for the specified level
+  const levelWords = dictionary.filter(w => w.level === level)
+
+  // Filter out learned words
+  const unlearnedWords = levelWords.filter(w => !learnedWords.includes(w.greek))
+
+  if (unlearnedWords.length === 0) {
+    return { words: [], topic: 'All learned!' }
+  }
+
+  // Group by topic
+  const grouped = groupWordsByTopic(unlearnedWords)
+
+  // Find topic with most words (prioritize focused learning)
+  let bestTopic = 'General'
+  let maxWords = 0
+
+  for (const [topic, words] of Object.entries(grouped)) {
+    if (topic !== 'General' && words.length > maxWords && words.length >= 5) {
+      bestTopic = topic
+      maxWords = words.length
+    }
+  }
+
+  // If no good topic found, use General or the biggest available
+  if (maxWords === 0) {
+    const sortedTopics = Object.entries(grouped).sort((a, b) => b[1].length - a[1].length)
+    if (sortedTopics.length > 0) {
+      bestTopic = sortedTopics[0][0]
+    }
+  }
+
+  // Take up to 10 words from the selected topic
+  const selectedWords = (grouped[bestTopic] || []).slice(0, 10)
+
+  return {
+    words: selectedWords,
+    topic: bestTopic
+  }
 }
 
 // Helper function to ensure default lists and clean up old ones
@@ -538,6 +643,146 @@ app.post('/api/translate', async (req, res) => {
       error: 'Auto-translation unavailable. Please enter translation manually.'
     })
   }
+})
+
+// Daily Practice API endpoints
+app.get('/api/daily-practice/:userId', (req, res) => {
+  const { userId } = req.params
+  const allData = readDailyPractice()
+  const userData = allData[userId]
+
+  if (!userData) {
+    return res.json({ needsSetup: true })
+  }
+
+  const today = new Date().toDateString()
+
+  // Check if we need to refresh (new day or words learned)
+  if (userData.date !== today || userData.words.length < 10) {
+    // Get user's learned words from progress
+    const progress = readProgress()
+    const userProgress = progress[userId] || { memorizedWords: [] }
+
+    // Also get learned words from all lists
+    const listsData = readWordLists()
+    const userLists = listsData[userId] || []
+    const allLearnedWords = new Set(userProgress.memorizedWords)
+
+    userLists.forEach(list => {
+      if (list.learnedWords) {
+        list.learnedWords.forEach(w => allLearnedWords.add(w))
+      }
+    })
+
+    // Generate new daily words
+    const { words, topic } = generateDailyWords(userData.level, Array.from(allLearnedWords))
+
+    userData.words = words
+    userData.topic = topic
+    userData.date = today
+    allData[userId] = userData
+    writeDailyPractice(allData)
+  }
+
+  res.json({
+    needsSetup: false,
+    level: userData.level,
+    words: userData.words,
+    topic: userData.topic,
+    date: userData.date
+  })
+})
+
+app.post('/api/daily-practice/:userId/setup', (req, res) => {
+  const { userId } = req.params
+  const { level } = req.body
+
+  if (!level || !['A1', 'A2', 'B1', 'B2'].includes(level)) {
+    return res.status(400).json({ error: 'Valid level (A1, A2, B1, B2) is required' })
+  }
+
+  const allData = readDailyPractice()
+  const today = new Date().toDateString()
+
+  // Get user's learned words
+  const progress = readProgress()
+  const userProgress = progress[userId] || { memorizedWords: [] }
+
+  const listsData = readWordLists()
+  const userLists = listsData[userId] || []
+  const allLearnedWords = new Set(userProgress.memorizedWords)
+
+  userLists.forEach(list => {
+    if (list.learnedWords) {
+      list.learnedWords.forEach(w => allLearnedWords.add(w))
+    }
+  })
+
+  // Generate initial daily words
+  const { words, topic } = generateDailyWords(level, Array.from(allLearnedWords))
+
+  allData[userId] = {
+    level,
+    words,
+    topic,
+    date: today
+  }
+
+  writeDailyPractice(allData)
+
+  res.json({
+    level,
+    words,
+    topic,
+    date: today
+  })
+})
+
+app.put('/api/daily-practice/:userId/level', (req, res) => {
+  const { userId } = req.params
+  const { level } = req.body
+
+  if (!level || !['A1', 'A2', 'B1', 'B2'].includes(level)) {
+    return res.status(400).json({ error: 'Valid level (A1, A2, B1, B2) is required' })
+  }
+
+  const allData = readDailyPractice()
+  const userData = allData[userId]
+
+  if (!userData) {
+    return res.status(404).json({ error: 'User daily practice not found' })
+  }
+
+  // Update level and regenerate words
+  userData.level = level
+
+  const progress = readProgress()
+  const userProgress = progress[userId] || { memorizedWords: [] }
+
+  const listsData = readWordLists()
+  const userLists = listsData[userId] || []
+  const allLearnedWords = new Set(userProgress.memorizedWords)
+
+  userLists.forEach(list => {
+    if (list.learnedWords) {
+      list.learnedWords.forEach(w => allLearnedWords.add(w))
+    }
+  })
+
+  const { words, topic } = generateDailyWords(level, Array.from(allLearnedWords))
+
+  userData.words = words
+  userData.topic = topic
+  userData.date = new Date().toDateString()
+
+  allData[userId] = userData
+  writeDailyPractice(allData)
+
+  res.json({
+    level: userData.level,
+    words: userData.words,
+    topic: userData.topic
+  })
 })
 
 // Handle React Router - serve index.html for all routes (must be last)

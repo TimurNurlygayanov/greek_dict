@@ -4,6 +4,7 @@ import { incrementTodayExercises } from '../utils/storage'
 import { getUserLists, markWordAsLearned } from '../utils/wordLists'
 import AuthModal from '../components/AuthModal'
 import AddToListModal from '../components/AddToListModal'
+import DailyPracticeWidget from '../components/DailyPracticeWidget'
 import Card from '../components/common/Card'
 import Button from '../components/common/Button'
 import Badge from '../components/common/Badge'
@@ -226,6 +227,11 @@ const Flashcards = () => {
             Choose Your Practice List
           </h1>
         </div>
+
+        {/* Daily Practice Widget */}
+        {!showAuthModal && (
+          <DailyPracticeWidget onSelectDailyPractice={handleListSelect} />
+        )}
 
         {lists.length === 0 ? (
           <Card variant="elevated" padding="lg" className="text-center">
