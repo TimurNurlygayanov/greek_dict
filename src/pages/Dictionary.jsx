@@ -227,10 +227,7 @@ const Dictionary = () => {
         <Card variant="elevated" padding="lg" className="text-center" style={{ maxWidth: '600px', margin: '0 auto' }}>
           <div className="mb-4">
             <div className="text-4xl mb-3">🔍</div>
-            <h3 className="text-2xl font-semibold mb-2" style={{ margin: 0 }}>
-              No results found
-            </h3>
-            <p className="text-secondary mb-4">
+            <p className="text-secondary mb-4" style={{ fontSize: '1.1rem' }}>
               We couldn't find "{searchTerm}" in our dictionary.
             </p>
           </div>

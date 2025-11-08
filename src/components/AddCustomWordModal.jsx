@@ -56,6 +56,16 @@ const AddCustomWordModal = ({ initialSearchTerm = '', onClose, onSuccess }) => {
     }
   }
 
+  const handleRetryTranslation = () => {
+    const isGreek = /[\u0370-\u03FF\u1F00-\u1FFF]/.test(greekText)
+
+    if (searchingFor === 'greek' && greekText.trim()) {
+      autoTranslate(greekText, 'el', 'en')
+    } else if (searchingFor === 'english' && englishText.trim()) {
+      autoTranslate(englishText, 'en', 'el')
+    }
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault()
 
@@ -89,7 +99,17 @@ const AddCustomWordModal = ({ initialSearchTerm = '', onClose, onSuccess }) => {
         </p>
         {translationError && (
           <div className="p-3 rounded-lg bg-warning-50 border border-warning-300 text-sm mb-2">
-            {translationError}
+            <div className="flex items-center justify-between gap-3">
+              <span>{translationError}</span>
+              <Button
+                variant="secondary"
+                size="sm"
+                onClick={handleRetryTranslation}
+                disabled={translating}
+              >
+                Retry
+              </Button>
+            </div>
           </div>
         )}
       </div>
@@ -163,7 +183,7 @@ const AddCustomWordModal = ({ initialSearchTerm = '', onClose, onSuccess }) => {
         </div>
       </form>
 
-      <div className="mt-4 p-3 rounded-lg bg-info-50 border border-info-300">
+      <div className="mt-4 p-3 rounded-lg bg-info-50">
         <p className="text-xs text-info-900">
           💡 Custom words are saved to your personal dictionary and can be used in lists and practice, just like regular words.
         </p>

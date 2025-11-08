@@ -11,7 +11,6 @@ const DailyPracticeWidget = ({ onSelectDailyPractice }) => {
   const [showLevelModal, setShowLevelModal] = useState(false)
   const [selectedLevel, setSelectedLevel] = useState(null)
   const [isHidden, setIsHidden] = useState(false)
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
   const [isHovering, setIsHovering] = useState(false)
 
   useEffect(() => {
@@ -79,112 +78,121 @@ const DailyPracticeWidget = ({ onSelectDailyPractice }) => {
       <div style={{ maxWidth: '600px', margin: '0 auto 2rem auto' }}>
         <Card
           variant="elevated"
-          padding="lg"
+          padding="xl"
           className="mb-6 animate-fade-in-up"
           onMouseEnter={() => setIsHovering(true)}
           onMouseLeave={() => setIsHovering(false)}
+          onClick={() => setShowLevelModal(true)}
           style={{
-            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+            background: 'linear-gradient(135deg, #0066cc 0%, #004999 100%)',
             color: 'white',
             position: 'relative',
             overflow: 'hidden',
+            cursor: 'pointer',
             transform: getCardTransform(),
             transition: 'transform 0.3s ease, box-shadow 0.3s ease',
             boxShadow: isHovering
-              ? '0 0 30px rgba(102, 126, 234, 0.8), 0 0 60px rgba(118, 75, 162, 0.6), inset 0 0 20px rgba(255, 255, 255, 0.1)'
-              : '0 10px 30px rgba(0, 0, 0, 0.2)',
-            border: isHovering ? '2px solid rgba(255, 255, 255, 0.3)' : '2px solid transparent'
+              ? '0 8px 30px rgba(0, 102, 204, 0.4), 0 0 0 3px rgba(255, 255, 255, 0.3)'
+              : '0 4px 20px rgba(0, 0, 0, 0.15)',
+            border: '3px solid white'
           }}
         >
-          {/* Neon glow borders */}
-          {isHovering && (
-            <>
-              <div
-                style={{
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  height: '2px',
-                  background: 'linear-gradient(90deg, transparent, #fff, transparent)',
-                  animation: 'shimmer 2s infinite',
-                  pointerEvents: 'none'
-                }}
-              />
-              <div
-                style={{
-                  position: 'absolute',
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                  height: '2px',
-                  background: 'linear-gradient(90deg, transparent, #fff, transparent)',
-                  animation: 'shimmer 2s infinite',
-                  animationDelay: '1s',
-                  pointerEvents: 'none'
-                }}
-              />
-            </>
-          )}
-
-          {/* Magic particles */}
-          {isHovering && (
-            <>
-              {[...Array(8)].map((_, i) => (
-                <div
-                  key={i}
-                  style={{
-                    position: 'absolute',
-                    width: '4px',
-                    height: '4px',
-                    background: 'rgba(255, 255, 255, 0.8)',
-                    borderRadius: '50%',
-                    boxShadow: '0 0 10px rgba(255, 255, 255, 0.8)',
-                    animation: `particle${i % 4} ${2 + (i % 3)}s ease-in-out infinite`,
-                    animationDelay: `${i * 0.2}s`,
-                    pointerEvents: 'none'
-                  }}
-                />
-              ))}
-            </>
-          )}
-
-          <button
-            onClick={() => setIsHidden(true)}
+          {/* Greek key pattern border */}
+          <div
             style={{
               position: 'absolute',
-              top: '12px',
-              right: '12px',
-              background: 'rgba(255, 255, 255, 0.2)',
-              border: 'none',
+              top: 0,
+              left: 0,
+              right: 0,
+              height: '8px',
+              background: 'repeating-linear-gradient(90deg, white 0px, white 12px, transparent 12px, transparent 16px, white 16px, white 20px, transparent 20px, transparent 24px)',
+              opacity: 0.3
+            }}
+          />
+          <div
+            style={{
+              position: 'absolute',
+              bottom: 0,
+              left: 0,
+              right: 0,
+              height: '8px',
+              background: 'repeating-linear-gradient(90deg, white 0px, white 12px, transparent 12px, transparent 16px, white 16px, white 20px, transparent 20px, transparent 24px)',
+              opacity: 0.3
+            }}
+          />
+
+          {/* Mediterranean wave pattern */}
+          <div
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              backgroundImage: 'radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%)',
+              pointerEvents: 'none'
+            }}
+          />
+
+          <button
+            onClick={(e) => {
+              e.stopPropagation()
+              setIsHidden(true)
+            }}
+            style={{
+              position: 'absolute',
+              top: '16px',
+              right: '16px',
+              background: 'rgba(255, 255, 255, 0.25)',
+              border: '2px solid rgba(255, 255, 255, 0.5)',
               borderRadius: '50%',
-              width: '32px',
-              height: '32px',
+              width: '36px',
+              height: '36px',
               cursor: 'pointer',
               color: 'white',
-              fontSize: '20px',
+              fontSize: '22px',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              transition: 'background 0.2s',
-              zIndex: 2
+              transition: 'all 0.2s',
+              zIndex: 2,
+              fontWeight: 'bold'
             }}
-            onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.3)'}
-            onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.2)'}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = 'rgba(255, 255, 255, 0.4)'
+              e.currentTarget.style.transform = 'scale(1.1)'
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = 'rgba(255, 255, 255, 0.25)'
+              e.currentTarget.style.transform = 'scale(1)'
+            }}
           >
             ×
           </button>
-          <div className="text-center" onClick={() => setShowLevelModal(true)} style={{ cursor: 'pointer', position: 'relative', zIndex: 1 }}>
-            <div className="text-3xl mb-4">✨</div>
-            <h3 className="text-2xl font-bold mb-3" style={{ margin: 0, color: 'white' }}>
+          <div className="text-center" style={{ position: 'relative', zIndex: 1, padding: '20px 0' }}>
+            <div style={{ fontSize: '4rem', marginBottom: '16px', filter: 'drop-shadow(0 2px 8px rgba(0,0,0,0.3))' }}>🏛️</div>
+            <h3 className="text-3xl font-bold mb-4" style={{ margin: 0, color: 'white', textShadow: '0 2px 8px rgba(0,0,0,0.3)' }}>
               Daily Practice
             </h3>
-            <p className="text-sm mb-5" style={{ color: 'rgba(255, 255, 255, 0.9)' }}>
-              Start your learning journey with 10 words a day!
+            <p className="text-lg mb-6" style={{ color: 'rgba(255, 255, 255, 0.95)', textShadow: '0 1px 4px rgba(0,0,0,0.2)' }}>
+              Start your learning journey with 10 words a day
             </p>
-            <Button variant="secondary" size="lg">
-              Get Started
-            </Button>
+            <div
+              style={{
+                display: 'inline-block',
+                background: 'white',
+                color: '#0066cc',
+                padding: '14px 40px',
+                borderRadius: '50px',
+                fontSize: '1.1rem',
+                fontWeight: 'bold',
+                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.2)',
+                transition: 'all 0.2s',
+                transform: isHovering ? 'scale(1.05)' : 'scale(1)'
+              }}
+            >
+              Get Started →
+            </div>
           </div>
         </Card>
 
@@ -232,80 +240,50 @@ const DailyPracticeWidget = ({ onSelectDailyPractice }) => {
     <div style={{ maxWidth: '600px', margin: '0 auto 2rem auto' }}>
       <Card
         variant="elevated"
-        padding="lg"
+        padding="xl"
         className="mb-6 animate-fade-in-up"
         onMouseEnter={() => setIsHovering(true)}
         onMouseLeave={() => setIsHovering(false)}
+        onClick={wordsCount > 0 ? handleStartPractice : undefined}
         style={{
-          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+          background: 'linear-gradient(135deg, #0066cc 0%, #004999 100%)',
           color: 'white',
           position: 'relative',
           overflow: 'hidden',
+          cursor: wordsCount > 0 ? 'pointer' : 'default',
           transform: getCardTransform(),
           transition: 'transform 0.3s ease, box-shadow 0.3s ease',
           boxShadow: isHovering
-            ? '0 0 30px rgba(102, 126, 234, 0.8), 0 0 60px rgba(118, 75, 162, 0.6), inset 0 0 20px rgba(255, 255, 255, 0.1)'
-            : '0 10px 30px rgba(0, 0, 0, 0.2)',
-          border: isHovering ? '2px solid rgba(255, 255, 255, 0.3)' : '2px solid transparent'
+            ? '0 8px 30px rgba(0, 102, 204, 0.4), 0 0 0 3px rgba(255, 255, 255, 0.3)'
+            : '0 4px 20px rgba(0, 0, 0, 0.15)',
+          border: '3px solid white'
         }}
       >
-        {/* Neon glow borders */}
-        {isHovering && (
-          <>
-            <div
-              style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                right: 0,
-                height: '2px',
-                background: 'linear-gradient(90deg, transparent, #fff, transparent)',
-                animation: 'shimmer 2s infinite',
-                pointerEvents: 'none',
-                zIndex: 2
-              }}
-            />
-            <div
-              style={{
-                position: 'absolute',
-                bottom: 0,
-                left: 0,
-                right: 0,
-                height: '2px',
-                background: 'linear-gradient(90deg, transparent, #fff, transparent)',
-                animation: 'shimmer 2s infinite',
-                animationDelay: '1s',
-                pointerEvents: 'none',
-                zIndex: 2
-              }}
-            />
-          </>
-        )}
+        {/* Greek key pattern border */}
+        <div
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            height: '8px',
+            background: 'repeating-linear-gradient(90deg, white 0px, white 12px, transparent 12px, transparent 16px, white 16px, white 20px, transparent 20px, transparent 24px)',
+            opacity: 0.3
+          }}
+        />
+        <div
+          style={{
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: '8px',
+            background: 'repeating-linear-gradient(90deg, white 0px, white 12px, transparent 12px, transparent 16px, white 16px, white 20px, transparent 20px, transparent 24px)',
+            opacity: 0.3
+          }}
+        />
 
-        {/* Magic particles */}
-        {isHovering && (
-          <>
-            {[...Array(8)].map((_, i) => (
-              <div
-                key={i}
-                style={{
-                  position: 'absolute',
-                  width: '4px',
-                  height: '4px',
-                  background: 'rgba(255, 255, 255, 0.8)',
-                  borderRadius: '50%',
-                  boxShadow: '0 0 10px rgba(255, 255, 255, 0.8)',
-                  animation: `particle${i % 4} ${2 + (i % 3)}s ease-in-out infinite`,
-                  animationDelay: `${i * 0.2}s`,
-                  pointerEvents: 'none',
-                  zIndex: 1
-                }}
-              />
-            ))}
-          </>
-        )}
-
-        {/* Sparkle animation background */}
+        {/* Mediterranean wave pattern */}
         <div
           style={{
             position: 'absolute',
@@ -313,52 +291,60 @@ const DailyPracticeWidget = ({ onSelectDailyPractice }) => {
             left: 0,
             right: 0,
             bottom: 0,
-            background: 'radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%), radial-gradient(circle at 80% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%)',
-            animation: 'pulse 3s ease-in-out infinite',
-            pointerEvents: 'none',
-            zIndex: 0
+            backgroundImage: 'radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%)',
+            pointerEvents: 'none'
           }}
         />
 
         <button
-          onClick={() => setIsHidden(true)}
+          onClick={(e) => {
+            e.stopPropagation()
+            setIsHidden(true)
+          }}
           style={{
             position: 'absolute',
-            top: '12px',
-            right: '12px',
-            background: 'rgba(255, 255, 255, 0.2)',
-            border: 'none',
+            top: '16px',
+            right: '16px',
+            background: 'rgba(255, 255, 255, 0.25)',
+            border: '2px solid rgba(255, 255, 255, 0.5)',
             borderRadius: '50%',
-            width: '32px',
-            height: '32px',
+            width: '36px',
+            height: '36px',
             cursor: 'pointer',
             color: 'white',
-            fontSize: '20px',
+            fontSize: '22px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            transition: 'background 0.2s',
-            zIndex: 2
+            transition: 'all 0.2s',
+            zIndex: 2,
+            fontWeight: 'bold'
           }}
-          onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.3)'}
-          onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.2)'}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = 'rgba(255, 255, 255, 0.4)'
+            e.currentTarget.style.transform = 'scale(1.1)'
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = 'rgba(255, 255, 255, 0.25)'
+            e.currentTarget.style.transform = 'scale(1)'
+          }}
         >
           ×
         </button>
 
-        <div style={{ position: 'relative', zIndex: 1 }}>
+        <div style={{ position: 'relative', zIndex: 1, padding: '10px 0' }}>
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-3">
-              <div className="text-3xl">✨</div>
+              <div style={{ fontSize: '3rem', filter: 'drop-shadow(0 2px 8px rgba(0,0,0,0.3))' }}>🏛️</div>
               <div>
-                <h3 className="text-2xl font-bold" style={{ margin: 0, color: 'white' }}>
+                <h3 className="text-2xl font-bold" style={{ margin: 0, color: 'white', textShadow: '0 2px 8px rgba(0,0,0,0.3)' }}>
                   Today's Practice
                 </h3>
                 <div className="flex items-center gap-2 mt-1">
-                  <Badge variant="secondary" size="sm" style={{ backgroundColor: 'rgba(255, 255, 255, 0.3)', color: 'white' }}>
+                  <Badge variant="secondary" size="sm" style={{ backgroundColor: 'white', color: '#0066cc', fontWeight: 'bold' }}>
                     {dailyData.level}
                   </Badge>
-                  <span className="text-sm" style={{ color: 'rgba(255, 255, 255, 0.9)' }}>
+                  <span className="text-sm font-medium" style={{ color: 'rgba(255, 255, 255, 0.95)', textShadow: '0 1px 4px rgba(0,0,0,0.2)' }}>
                     {dailyData.topic}
                   </span>
                 </div>
@@ -371,57 +357,43 @@ const DailyPracticeWidget = ({ onSelectDailyPractice }) => {
                 e.stopPropagation()
                 setShowLevelModal(true)
               }}
-              style={{ color: 'white', border: '1px solid rgba(255, 255, 255, 0.3)' }}
+              style={{
+                color: 'white',
+                border: '2px solid rgba(255, 255, 255, 0.5)',
+                background: 'rgba(255, 255, 255, 0.1)',
+                fontWeight: '600'
+              }}
             >
               Change Level
             </Button>
           </div>
 
-          <p className="text-sm mb-4" style={{ color: 'rgba(255, 255, 255, 0.9)' }}>
+          <p className="text-base mb-5" style={{ color: 'rgba(255, 255, 255, 0.95)', textShadow: '0 1px 4px rgba(0,0,0,0.2)', fontWeight: '500' }}>
             {wordsCount} {wordsCount === 10 ? 'new words' : 'words'} to practice today
           </p>
 
-          <Button
-            variant="secondary"
-            size="lg"
-            onClick={handleStartPractice}
-            disabled={wordsCount === 0}
-            fullWidth
+          <div
+            style={{
+              display: wordsCount > 0 ? 'inline-block' : 'block',
+              background: 'white',
+              color: '#0066cc',
+              padding: '14px 40px',
+              borderRadius: '50px',
+              fontSize: '1.1rem',
+              fontWeight: 'bold',
+              boxShadow: '0 4px 12px rgba(0, 0, 0, 0.2)',
+              transition: 'all 0.2s',
+              transform: isHovering && wordsCount > 0 ? 'scale(1.05)' : 'scale(1)',
+              textAlign: 'center',
+              width: wordsCount > 0 ? 'auto' : '100%',
+              cursor: wordsCount > 0 ? 'pointer' : 'default',
+              opacity: wordsCount > 0 ? 1 : 0.7
+            }}
           >
             {wordsCount > 0 ? 'Start Practice →' : 'All words learned! 🎉'}
-          </Button>
+          </div>
         </div>
 
-        <style>{`
-          @keyframes pulse {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 1; }
-          }
-          @keyframes shimmer {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(200%); }
-          }
-          @keyframes particle0 {
-            0% { left: 10%; top: 20%; opacity: 0; }
-            50% { opacity: 1; }
-            100% { left: 90%; top: 80%; opacity: 0; }
-          }
-          @keyframes particle1 {
-            0% { left: 90%; top: 30%; opacity: 0; }
-            50% { opacity: 1; }
-            100% { left: 10%; top: 70%; opacity: 0; }
-          }
-          @keyframes particle2 {
-            0% { left: 50%; top: 10%; opacity: 0; }
-            50% { opacity: 1; }
-            100% { left: 50%; top: 90%; opacity: 0; }
-          }
-          @keyframes particle3 {
-            0% { left: 20%; top: 80%; opacity: 0; }
-            50% { opacity: 1; }
-            100% { left: 80%; top: 20%; opacity: 0; }
-          }
-        `}</style>
       </Card>
 
       {showLevelModal && (

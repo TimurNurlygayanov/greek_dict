@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import dictionaryData from '../dictionary.json'
 import { incrementTodayExercises } from '../utils/storage'
 import { getUserLists, markWordAsLearned } from '../utils/wordLists'
@@ -29,6 +29,7 @@ const Flashcards = () => {
   const [selectedAnswer, setSelectedAnswer] = useState(null)
   const [isCorrect, setIsCorrect] = useState(null)
   const [showAddToListModal, setShowAddToListModal] = useState(false)
+  const [countdown, setCountdown] = useState(null)
 
   // Touch/Swipe state
   const [touchStart, setTouchStart] = useState(null)
@@ -40,12 +41,42 @@ const Flashcards = () => {
   // Swipe threshold (minimum distance for a swipe)
   const minSwipeDistance = 50
 
+  // Calculate font size based on text length to prevent overflow and multi-line wrapping
+  const getFontSize = (text) => {
+    const length = text.length
+    if (length > 30) return 'clamp(2rem, 5vw, 3.5rem)'
+    if (length > 20) return 'clamp(2.5rem, 6vw, 4.5rem)'
+    if (length > 15) return 'clamp(3rem, 7vw, 5.5rem)'
+    return 'clamp(3.5rem, 8vw, 6.5rem)'
+  }
+
   // Reload lists when returning to list selection
   useEffect(() => {
     if (!selectedList && !showAuthModal) {
       refreshLists()
     }
   }, [selectedList, showAuthModal, refreshLists])
+
+  // Auto-advance countdown for multiple choice
+  useEffect(() => {
+    if (mode === MODES.MULTIPLE_CHOICE && selectedAnswer !== null) {
+      setCountdown(5)
+      const interval = setInterval(() => {
+        setCountdown(prev => {
+          if (prev <= 1) {
+            clearInterval(interval)
+            handleNextQuestion()
+            return null
+          }
+          return prev - 1
+        })
+      }, 1000)
+
+      return () => clearInterval(interval)
+    } else {
+      setCountdown(null)
+    }
+  }, [selectedAnswer, mode])
 
   // Get available words (excluding learned ones)
   const getAvailableWords = () => {
@@ -145,6 +176,7 @@ const Flashcards = () => {
     setShowTranslation(false)
     setSelectedAnswer(null)
     setIsCorrect(null)
+    setCountdown(null)
     const wrongAnswers = getRandomWords(2, word)
     const options = [word.english, ...wrongAnswers].sort(() => 0.5 - Math.random())
     setMultipleChoiceOptions(options)
@@ -430,7 +462,7 @@ const Flashcards = () => {
             </h2>
           </div>
 
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-3" style={{ maxWidth: '600px', margin: '0 auto' }}>
             {multipleChoiceOptions.map((option, index) => {
               let variant = 'outline'
               if (selectedAnswer === option) {
@@ -443,15 +475,15 @@ const Flashcards = () => {
                 <Button
                   key={index}
                   variant={variant}
-                  size="xl"
+                  size="lg"
                   onClick={() => handleAnswerClick(option)}
                   disabled={selectedAnswer !== null}
                   fullWidth
                   style={{
-                    fontSize: 'clamp(1.25rem, 3vw, 2rem)',
-                    padding: 'var(--space-6)',
+                    fontSize: 'clamp(1rem, 2.5vw, 1.5rem)',
+                    padding: 'var(--space-4) var(--space-5)',
                     justifyContent: 'center',
-                    minHeight: '80px'
+                    minHeight: '60px'
                   }}
                 >
                   {option}
@@ -485,7 +517,7 @@ const Flashcards = () => {
                 size="lg"
                 onClick={handleNextQuestion}
               >
-                Next Question →
+                {countdown !== null ? `Next Question (${countdown}s)` : 'Next Question'}
               </Button>
             </div>
           )}
@@ -514,12 +546,12 @@ const Flashcards = () => {
         >
           {mode === MODES.GREEK_TO_ENGLISH ? (
             <>
-              <h2 className="font-bold mb-8" style={{ margin: 0, color: 'var(--color-primary-600)', fontSize: 'clamp(3.5rem, 12vw, 10rem)', lineHeight: '1.2' }}>
+              <h2 className="font-bold mb-6" style={{ margin: 0, color: 'var(--color-primary-600)', fontSize: getFontSize(currentWord.greek), lineHeight: '1.2' }}>
                 {currentWord.greek}
               </h2>
               {showTranslation && (
                 <div className="animate-fade-in">
-                  <div className="font-semibold mb-8 text-secondary" style={{ fontSize: 'clamp(2rem, 6vw, 4rem)', lineHeight: '1.3' }}>
+                  <div className="font-bold mb-6 text-secondary" style={{ fontSize: getFontSize(currentWord.english), lineHeight: '1.2' }}>
                     {currentWord.english}
                   </div>
                   <div className="flex gap-4 justify-center flex-wrap">
@@ -551,12 +583,12 @@ const Flashcards = () => {
             </>
           ) : (
             <>
-              <h2 className="font-bold mb-8" style={{ margin: 0, color: 'var(--color-primary-600)', fontSize: 'clamp(3.5rem, 12vw, 10rem)', lineHeight: '1.2' }}>
+              <h2 className="font-bold mb-6" style={{ margin: 0, color: 'var(--color-primary-600)', fontSize: getFontSize(currentWord.english), lineHeight: '1.2' }}>
                 {currentWord.english}
               </h2>
               {showTranslation && (
                 <div className="animate-fade-in">
-                  <div className="font-semibold mb-8 text-secondary" style={{ fontSize: 'clamp(2rem, 6vw, 4rem)', lineHeight: '1.3' }}>
+                  <div className="font-bold mb-6 text-secondary" style={{ fontSize: getFontSize(currentWord.greek), lineHeight: '1.2' }}>
                     {currentWord.greek}
                   </div>
                   <div className="flex gap-4 justify-center flex-wrap">
