@@ -10,6 +10,7 @@ const DailyPracticeWidget = ({ onSelectDailyPractice }) => {
   const [loading, setLoading] = useState(true)
   const [showLevelModal, setShowLevelModal] = useState(false)
   const [selectedLevel, setSelectedLevel] = useState(null)
+  const [isHidden, setIsHidden] = useState(false)
 
   useEffect(() => {
     loadDailyPractice()
@@ -20,10 +21,7 @@ const DailyPracticeWidget = ({ onSelectDailyPractice }) => {
     try {
       const data = await getDailyPractice()
       setDailyData(data)
-
-      if (data.needsSetup) {
-        setShowLevelModal(true)
-      }
+      // Don't auto-show modal, only show when user clicks widget
     } catch (error) {
       console.error('Error loading daily practice:', error)
     } finally {
@@ -65,13 +63,13 @@ const DailyPracticeWidget = ({ onSelectDailyPractice }) => {
     }
   }
 
-  if (loading) {
+  if (loading || isHidden) {
     return null
   }
 
   if (!dailyData || dailyData.needsSetup) {
     return (
-      <>
+      <div style={{ maxWidth: '600px', margin: '0 auto 2rem auto' }}>
         <Card
           variant="elevated"
           padding="lg"
@@ -79,12 +77,34 @@ const DailyPracticeWidget = ({ onSelectDailyPractice }) => {
           style={{
             background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
             color: 'white',
-            cursor: 'pointer'
+            position: 'relative'
           }}
-          onClick={() => setShowLevelModal(true)}
-          hoverable
         >
-          <div className="text-center">
+          <button
+            onClick={() => setIsHidden(true)}
+            style={{
+              position: 'absolute',
+              top: '12px',
+              right: '12px',
+              background: 'rgba(255, 255, 255, 0.2)',
+              border: 'none',
+              borderRadius: '50%',
+              width: '32px',
+              height: '32px',
+              cursor: 'pointer',
+              color: 'white',
+              fontSize: '20px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              transition: 'background 0.2s'
+            }}
+            onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.3)'}
+            onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.2)'}
+          >
+            ×
+          </button>
+          <div className="text-center" onClick={() => setShowLevelModal(true)} style={{ cursor: 'pointer' }}>
             <div className="text-5xl mb-3">✨</div>
             <h3 className="text-2xl font-bold mb-2" style={{ margin: 0, color: 'white' }}>
               Daily Practice
@@ -132,14 +152,14 @@ const DailyPracticeWidget = ({ onSelectDailyPractice }) => {
             </div>
           </Modal>
         )}
-      </>
+      </div>
     )
   }
 
   const wordsCount = dailyData.words?.length || 0
 
   return (
-    <>
+    <div style={{ maxWidth: '600px', margin: '0 auto 2rem auto' }}>
       <Card
         variant="elevated"
         padding="lg"
@@ -164,6 +184,32 @@ const DailyPracticeWidget = ({ onSelectDailyPractice }) => {
             pointerEvents: 'none'
           }}
         />
+
+        <button
+          onClick={() => setIsHidden(true)}
+          style={{
+            position: 'absolute',
+            top: '12px',
+            right: '12px',
+            background: 'rgba(255, 255, 255, 0.2)',
+            border: 'none',
+            borderRadius: '50%',
+            width: '32px',
+            height: '32px',
+            cursor: 'pointer',
+            color: 'white',
+            fontSize: '20px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            transition: 'background 0.2s',
+            zIndex: 2
+          }}
+          onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.3)'}
+          onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.2)'}
+        >
+          ×
+        </button>
 
         <div style={{ position: 'relative', zIndex: 1 }}>
           <div className="flex items-center justify-between mb-4">
@@ -260,7 +306,7 @@ const DailyPracticeWidget = ({ onSelectDailyPractice }) => {
           </div>
         </Modal>
       )}
-    </>
+    </div>
   )
 }
 

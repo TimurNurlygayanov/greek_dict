@@ -35,8 +35,12 @@ export const setupDailyPractice = async (level) => {
   })
 
   if (!response.ok) {
-    const error = await response.json()
-    throw new Error(error.error || 'Failed to setup daily practice')
+    try {
+      const error = await response.json()
+      throw new Error(error.error || 'Failed to setup daily practice')
+    } catch (e) {
+      throw new Error('Failed to setup daily practice')
+    }
   }
 
   const data = await response.json()
@@ -57,8 +61,12 @@ export const updateDailyPracticeLevel = async (level) => {
   })
 
   if (!response.ok) {
-    const error = await response.json()
-    throw new Error(error.error || 'Failed to update level')
+    try {
+      const error = await response.json()
+      throw new Error(error.error || 'Failed to update level')
+    } catch (e) {
+      throw new Error('Failed to update level')
+    }
   }
 
   const data = await response.json()
