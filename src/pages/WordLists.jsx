@@ -94,6 +94,13 @@ const WordLists = () => {
 
   const handleRemoveWord = async (listId, wordGreek) => {
     const list = lists.find(l => l.id === listId)
+
+    // Check if list is read-only
+    if (list?.isReadOnly) {
+      alert('Cannot remove words from this list. You can practice and mark words as learned.')
+      return
+    }
+
     const isLearnedList = listId === 'learned'
 
     if (!confirm(isLearnedList ? 'Remove this word from learned words? (This will unlearn it)' : 'Remove this word from the list?')) {
@@ -313,6 +320,14 @@ const WordLists = () => {
             </div>
           )}
 
+          {selectedListModal.isReadOnly && (
+            <div className="mb-4 p-3 rounded-lg" style={{ backgroundColor: 'var(--color-info-100)', border: '1px solid var(--color-info-300)' }}>
+              <div className="text-sm" style={{ color: 'var(--color-info-800)' }}>
+                ℹ️ This is a read-only list. You can practice these words and mark them as learned, but you cannot remove words from this list.
+              </div>
+            </div>
+          )}
+
           <div>
             {selectedListModal.words.length === 0 ? (
               <div className="text-center py-8 text-secondary">
@@ -336,15 +351,17 @@ const WordLists = () => {
                         <div className="text-sm text-secondary">{word.english}</div>
                         {isLearned && <Badge variant="success" size="sm" className="mt-1">✓ Learned</Badge>}
                       </div>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => handleRemoveWord(selectedListModal.id, word.greek)}
-                        title="Remove from list"
-                        style={{ color: 'var(--color-danger-500)', fontSize: 'var(--text-2xl)' }}
-                      >
-                        ×
-                      </Button>
+                      {!selectedListModal.isReadOnly && (
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => handleRemoveWord(selectedListModal.id, word.greek)}
+                          title="Remove from list"
+                          style={{ color: 'var(--color-danger-500)', fontSize: 'var(--text-2xl)' }}
+                        >
+                          ×
+                        </Button>
+                      )}
                     </div>
                   )
                 })}

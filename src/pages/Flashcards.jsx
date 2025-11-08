@@ -26,7 +26,6 @@ const Flashcards = () => {
   const [multipleChoiceOptions, setMultipleChoiceOptions] = useState([])
   const [selectedAnswer, setSelectedAnswer] = useState(null)
   const [isCorrect, setIsCorrect] = useState(null)
-  const [levelFilter, setLevelFilter] = useState('ALL')
 
   // Touch/Swipe state
   const [touchStart, setTouchStart] = useState(null)
@@ -42,13 +41,12 @@ const Flashcards = () => {
     }
   }, [selectedList, showAuthModal, refreshLists])
 
-  // Get available words (excluding learned ones and filtered by level)
+  // Get available words (excluding learned ones)
   const getAvailableWords = () => {
     if (!selectedList) return []
     return selectedList.words.filter(word => {
       const isNotLearned = !selectedList.learnedWords.includes(word.greek)
-      const matchesLevel = levelFilter === 'ALL' || word.level === levelFilter
-      return isNotLearned && matchesLevel
+      return isNotLearned
     })
   }
 
@@ -332,48 +330,6 @@ const Flashcards = () => {
           <p className="text-lg mb-6" style={{ color: 'rgba(255, 255, 255, 0.8)' }}>
             Playing with: {selectedList.name} ({availableWords.length} words)
           </p>
-
-          {/* Level Filter */}
-          <Card variant="glass" padding="md" className="mb-4">
-            <div className="text-sm font-medium text-secondary mb-3">Filter by level:</div>
-            <div className="flex gap-2 flex-wrap">
-              <Button
-                variant={levelFilter === 'ALL' ? 'primary' : 'outline'}
-                size="sm"
-                onClick={() => setLevelFilter('ALL')}
-              >
-                All
-              </Button>
-              <Button
-                variant={levelFilter === 'A1' ? 'success' : 'outline'}
-                size="sm"
-                onClick={() => setLevelFilter('A1')}
-              >
-                A1
-              </Button>
-              <Button
-                variant={levelFilter === 'A2' ? 'info' : 'outline'}
-                size="sm"
-                onClick={() => setLevelFilter('A2')}
-              >
-                A2
-              </Button>
-              <Button
-                variant={levelFilter === 'B1' ? 'warning' : 'outline'}
-                size="sm"
-                onClick={() => setLevelFilter('B1')}
-              >
-                B1
-              </Button>
-              <Button
-                variant={levelFilter === 'B2' ? 'danger' : 'outline'}
-                size="sm"
-                onClick={() => setLevelFilter('B2')}
-              >
-                B2
-              </Button>
-            </div>
-          </Card>
         </div>
 
         <div className="grid grid-cols-3 gap-6">

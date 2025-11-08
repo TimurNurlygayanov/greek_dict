@@ -85,23 +85,45 @@ try {
 // Helper function to ensure default lists
 const ensureDefaultLists = (userId, userLists) => {
   let updated = false
-  
+
+  // Create level-based lists (A1, A2, B1, B2)
+  const levels = ['A1', 'A2', 'B1', 'B2']
+  levels.forEach(level => {
+    let levelList = userLists.find(list => list.id === level.toLowerCase())
+    if (!levelList) {
+      const levelWords = dictionary.filter(word => word.level === level)
+      levelList = {
+        id: level.toLowerCase(),
+        name: `${level} Words`,
+        words: levelWords.map(word => ({ ...word })),
+        learnedWords: [],
+        isDefault: true,
+        isReadOnly: true // Can't remove words from level lists
+      }
+      userLists.push(levelList)
+      updated = true
+    } else if (levelList.words.length === 0) {
+      // Repopulate if empty
+      const levelWords = dictionary.filter(word => word.level === level)
+      levelList.words = levelWords.map(word => ({ ...word }))
+      levelList.isReadOnly = true
+      updated = true
+    }
+  })
+
   let unstudiedList = userLists.find(list => list.id === 'unstudied')
   if (!unstudiedList) {
     unstudiedList = {
       id: 'unstudied',
       name: 'B2 Required Words',
-      words: dictionary.map(word => ({ ...word })),
+      words: [],
       learnedWords: [],
       isDefault: true
     }
     userLists.push(unstudiedList)
     updated = true
-  } else if (unstudiedList.words.length === 0) {
-    unstudiedList.words = dictionary.map(word => ({ ...word }))
-    updated = true
   }
-  
+
   let learnedList = userLists.find(list => list.id === 'learned')
   if (!learnedList) {
     learnedList = {
@@ -114,7 +136,7 @@ const ensureDefaultLists = (userId, userLists) => {
     userLists.push(learnedList)
     updated = true
   }
-  
+
   return updated
 }
 
@@ -359,19 +381,24 @@ app.post('/api/lists/:userId/:listId/words', (req, res) => {
 app.delete('/api/lists/:userId/:listId/words/:wordGreek', (req, res) => {
   const { userId, listId, wordGreek } = req.params
   const allData = readWordLists()
-  
+
   if (!allData[userId]) {
     return res.status(404).json({ error: 'User not found' })
   }
-  
+
   const list = allData[userId].find(l => l.id === listId)
   if (!list) {
     return res.status(404).json({ error: 'List not found' })
   }
-  
+
+  // Prevent removing words from read-only lists (level lists)
+  if (list.isReadOnly) {
+    return res.status(400).json({ error: 'Cannot remove words from this list. You can practice and mark words as learned.' })
+  }
+
   list.words = list.words.filter(w => w.greek !== decodeURIComponent(wordGreek))
   writeWordLists(allData)
-  
+
   res.json({ list })
 })
 
