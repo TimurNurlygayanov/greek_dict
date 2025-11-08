@@ -1,6 +1,6 @@
 # Ellinaki - Learn Greek Words Easily
 
-A modern web application for learning Greek words, designed to help you prepare for B2 Greek exams.
+[ellinaki.com](ellinaki.com) is a web application for learning Greek words, designed to help you prepare for B2 Greek exams.
 
 ## Features
 
