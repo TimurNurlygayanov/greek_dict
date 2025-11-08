@@ -2,9 +2,6 @@
   background: var(--color-surface);
   backdrop-filter: var(--glass-blur);
   box-shadow: var(--shadow-md);
-  position: sticky;
-  top: 0;
-  z-index: var(--z-index-sticky);
   padding: var(--space-6) 0;
   border-bottom: 3px solid var(--color-primary-500);
 }
