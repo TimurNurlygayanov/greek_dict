@@ -426,9 +426,9 @@ const Flashcards = () => {
       </div>
 
       {mode === MODES.MULTIPLE_CHOICE ? (
-        <Card variant="elevated" padding="xl" className="animate-scale-in" style={{ maxWidth: '800px', margin: '0 auto' }}>
+        <Card variant="elevated" padding="xl" className="animate-scale-in" style={{ maxWidth: '1000px', margin: '0 auto' }}>
           <div className="text-center mb-8">
-            <h2 className="text-6xl font-bold mb-4" style={{ margin: 0, color: 'var(--color-primary-600)' }}>
+            <h2 className="font-bold mb-6" style={{ margin: 0, color: 'var(--color-primary-600)', fontSize: 'clamp(3rem, 10vw, 8rem)', lineHeight: '1.2' }}>
               {currentWord.greek}
             </h2>
           </div>
@@ -451,9 +451,10 @@ const Flashcards = () => {
                   disabled={selectedAnswer !== null}
                   fullWidth
                   style={{
-                    fontSize: 'var(--text-xl)',
+                    fontSize: 'clamp(1.25rem, 3vw, 2rem)',
                     padding: 'var(--space-6)',
-                    justifyContent: 'center'
+                    justifyContent: 'center',
+                    minHeight: '80px'
                   }}
                 >
                   {option}
@@ -502,10 +503,10 @@ const Flashcards = () => {
           onTouchEnd={onTouchEnd}
           className="animate-scale-in"
           style={{
-            maxWidth: '800px',
+            maxWidth: '1000px',
             margin: '0 auto',
             cursor: 'pointer',
-            minHeight: '400px',
+            minHeight: '500px',
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center',
@@ -516,12 +517,12 @@ const Flashcards = () => {
         >
           {mode === MODES.GREEK_TO_ENGLISH ? (
             <>
-              <h2 className="text-7xl font-bold mb-6" style={{ margin: 0, color: 'var(--color-primary-600)' }}>
+              <h2 className="font-bold mb-8" style={{ margin: 0, color: 'var(--color-primary-600)', fontSize: 'clamp(3.5rem, 12vw, 10rem)', lineHeight: '1.2' }}>
                 {currentWord.greek}
               </h2>
               {showTranslation && (
                 <div className="animate-fade-in">
-                  <div className="text-4xl font-semibold mb-6 text-secondary">
+                  <div className="font-semibold mb-8 text-secondary" style={{ fontSize: 'clamp(2rem, 6vw, 4rem)', lineHeight: '1.3' }}>
                     {currentWord.english}
                   </div>
                   <div className="flex gap-4 justify-center flex-wrap">
@@ -553,12 +554,12 @@ const Flashcards = () => {
             </>
           ) : (
             <>
-              <h2 className="text-7xl font-bold mb-6" style={{ margin: 0, color: 'var(--color-primary-600)' }}>
+              <h2 className="font-bold mb-8" style={{ margin: 0, color: 'var(--color-primary-600)', fontSize: 'clamp(3.5rem, 12vw, 10rem)', lineHeight: '1.2' }}>
                 {currentWord.english}
               </h2>
               {showTranslation && (
                 <div className="animate-fade-in">
-                  <div className="text-4xl font-semibold mb-6 text-secondary">
+                  <div className="font-semibold mb-8 text-secondary" style={{ fontSize: 'clamp(2rem, 6vw, 4rem)', lineHeight: '1.3' }}>
                     {currentWord.greek}
                   </div>
                   <div className="flex gap-4 justify-center flex-wrap">
@@ -590,12 +591,12 @@ const Flashcards = () => {
             </>
           )}
           {!showTranslation && (
-            <div className="text-lg text-tertiary mt-8 animate-fade-in">
+            <div className="text-tertiary mt-8 animate-fade-in" style={{ fontSize: 'clamp(1rem, 2.5vw, 1.5rem)' }}>
               Tap to reveal translation
             </div>
           )}
           {showTranslation && (
-            <div className="text-sm text-tertiary mt-4 animate-fade-in" style={{ animationDelay: '0.3s' }}>
+            <div className="text-tertiary mt-4 animate-fade-in" style={{ fontSize: 'clamp(0.875rem, 2vw, 1.125rem)', animationDelay: '0.3s' }}>
               Swipe horizontally for next • Swipe up to mark as learned
             </div>
           )}
