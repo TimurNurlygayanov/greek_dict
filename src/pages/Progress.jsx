@@ -233,7 +233,7 @@ const Progress = () => {
   const StatCard = ({ title, value, subtitle, progress }) => (
     <Card variant="elevated" padding="lg">
       <div className="text-sm font-medium text-secondary mb-2">{title}</div>
-      <div className="text-5xl font-bold mb-2" style={{ color: 'white' }}>{value}</div>
+      <div className="text-5xl font-bold mb-2 text-primary">{value}</div>
       {subtitle && <div className="text-sm text-secondary mb-4">{subtitle}</div>}
       {progress && <ProgressBar value={progress.value} max={progress.max} size="lg" />}
     </Card>
@@ -242,15 +242,6 @@ const Progress = () => {
   return (
     <div className="container" style={{ paddingTop: 'var(--space-8)', paddingBottom: 'var(--space-20)' }}>
       {showAuthModal && <AuthModal onClose={closeAuthModal} />}
-
-      <div className="mb-8">
-        <h1 className="text-5xl font-bold mb-2" style={{ color: 'white', margin: 0 }}>
-          Your Progress
-        </h1>
-        <p className="text-lg" style={{ color: 'rgba(255, 255, 255, 0.8)' }}>
-          Track your learning journey
-        </p>
-      </div>
 
       {/* Main Stats Grid */}
       <div className="grid grid-cols-2 gap-6 mb-8">

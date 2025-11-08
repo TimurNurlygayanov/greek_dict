@@ -8,6 +8,7 @@ const PORT = process.env.PORT || 10000
 const DATA_DIR = process.env.DATA_DIR || path.join(process.cwd(), 'data')
 const PROGRESS_FILE = path.join(DATA_DIR, 'progress.json')
 const LISTS_FILE = path.join(DATA_DIR, 'word-lists.json')
+const CUSTOM_WORDS_FILE = path.join(DATA_DIR, 'custom-words.json')
 
 // Ensure data directory exists
 if (!fs.existsSync(DATA_DIR)) {
@@ -68,6 +69,29 @@ const writeWordLists = (data) => {
     fs.writeFileSync(LISTS_FILE, JSON.stringify(data, null, 2), 'utf8')
   } catch (error) {
     console.error('Error writing word lists file:', error)
+    throw error
+  }
+}
+
+// Helper functions for reading/writing custom words
+const readCustomWords = () => {
+  if (!fs.existsSync(CUSTOM_WORDS_FILE)) {
+    return {}
+  }
+  try {
+    const data = fs.readFileSync(CUSTOM_WORDS_FILE, 'utf8')
+    return JSON.parse(data)
+  } catch (error) {
+    console.error('Error reading custom words file:', error)
+    return {}
+  }
+}
+
+const writeCustomWords = (data) => {
+  try {
+    fs.writeFileSync(CUSTOM_WORDS_FILE, JSON.stringify(data, null, 2), 'utf8')
+  } catch (error) {
+    console.error('Error writing custom words file:', error)
     throw error
   }
 }
@@ -409,8 +433,111 @@ app.delete('/api/lists/:userId/:listId/learned/:wordGreek', (req, res) => {
   
   list.learnedWords = list.learnedWords.filter(w => w !== decodeURIComponent(wordGreek))
   writeWordLists(allData)
-  
+
   res.json({ list })
+})
+
+// API Routes for custom words
+app.get('/api/custom-words/:userId', (req, res) => {
+  const { userId } = req.params
+  const allWords = readCustomWords()
+  const userWords = allWords[userId] || []
+
+  res.json({ words: userWords })
+})
+
+app.post('/api/custom-words/:userId', (req, res) => {
+  const { userId } = req.params
+  const { greek, english, pos } = req.body
+
+  if (!greek || !greek.trim() || !english || !english.trim()) {
+    return res.status(400).json({ error: 'Greek and English text are required' })
+  }
+
+  const allWords = readCustomWords()
+  if (!allWords[userId]) allWords[userId] = []
+
+  // Check if word already exists
+  if (allWords[userId].some(w => w.greek === greek.trim())) {
+    return res.status(400).json({ error: 'This word already exists in your custom dictionary' })
+  }
+
+  // Limit to 500 custom words per user
+  if (allWords[userId].length >= 500) {
+    return res.status(400).json({ error: 'Maximum 500 custom words per user' })
+  }
+
+  const newWord = {
+    greek: greek.trim(),
+    greek_normalized: greek.trim().normalize('NFD').replace(/[\u0300-\u036f]/g, ''),
+    english: english.trim(),
+    pos: pos?.trim() || '',
+    level: 'Custom',
+    isCustom: true,
+    createdAt: new Date().toISOString()
+  }
+
+  allWords[userId].push(newWord)
+  writeCustomWords(allWords)
+
+  res.json({ word: newWord })
+})
+
+app.delete('/api/custom-words/:userId/:greekWord', (req, res) => {
+  const { userId, greekWord } = req.params
+  const allWords = readCustomWords()
+
+  if (!allWords[userId]) {
+    return res.status(404).json({ error: 'User not found' })
+  }
+
+  const decodedWord = decodeURIComponent(greekWord)
+  allWords[userId] = allWords[userId].filter(w => w.greek !== decodedWord)
+  writeCustomWords(allWords)
+
+  res.json({ success: true })
+})
+
+// Translation API endpoint
+app.post('/api/translate', async (req, res) => {
+  const { text, from, to } = req.body
+
+  if (!text || !text.trim()) {
+    return res.status(400).json({ error: 'Text is required' })
+  }
+
+  try {
+    // Use LibreTranslate (free, no API key required)
+    const url = 'https://libretranslate.com/translate'
+
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        q: text.trim(),
+        source: from || 'en',
+        target: to || 'el',
+        format: 'text'
+      })
+    })
+
+    if (!response.ok) {
+      throw new Error('Translation failed')
+    }
+
+    const data = await response.json()
+    const translation = data.translatedText || ''
+
+    res.json({ translation })
+  } catch (error) {
+    console.error('LibreTranslate error:', error)
+
+    // Fallback: Allow manual entry
+    res.json({
+      translation: '',
+      error: 'Auto-translation unavailable. Please enter translation manually.'
+    })
+  }
 })
 
 // Handle React Router - serve index.html for all routes (must be last)

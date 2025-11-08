@@ -1,11 +1,13 @@
 import { useState, useEffect, useMemo, useRef } from 'react'
 import dictionaryData from '../dictionary.json'
 import AddToListModal from '../components/AddToListModal'
+import AddCustomWordModal from '../components/AddCustomWordModal'
 import GreekDecoration from '../components/GreekDecoration'
 import Card from '../components/common/Card'
 import Button from '../components/common/Button'
 import Input from '../components/common/Input'
 import Badge from '../components/common/Badge'
+import { getCustomWords } from '../utils/customWords'
 import './Dictionary.css'
 
 const Dictionary = () => {
@@ -13,8 +15,19 @@ const Dictionary = () => {
   const [selectedWord, setSelectedWord] = useState(null)
   const [suggestions, setSuggestions] = useState([])
   const [showAddToListModal, setShowAddToListModal] = useState(false)
+  const [showAddCustomWordModal, setShowAddCustomWordModal] = useState(false)
   const [highlightedIndex, setHighlightedIndex] = useState(-1)
+  const [customWords, setCustomWords] = useState([])
   const inputRef = useRef(null)
+
+  // Load custom words on mount
+  useEffect(() => {
+    const loadCustomWords = async () => {
+      const words = await getCustomWords()
+      setCustomWords(words)
+    }
+    loadCustomWords()
+  }, [])
 
   const filteredSuggestions = useMemo(() => {
     if (!searchTerm.trim()) {
@@ -22,7 +35,11 @@ const Dictionary = () => {
     }
 
     const term = searchTerm.toLowerCase().trim()
-    return dictionaryData
+
+    // Merge dictionary and custom words
+    const allWords = [...dictionaryData, ...customWords]
+
+    return allWords
       .filter(
         (word) => {
           // Filter by search term
@@ -34,7 +51,7 @@ const Dictionary = () => {
         }
       )
       .slice(0, 10)
-  }, [searchTerm])
+  }, [searchTerm, customWords])
 
   useEffect(() => {
     // Don't update suggestions if a word is selected
@@ -191,8 +208,43 @@ const Dictionary = () => {
         />
       )}
 
+      {showAddCustomWordModal && (
+        <AddCustomWordModal
+          initialSearchTerm={searchTerm}
+          onClose={() => setShowAddCustomWordModal(false)}
+          onSuccess={async (newWord) => {
+            // Reload custom words and select the new word
+            const words = await getCustomWords()
+            setCustomWords(words)
+            setSelectedWord(newWord)
+            setSearchTerm(newWord.greek)
+          }}
+        />
+      )}
+
       {!selectedWord && searchTerm && suggestions.length === 0 && (
-        <div className="no-results">No words found. Try a different search.</div>
+        <Card variant="elevated" padding="lg" className="text-center" style={{ maxWidth: '600px', margin: '0 auto' }}>
+          <div className="mb-4">
+            <div className="text-4xl mb-3">🔍</div>
+            <h3 className="text-2xl font-semibold mb-2" style={{ margin: 0 }}>
+              No results found
+            </h3>
+            <p className="text-secondary mb-4">
+              We couldn't find "{searchTerm}" in our dictionary.
+            </p>
+          </div>
+          <Button
+            variant="primary"
+            size="lg"
+            onClick={() => setShowAddCustomWordModal(true)}
+            icon={<span>+</span>}
+          >
+            Add as Custom Word
+          </Button>
+          <p className="text-xs text-secondary mt-3">
+            Custom words are saved to your personal dictionary and work just like regular words.
+          </p>
+        </Card>
       )}
     </div>
   )
