@@ -6,7 +6,9 @@ const STORAGE_KEYS = {
   EXERCISES_TODAY: 'ellinaki_exercises_today',
   EXERCISES_DATE: 'ellinaki_exercises_date',
   MEMORIZED_WORDS: 'ellinaki_memorized_words',
-  USER_ID: 'ellinaki_user_id'
+  USER_ID: 'ellinaki_user_id',
+  WORD_LISTS_CACHE: 'ellinaki_word_lists_cache',
+  WORD_LISTS_CACHE_TIME: 'ellinaki_word_lists_cache_time'
 }
 
 // Get or generate user ID
@@ -154,4 +156,37 @@ export const getUserId = () => {
 
 export const setUserId = (userId) => {
   localStorage.setItem(STORAGE_KEYS.USER_ID, userId)
+}
+
+// Word Lists Cache Management
+export const getCachedWordLists = () => {
+  try {
+    const cached = localStorage.getItem(STORAGE_KEYS.WORD_LISTS_CACHE)
+    if (cached) {
+      return JSON.parse(cached)
+    }
+  } catch (error) {
+    console.error('Error reading cached word lists:', error)
+  }
+  return null
+}
+
+export const setCachedWordLists = (lists) => {
+  try {
+    localStorage.setItem(STORAGE_KEYS.WORD_LISTS_CACHE, JSON.stringify(lists))
+    localStorage.setItem(STORAGE_KEYS.WORD_LISTS_CACHE_TIME, Date.now().toString())
+  } catch (error) {
+    console.error('Error caching word lists:', error)
+  }
+}
+
+export const clearWordListsCache = () => {
+  localStorage.removeItem(STORAGE_KEYS.WORD_LISTS_CACHE)
+  localStorage.removeItem(STORAGE_KEYS.WORD_LISTS_CACHE_TIME)
+}
+
+export const getCacheAge = () => {
+  const cacheTime = localStorage.getItem(STORAGE_KEYS.WORD_LISTS_CACHE_TIME)
+  if (!cacheTime) return null
+  return Date.now() - parseInt(cacheTime, 10)
 }

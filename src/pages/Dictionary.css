@@ -87,8 +87,14 @@
   border-bottom: none;
 }
 
-.suggestion-item:hover {
+.suggestion-item:hover,
+.suggestion-item.highlighted {
   background: #f8f9fa;
+}
+
+.suggestion-item.highlighted {
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: -2px;
 }
 
 .suggestion-greek {

@@ -18,3 +18,7 @@
 - React Router DOM
 - Vite
 - CSS3 (with responsive design)
+
+## Words Lists
+
+We took the list of words required for the Greek exams from web site https://www.greek-language.gr/

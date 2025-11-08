@@ -90,7 +90,7 @@ const ensureDefaultLists = (userId, userLists) => {
   if (!unstudiedList) {
     unstudiedList = {
       id: 'unstudied',
-      name: 'Unstudied Words',
+      name: 'B2 Required Words',
       words: dictionary.map(word => ({ ...word })),
       learnedWords: [],
       isDefault: true

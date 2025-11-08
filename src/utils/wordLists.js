@@ -1,5 +1,5 @@
 // Utility functions for managing word lists
-import { getUserId } from './storage'
+import { getUserId, getCachedWordLists, setCachedWordLists } from './storage'
 
 const apiRequest = async (endpoint, options = {}) => {
   try {
@@ -23,19 +23,45 @@ const apiRequest = async (endpoint, options = {}) => {
   }
 }
 
-export const getUserLists = async () => {
+export const getUserLists = async (useCache = true) => {
   const userId = getUserId()
   if (!userId || userId.startsWith('user_')) {
     console.log('Temporary user - no persistent lists')
     return []
   }
-  
+
+  // Return cached data immediately if available
+  if (useCache) {
+    const cachedLists = getCachedWordLists()
+    if (cachedLists) {
+      console.log('getUserLists: Returning cached lists')
+
+      // Fetch fresh data in background and update cache
+      apiRequest(`/api/lists/${userId}`)
+        .then(data => {
+          const freshLists = data?.lists || []
+          setCachedWordLists(freshLists)
+          console.log('getUserLists: Background cache update complete')
+        })
+        .catch(error => {
+          console.error('Background cache update failed:', error)
+        })
+
+      return cachedLists
+    }
+  }
+
+  // No cache or cache disabled - fetch fresh data
   try {
     console.log('getUserLists: Fetching lists for userId:', userId)
     const data = await apiRequest(`/api/lists/${userId}`)
     console.log('getUserLists: API response:', data)
     const lists = data?.lists || []
     console.log('getUserLists: Returning lists:', lists)
+
+    // Update cache with fresh data
+    setCachedWordLists(lists)
+
     return lists
   } catch (error) {
     console.error('Error fetching lists:', error)
@@ -43,15 +69,25 @@ export const getUserLists = async () => {
   }
 }
 
+// Preload word lists for caching (call after user authentication)
+export const preloadWordLists = async () => {
+  console.log('Preloading word lists for cache')
+  await getUserLists(false) // Force fresh fetch to populate cache
+}
+
 export const createList = async (name) => {
   const userId = getUserId()
   if (!userId || userId.startsWith('user_')) return null
-  
+
   try {
     const data = await apiRequest(`/api/lists/${userId}`, {
       method: 'POST',
       body: JSON.stringify({ name })
     })
+
+    // Refresh cache after creating list
+    await getUserLists(false)
+
     return data?.list || null
   } catch (error) {
     console.error('Error creating list:', error)
@@ -62,11 +98,15 @@ export const createList = async (name) => {
 export const deleteList = async (listId) => {
   const userId = getUserId()
   if (!userId || userId.startsWith('user_')) return false
-  
+
   try {
     await apiRequest(`/api/lists/${userId}/${listId}`, {
       method: 'DELETE'
     })
+
+    // Refresh cache after deleting list
+    await getUserLists(false)
+
     return true
   } catch (error) {
     console.error('Error deleting list:', error)
@@ -77,12 +117,16 @@ export const deleteList = async (listId) => {
 export const addWordToList = async (listId, word) => {
   const userId = getUserId()
   if (!userId || userId.startsWith('user_')) return null
-  
+
   try {
     const data = await apiRequest(`/api/lists/${userId}/${listId}/words`, {
       method: 'POST',
       body: JSON.stringify({ word })
     })
+
+    // Refresh cache after adding word
+    await getUserLists(false)
+
     return data?.list || null
   } catch (error) {
     console.error('Error adding word to list:', error)
@@ -93,11 +137,15 @@ export const addWordToList = async (listId, word) => {
 export const removeWordFromList = async (listId, wordGreek) => {
   const userId = getUserId()
   if (!userId || userId.startsWith('user_')) return null
-  
+
   try {
     const data = await apiRequest(`/api/lists/${userId}/${listId}/words/${encodeURIComponent(wordGreek)}`, {
       method: 'DELETE'
     })
+
+    // Refresh cache after removing word
+    await getUserLists(false)
+
     return data?.list || null
   } catch (error) {
     console.error('Error removing word from list:', error)
@@ -108,12 +156,16 @@ export const removeWordFromList = async (listId, wordGreek) => {
 export const markWordAsLearned = async (listId, wordGreek) => {
   const userId = getUserId()
   if (!userId || userId.startsWith('user_')) return null
-  
+
   try {
     const data = await apiRequest(`/api/lists/${userId}/${listId}/learned`, {
       method: 'POST',
       body: JSON.stringify({ wordGreek })
     })
+
+    // Refresh cache after marking word as learned
+    await getUserLists(false)
+
     return data?.list || null
   } catch (error) {
     console.error('Error marking word as learned:', error)
@@ -124,11 +176,15 @@ export const markWordAsLearned = async (listId, wordGreek) => {
 export const unmarkWordAsLearned = async (listId, wordGreek) => {
   const userId = getUserId()
   if (!userId || userId.startsWith('user_')) return null
-  
+
   try {
     const data = await apiRequest(`/api/lists/${userId}/${listId}/learned/${encodeURIComponent(wordGreek)}`, {
       method: 'DELETE'
     })
+
+    // Refresh cache after unmarking word as learned
+    await getUserLists(false)
+
     return data?.list || null
   } catch (error) {
     console.error('Error unmarking word as learned:', error)
@@ -139,12 +195,16 @@ export const unmarkWordAsLearned = async (listId, wordGreek) => {
 export const updateListName = async (listId, newName) => {
   const userId = getUserId()
   if (!userId || userId.startsWith('user_')) return null
-  
+
   try {
     const data = await apiRequest(`/api/lists/${userId}/${listId}`, {
       method: 'PUT',
       body: JSON.stringify({ name: newName })
     })
+
+    // Refresh cache after updating list name
+    await getUserLists(false)
+
     return data?.list || null
   } catch (error) {
     console.error('Error updating list name:', error)

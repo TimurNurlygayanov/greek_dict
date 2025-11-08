@@ -1,63 +1,23 @@
-import { useState, useEffect } from 'react'
-import { getUserLists, createList, deleteList, removeWordFromList, unmarkWordAsLearned } from '../utils/wordLists'
-import { getUserId } from '../utils/storage'
+import { useState } from 'react'
+import { createList, deleteList, removeWordFromList, unmarkWordAsLearned, getUserLists, updateListName } from '../utils/wordLists'
 import AuthModal from '../components/AuthModal'
-import './WordLists.css'
+import Card from '../components/common/Card'
+import Button from '../components/common/Button'
+import Input from '../components/common/Input'
+import Badge from '../components/common/Badge'
+import Modal from '../components/common/Modal'
+import useAuthGuard from '../hooks/useAuthGuard'
+import useWordLists from '../hooks/useWordLists'
 
 const WordLists = () => {
-  const [lists, setLists] = useState([])
-  const [showAuthModal, setShowAuthModal] = useState(false)
+  const { showAuthModal, closeAuthModal } = useAuthGuard(true)
+  const { lists, refreshLists } = useWordLists(!showAuthModal)
+
   const [showCreateForm, setShowCreateForm] = useState(false)
   const [newListName, setNewListName] = useState('')
-  const [editingListId, setEditingListId] = useState(null)
-  const [editingListName, setEditingListName] = useState('')
   const [selectedListModal, setSelectedListModal] = useState(null)
-
-  useEffect(() => {
-    const userId = getUserId()
-    console.log('WordLists mount - userId:', userId)
-    if (!userId || userId.startsWith('user_')) {
-      setShowAuthModal(true)
-    } else {
-      loadLists()
-    }
-  }, [])
-
-  // Reload lists when auth modal is closed
-  useEffect(() => {
-    if (!showAuthModal) {
-      const userId = getUserId()
-      console.log('Auth modal closed - userId:', userId)
-      if (userId && !userId.startsWith('user_')) {
-        loadLists()
-      }
-    }
-  }, [showAuthModal])
-
-  const loadLists = async () => {
-    try {
-      const userLists = await getUserLists()
-      console.log('Loaded lists:', userLists)
-      
-      // Sort: custom first, then default
-      const customLists = userLists.filter(list => !list.isDefault).sort((a, b) => a.name.localeCompare(b.name))
-      const defaultLists = userLists.filter(list => list.isDefault).sort((a, b) => a.name.localeCompare(b.name))
-      
-      setLists([...customLists, ...defaultLists])
-    } catch (error) {
-      console.error('Error loading lists:', error)
-      setLists([])
-    }
-  }
-
-  const handleAuthModalClose = () => {
-    setShowAuthModal(false)
-    const userId = getUserId()
-    console.log('Auth modal closed - userId:', userId)
-    if (userId && !userId.startsWith('user_')) {
-      loadLists()
-    }
-  }
+  const [isRenamingModal, setIsRenamingModal] = useState(false)
+  const [modalListName, setModalListName] = useState('')
 
   const handleCreateList = async (e) => {
     e.preventDefault()
@@ -67,7 +27,7 @@ const WordLists = () => {
       await createList(newListName.trim())
       setNewListName('')
       setShowCreateForm(false)
-      await loadLists()
+      await refreshLists()
     } catch (error) {
       alert(error.message || 'Failed to create list')
     }
@@ -76,7 +36,7 @@ const WordLists = () => {
   const handleDeleteList = async (listId) => {
     const list = lists.find(l => l.id === listId)
     const isDefault = list?.isDefault || listId === 'unstudied' || listId === 'learned'
-    
+
     if (isDefault) {
       alert('Cannot delete default lists')
       return
@@ -88,45 +48,45 @@ const WordLists = () => {
 
     try {
       await deleteList(listId)
-      await loadLists()
+      await refreshLists()
     } catch (error) {
       alert(error.message || 'Failed to delete list')
     }
   }
 
-  const handleStartRename = (list) => {
-    setEditingListId(list.id)
-    setEditingListName(list.name)
+  const handleStartRenameModal = () => {
+    setIsRenamingModal(true)
+    setModalListName(selectedListModal.name)
   }
 
-  const handleCancelRename = () => {
-    setEditingListId(null)
-    setEditingListName('')
+  const handleCancelRenameModal = () => {
+    setIsRenamingModal(false)
+    setModalListName('')
   }
 
-  const handleSaveRename = async (listId) => {
-    if (!editingListName.trim()) {
+  const handleSaveRenameModal = async () => {
+    if (!modalListName.trim()) {
       alert('List name cannot be empty')
       return
     }
 
+    if (!selectedListModal || selectedListModal.isDefault) {
+      alert('Cannot rename default lists')
+      return
+    }
+
     try {
-      const userId = getUserId()
-      const response = await fetch(`/api/lists/${userId}/${listId}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ name: editingListName.trim() })
-      })
+      await updateListName(selectedListModal.id, modalListName.trim())
+      setIsRenamingModal(false)
+      setModalListName('')
+      await refreshLists()
 
-      if (!response.ok) {
-        throw new Error('Failed to rename list')
+      // Update modal data
+      const updatedLists = await getUserLists(false)
+      const updatedList = updatedLists.find(l => l.id === selectedListModal.id)
+      if (updatedList) {
+        setSelectedListModal(updatedList)
       }
-
-      setEditingListId(null)
-      setEditingListName('')
-      await loadLists()
     } catch (error) {
       alert(error.message || 'Failed to rename list')
     }
@@ -135,28 +95,28 @@ const WordLists = () => {
   const handleRemoveWord = async (listId, wordGreek) => {
     const list = lists.find(l => l.id === listId)
     const isLearnedList = listId === 'learned'
-    
+
     if (!confirm(isLearnedList ? 'Remove this word from learned words? (This will unlearn it)' : 'Remove this word from the list?')) {
       return
     }
 
     try {
       await removeWordFromList(listId, wordGreek)
-      
+
       // If removing from "Learned Words" list, unmark as learned in all lists
       if (isLearnedList) {
-        const allLists = await getUserLists()
+        const allLists = await getUserLists(false)
         for (const list of allLists) {
           if (list.learnedWords.includes(wordGreek)) {
             await unmarkWordAsLearned(list.id, wordGreek)
           }
         }
       }
-      
-      await loadLists()
+
+      await refreshLists()
       // Update modal if it's open
       if (selectedListModal?.id === listId) {
-        const updatedLists = await getUserLists()
+        const updatedLists = await getUserLists(false)
         const updatedList = updatedLists.find(l => l.id === listId)
         if (updatedList) {
           setSelectedListModal(updatedList)
@@ -169,7 +129,7 @@ const WordLists = () => {
 
   const handleListClick = async (list) => {
     // Load fresh list data
-    const allLists = await getUserLists()
+    const allLists = await getUserLists(false)
     const freshList = allLists.find(l => l.id === list.id)
     if (freshList) {
       setSelectedListModal(freshList)
@@ -177,186 +137,215 @@ const WordLists = () => {
   }
 
   return (
-    <div className="word-lists">
-      {showAuthModal && <AuthModal onClose={handleAuthModalClose} />}
-      <div className="word-lists-header">
-        <h2>Your Lists</h2>
-        <button 
-          className="create-list-button"
+    <div className="container" style={{ paddingTop: 'var(--space-6)', paddingBottom: 'var(--space-20)' }}>
+      {showAuthModal && <AuthModal onClose={closeAuthModal} />}
+
+      <div className="flex-between mb-6">
+        <h2 className="text-4xl font-bold" style={{ color: 'white', margin: 0 }}>Your Lists</h2>
+        <Button
+          variant="primary"
+          size="lg"
           onClick={() => setShowCreateForm(true)}
+          style={{
+            width: '50px',
+            height: '50px',
+            borderRadius: 'var(--radius-full)',
+            fontSize: 'var(--text-3xl)',
+            padding: 0
+          }}
         >
           +
-        </button>
+        </Button>
       </div>
 
       {showCreateForm && (
-        <div className="create-list-form-card">
-          <form onSubmit={handleCreateList}>
-            <input
+        <Card variant="elevated" padding="md" className="mb-6 animate-scale-in">
+          <form onSubmit={handleCreateList} className="flex gap-3">
+            <Input
               type="text"
               placeholder="List name"
               value={newListName}
               onChange={(e) => setNewListName(e.target.value)}
-              className="list-name-input"
               autoFocus
               maxLength={50}
+              fullWidth
             />
-            <div className="form-actions">
-              <button type="submit" className="submit-button" disabled={!newListName.trim()}>
-                Create
-              </button>
-              <button 
-                type="button" 
-                className="cancel-button"
-                onClick={() => {
-                  setShowCreateForm(false)
-                  setNewListName('')
-                }}
-              >
-                Cancel
-              </button>
-            </div>
+            <Button type="submit" variant="primary" disabled={!newListName.trim()}>
+              Create
+            </Button>
+            <Button
+              type="button"
+              variant="secondary"
+              onClick={() => {
+                setShowCreateForm(false)
+                setNewListName('')
+              }}
+            >
+              Cancel
+            </Button>
           </form>
-        </div>
+        </Card>
       )}
 
       {lists.length === 0 ? (
-        <div className="no-lists-message">
-          <p>You don't have any word lists yet.</p>
-          <p>Create your first list to start organizing words!</p>
-        </div>
+        <Card variant="elevated" padding="lg" className="text-center">
+          <p className="text-lg text-secondary mb-2">You don't have any word lists yet.</p>
+          <p className="text-secondary">Create your first list to start organizing words!</p>
+        </Card>
       ) : (
-        <div className="lists-container">
-            {lists
-              .sort((a, b) => {
-                // Sort: custom lists first, then default lists
-                const aIsDefault = a.isDefault || a.id === 'unstudied' || a.id === 'learned'
-                const bIsDefault = b.isDefault || b.id === 'unstudied' || b.id === 'learned'
-                if (aIsDefault && !bIsDefault) return 1
-                if (!aIsDefault && bIsDefault) return -1
-                return 0
-              })
-              .map((list) => {
+        <div className="card-grid">
+          {lists
+            .sort((a, b) => {
+              const aIsDefault = a.isDefault || a.id === 'unstudied' || a.id === 'learned'
+              const bIsDefault = b.isDefault || b.id === 'unstudied' || b.id === 'learned'
+              if (aIsDefault && !bIsDefault) return 1
+              if (!aIsDefault && bIsDefault) return -1
+              return 0
+            })
+            .map((list) => {
               const isDefault = list.isDefault || list.id === 'unstudied' || list.id === 'learned'
-              const isEditing = editingListId === list.id
 
               return (
-                <div 
-                  key={list.id} 
-                  className="list-card"
+                <Card
+                  key={list.id}
+                  variant="elevated"
+                  padding="md"
+                  hoverable
                   onClick={() => handleListClick(list)}
-                  style={{ cursor: 'pointer' }}
+                  className="animate-fade-in-up"
                 >
-                  <div className="list-card-header">
-                    <div className="list-card-title-section">
-                      {isEditing ? (
-                        <input
-                          type="text"
-                          value={editingListName}
-                          onChange={(e) => setEditingListName(e.target.value)}
-                          className="list-name-edit-input"
-                          autoFocus
-                          onBlur={() => handleSaveRename(list.id)}
-                          onKeyDown={(e) => {
-                            if (e.key === 'Enter') {
-                              handleSaveRename(list.id)
-                            } else if (e.key === 'Escape') {
-                              handleCancelRename()
-                            }
-                          }}
-                          onClick={(e) => e.stopPropagation()}
-                        />
-                      ) : (
-                        <h3 className="list-card-name">
+                  <div className="flex-between mb-3">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-1">
+                        <h3 className="text-lg font-semibold" style={{ margin: 0 }}>
                           {list.name}
-                          {isDefault && <span className="default-badge">Default</span>}
                         </h3>
-                      )}
-                      <div className="list-card-stats">
+                        {isDefault && <Badge variant="info" size="sm">Default</Badge>}
+                      </div>
+                      <div className="text-sm text-secondary">
                         {list.words.length} word{list.words.length !== 1 ? 's' : ''}
                         {list.learnedWords.length > 0 && (
-                          <span className="learned-count">
-                            • {list.learnedWords.length} learned
+                          <span style={{ color: 'var(--color-success-600)', fontWeight: 'var(--font-weight-semibold)' }}>
+                            {' • '}{list.learnedWords.length} learned
                           </span>
                         )}
                       </div>
                     </div>
-                    <div className="list-card-actions" onClick={(e) => e.stopPropagation()}>
-                      {!isDefault && !isEditing && (
-                        <>
-                          <button
-                            className="action-button rename-button"
-                            onClick={() => handleStartRename(list)}
-                            title="Rename list"
-                          >
-                            ✏️
-                          </button>
-                          <button
-                            className="action-button delete-button"
-                            onClick={() => handleDeleteList(list.id)}
-                            title="Delete list"
-                          >
-                            🗑️
-                          </button>
-                        </>
-                      )}
-                    </div>
+                    {!isDefault && (
+                      <div onClick={(e) => e.stopPropagation()}>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => handleDeleteList(list.id)}
+                          title="Delete list"
+                        >
+                          🗑️
+                        </Button>
+                      </div>
+                    )}
                   </div>
-                </div>
+                </Card>
               )
             })}
-          </div>
-        )}
+        </div>
+      )}
 
       {selectedListModal && (
-        <div className="list-modal-overlay" onClick={() => setSelectedListModal(null)}>
-          <div className="list-modal-content" onClick={(e) => e.stopPropagation()}>
-            <div className="list-modal-header">
-              <h2>{selectedListModal.name}</h2>
-              <button 
-                className="list-modal-close"
-                onClick={() => setSelectedListModal(null)}
-              >
-                ×
-              </button>
+        <Modal
+          isOpen={true}
+          onClose={() => {
+            setSelectedListModal(null)
+            setIsRenamingModal(false)
+            setModalListName('')
+          }}
+          size="lg"
+          title={!isRenamingModal ? selectedListModal.name : undefined}
+          showCloseButton={true}
+        >
+          {isRenamingModal ? (
+            <div className="mb-4">
+              <Input
+                type="text"
+                value={modalListName}
+                onChange={(e) => setModalListName(e.target.value)}
+                autoFocus
+                fullWidth
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    handleSaveRenameModal()
+                  } else if (e.key === 'Escape') {
+                    handleCancelRenameModal()
+                  }
+                }}
+              />
+              <div className="flex gap-3 justify-end mt-3">
+                <Button variant="secondary" onClick={handleCancelRenameModal}>
+                  Cancel
+                </Button>
+                <Button variant="primary" onClick={handleSaveRenameModal}>
+                  Save
+                </Button>
+              </div>
             </div>
-            <div className="list-modal-body">
-              {selectedListModal.words.length === 0 ? (
-                <div className="empty-list-message">
-                  This list is empty. Add words from the Dictionary!
-                </div>
-              ) : (
-                <div className="words-list">
-                  {selectedListModal.words.map((word, index) => {
-                    const isLearned = selectedListModal.learnedWords.includes(word.greek)
-                    return (
-                      <div key={index} className={`word-item ${isLearned ? 'learned' : ''}`}>
-                        <div className="word-info">
-                          <div className="word-greek">{word.greek}</div>
-                          {word.pos && <div className="word-pos">{word.pos}</div>}
-                          <div className="word-english">{word.english}</div>
-                          {isLearned && <span className="learned-badge">✓ Learned</span>}
-                        </div>
-                        <button
-                          className="remove-word-button"
-                          onClick={() => handleRemoveWord(selectedListModal.id, word.greek)}
-                          title="Remove from list"
-                        >
-                          ×
-                        </button>
-                      </div>
-                    )
-                  })}
+          ) : (
+            <>
+              {!selectedListModal.isDefault && selectedListModal.id !== 'unstudied' && selectedListModal.id !== 'learned' && (
+                <div className="mb-4">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={handleStartRenameModal}
+                    icon={<span>✏️</span>}
+                  >
+                    Rename
+                  </Button>
                 </div>
               )}
-            </div>
+            </>
+          )}
+
+          <div>
+            {selectedListModal.words.length === 0 ? (
+              <div className="text-center py-8 text-secondary">
+                This list is empty. Add words from the Dictionary!
+              </div>
+            ) : (
+              <div className="flex flex-col gap-2" style={{ maxHeight: '60vh', overflowY: 'auto' }}>
+                {selectedListModal.words.map((word, index) => {
+                  const isLearned = selectedListModal.learnedWords.includes(word.greek)
+                  return (
+                    <div
+                      key={index}
+                      className={`flex items-center justify-between p-4 rounded-lg border transition ${
+                        isLearned ? 'bg-gray-50 opacity-75' : 'bg-white'
+                      }`}
+                      style={{ borderColor: 'var(--color-border)' }}
+                    >
+                      <div className="flex-1">
+                        <div className="font-semibold text-lg">{word.greek}</div>
+                        {word.pos && <div className="text-sm text-tertiary italic">{word.pos}</div>}
+                        <div className="text-sm text-secondary">{word.english}</div>
+                        {isLearned && <Badge variant="success" size="sm" className="mt-1">✓ Learned</Badge>}
+                      </div>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleRemoveWord(selectedListModal.id, word.greek)}
+                        title="Remove from list"
+                        style={{ color: 'var(--color-danger-500)', fontSize: 'var(--text-2xl)' }}
+                      >
+                        ×
+                      </Button>
+                    </div>
+                  )
+                })}
+              </div>
+            )}
           </div>
-        </div>
+        </Modal>
       )}
     </div>
   )
 }
 
 export default WordLists
-
-

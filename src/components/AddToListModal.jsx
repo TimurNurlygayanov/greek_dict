@@ -1,28 +1,22 @@
-import { useState, useEffect } from 'react'
-import { getUserLists, createList, addWordToList } from '../utils/wordLists'
-import './AddToListModal.css'
+import { useState } from 'react'
+import { createList, addWordToList } from '../utils/wordLists'
+import Modal from './common/Modal'
+import Button from './common/Button'
+import Input from './common/Input'
+import Badge from './common/Badge'
+import useWordLists from '../hooks/useWordLists'
 
 const AddToListModal = ({ word, onClose, onSuccess }) => {
-  const [lists, setLists] = useState([])
+  const { lists, refreshLists } = useWordLists()
   const [newListName, setNewListName] = useState('')
   const [showCreateForm, setShowCreateForm] = useState(false)
   const [loading, setLoading] = useState(false)
-
-  useEffect(() => {
-    loadLists()
-  }, [])
-
-  const loadLists = async () => {
-    const userLists = await getUserLists()
-    setLists(userLists)
-  }
 
   const handleAddToList = async (listId) => {
     setLoading(true)
     try {
       await addWordToList(listId, word)
-      // Reload lists to get updated data
-      await loadLists()
+      await refreshLists()
       if (onSuccess) onSuccess()
       onClose()
     } catch (error) {
@@ -39,7 +33,7 @@ const AddToListModal = ({ word, onClose, onSuccess }) => {
     setLoading(true)
     try {
       const newList = await createList(newListName.trim())
-      setLists([...lists, newList])
+      await refreshLists()
       setNewListName('')
       setShowCreateForm(false)
       await handleAddToList(newList.id)
@@ -51,89 +45,94 @@ const AddToListModal = ({ word, onClose, onSuccess }) => {
   }
 
   return (
-    <div className="add-to-list-modal-overlay" onClick={onClose}>
-      <div className="add-to-list-modal-content" onClick={(e) => e.stopPropagation()}>
-        <button className="modal-close" onClick={onClose}>×</button>
-        <h2 className="modal-title">Add to List</h2>
-        <p className="modal-word">{word.greek}</p>
-
-        {lists.length === 0 && !showCreateForm && (
-          <div className="no-lists">
-            <p>You don't have any lists yet.</p>
-            <button 
-              className="create-list-button"
-              onClick={() => setShowCreateForm(true)}
-            >
-              Create New List
-            </button>
-          </div>
-        )}
-
-        {showCreateForm && (
-          <form onSubmit={handleCreateList} className="create-list-form">
-            <input
-              type="text"
-              placeholder="List name"
-              value={newListName}
-              onChange={(e) => setNewListName(e.target.value)}
-              className="list-name-input"
-              autoFocus
-              maxLength={50}
-            />
-            <div className="form-actions">
-              <button type="submit" className="submit-button" disabled={loading || !newListName.trim()}>
-                Create & Add
-              </button>
-              <button 
-                type="button" 
-                className="cancel-button"
-                onClick={() => {
-                  setShowCreateForm(false)
-                  setNewListName('')
-                }}
-              >
-                Cancel
-              </button>
-            </div>
-          </form>
-        )}
-
-        {lists.length > 0 && !showCreateForm && (
-          <>
-            <div className="lists-container">
-              {lists.map((list) => {
-                const isWordInList = list.words.some(w => w.greek === word.greek)
-                const isDefault = list.isDefault || list.id === 'unstudied' || list.id === 'learned'
-                return (
-                  <div 
-                    key={list.id} 
-                    className={`list-item ${isDefault ? 'default-list-item' : ''} ${isWordInList ? 'added' : ''}`}
-                    onClick={() => !isWordInList && handleAddToList(list.id)}
-                  >
-                    <div className="list-info">
-                      <div className="list-name">
-                        {list.name}
-                        {isDefault && <span className="default-badge-inline">Default</span>}
-                      </div>
-                      <div className="list-count">{list.words.length} words</div>
-                    </div>
-                    {isWordInList && <span className="added-check">✓</span>}
-                  </div>
-                )
-              })}
-              <div 
-                className="list-item create-item"
-                onClick={() => setShowCreateForm(true)}
-              >
-                <div className="list-info">
-                  <div className="list-name">+ Create New List</div>
-                </div>
-              </div>
-            </div>
-          </>
-        )}
+    <Modal
+      isOpen={true}
+      onClose={onClose}
+      title="Add to List"
+      size="md"
+    >
+      <div className="mb-4 text-center">
+        <p className="text-2xl font-semibold text-primary">{word.greek}</p>
       </div>
-    </div>
+
+      {lists.length === 0 && !showCreateForm && (
+        <div className="text-center py-6">
+          <p className="text-secondary mb-4">You don't have any lists yet.</p>
+          <Button variant="primary" onClick={() => setShowCreateForm(true)}>
+            Create New List
+          </Button>
+        </div>
+      )}
+
+      {showCreateForm && (
+        <form onSubmit={handleCreateList} className="flex flex-col gap-4">
+          <Input
+            type="text"
+            placeholder="List name"
+            value={newListName}
+            onChange={(e) => setNewListName(e.target.value)}
+            autoFocus
+            maxLength={50}
+            fullWidth
+          />
+          <div className="flex gap-3 justify-end">
+            <Button
+              type="button"
+              variant="secondary"
+              onClick={() => {
+                setShowCreateForm(false)
+                setNewListName('')
+              }}
+            >
+              Cancel
+            </Button>
+            <Button
+              type="submit"
+              variant="primary"
+              disabled={loading || !newListName.trim()}
+              loading={loading}
+            >
+              Create & Add
+            </Button>
+          </div>
+        </form>
+      )}
+
+      {lists.length > 0 && !showCreateForm && (
+        <div className="flex flex-col gap-2">
+          {lists.map((list) => {
+            const isWordInList = list.words.some(w => w.greek === word.greek)
+            const isDefault = list.isDefault || list.id === 'unstudied' || list.id === 'learned'
+            return (
+              <div
+                key={list.id}
+                onClick={() => !isWordInList && !loading && handleAddToList(list.id)}
+                className={`
+                  flex items-center justify-between p-4 rounded-lg border-2 transition cursor-pointer
+                  ${isWordInList ? 'bg-gray-50 border-success cursor-default' : 'border-gray-200 hover:border-primary hover:bg-gray-50'}
+                `}
+                style={{ cursor: isWordInList || loading ? 'default' : 'pointer' }}
+              >
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="font-medium">{list.name}</span>
+                    {isDefault && <Badge variant="info" size="sm">Default</Badge>}
+                  </div>
+                  <div className="text-sm text-secondary">{list.words.length} words</div>
+                </div>
+                {isWordInList && <span className="text-success text-2xl">✓</span>}
+              </div>
+            )
+          })}
+          <div
+            onClick={() => setShowCreateForm(true)}
+            className="flex items-center justify-between p-4 rounded-lg border-2 border-dashed border-gray-300 hover:border-primary hover:bg-gray-50 transition cursor-pointer"
+          >
+            <span className="font-medium text-primary">+ Create New List</span>
+          </div>
+        </div>
+      )}
+    </Modal>
   )
 }
 

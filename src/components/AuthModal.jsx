@@ -1,20 +1,24 @@
-import { useState } from 'react'
+import Modal from './common/Modal'
 import GoogleAuth from './GoogleAuth'
-import './AuthModal.css'
 
 const AuthModal = ({ onClose }) => {
   return (
-    <div className="auth-modal-overlay" onClick={onClose}>
-      <div className="auth-modal-content" onClick={(e) => e.stopPropagation()}>
-        <button className="auth-modal-close" onClick={onClose}>×</button>
-        <h2 className="auth-modal-title">Authorization Required</h2>
-        <p className="auth-modal-message">
-          To save your progress and learning statistics, you need to authorize. 
+    <Modal
+      isOpen={true}
+      onClose={onClose}
+      title="Authorization Required"
+      size="md"
+      closeOnOverlayClick={false}
+      closeOnEsc={true}
+    >
+      <div style={{ textAlign: 'center' }}>
+        <p className="text-secondary" style={{ marginBottom: 'var(--space-6)' }}>
+          To save your progress and learning statistics, you need to authorize.
           We will never send you emails or use your data in any other way.
         </p>
         <GoogleAuth />
       </div>
-    </div>
+    </Modal>
   )
 }
 

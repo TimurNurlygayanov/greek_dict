@@ -398,12 +398,92 @@
   margin-bottom: 20px;
   padding-bottom: 15px;
   border-bottom: 2px solid #e0e0e0;
+  position: relative;
+}
+
+.modal-title-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
 }
 
 .list-modal-header h2 {
   font-size: 24px;
   color: #333;
   margin: 0;
+}
+
+.modal-rename-button {
+  background: transparent;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  padding: 6px 10px;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-size: 16px;
+  line-height: 1;
+}
+
+.modal-rename-button:hover {
+  background: #f0f0f0;
+  border-color: #0D5EAF;
+}
+
+.modal-rename-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+
+.modal-rename-input {
+  font-size: 20px;
+  font-weight: 600;
+  padding: 8px 12px;
+  border: 2px solid #0D5EAF;
+  border-radius: 8px;
+  outline: none;
+  width: 100%;
+}
+
+.modal-rename-input:focus {
+  border-color: #005BAE;
+  box-shadow: 0 0 0 3px rgba(13, 94, 175, 0.1);
+}
+
+.modal-rename-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.modal-rename-save,
+.modal-rename-cancel {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-size: 14px;
+}
+
+.modal-rename-save {
+  background: #0D5EAF;
+  color: white;
+}
+
+.modal-rename-save:hover {
+  background: #005BAE;
+}
+
+.modal-rename-cancel {
+  background: #f0f0f0;
+  color: #333;
+}
+
+.modal-rename-cancel:hover {
+  background: #e0e0e0;
 }
 
 .list-modal-close {

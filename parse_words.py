@@ -3,6 +3,8 @@ import json
 import re
 import unicodedata
 
+words_level = 'B1'
+
 
 def normalize_greek(text: str) -> str:
     """Удаляет ударения и диакритики из греческого текста для поиска"""
@@ -20,7 +22,7 @@ def extract_pos(greek_part: str):
     return greek_part.strip(), ""  # если не найдено — вернуть пустую строку
 
 
-doc = fitz.open("words.pdf")
+doc = fitz.open(f"words_{words_level}.pdf")
 lines = []
 
 # Собираем все строки со всех страниц
@@ -86,7 +88,7 @@ while i < len(lines):
     i += 1
 
 # Сохраняем результат
-with open("dictionary.json", "w", encoding="utf-8") as f:
+with open(f"dictionary_{words_level}.json", "w", encoding="utf-8") as f:
     json.dump(data, f, ensure_ascii=False, indent=2)
 
 print(f"✅ Extracted {len(data)} entries.")
