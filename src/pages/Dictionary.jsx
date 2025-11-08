@@ -177,11 +177,6 @@ const Dictionary = () => {
         <Card variant="elevated" padding="xl" className="word-result animate-scale-in">
           <div className="flex items-center gap-3 mb-2" style={{ justifyContent: 'center' }}>
             <div className="word-result-greek">{selectedWord.greek}</div>
-            {selectedWord.level && (
-              <Badge variant={getLevelBadgeVariant(selectedWord.level)} size="md">
-                {selectedWord.level}
-              </Badge>
-            )}
           </div>
           {selectedWord.pos && (
             <div className="word-result-pos">{selectedWord.pos}</div>

@@ -119,6 +119,11 @@ const AddToListModal = ({ word, onClose, onSuccess }) => {
             {lists.map((list) => {
               const isWordInList = list.words.some(w => w.greek === word.greek)
               const isDefault = list.isDefault || list.id === 'unstudied' || list.id === 'learned'
+              // Check if this is a default level list that matches the word's level (e.g., "A1 Words" for an A1 word)
+              const isDefaultLevelList = isDefault && word.level && list.name.includes(word.level)
+              // Only show "Already added" badge for custom lists or default lists that don't match word level
+              const showAlreadyAddedBadge = isWordInList && !isDefaultLevelList
+
               return (
                 <div
                   key={list.id}
@@ -142,7 +147,7 @@ const AddToListModal = ({ word, onClose, onSuccess }) => {
                   </div>
                   {isWordInList ? (
                     <div className="flex items-center gap-2">
-                      <Badge variant="success" size="sm">Already added</Badge>
+                      {showAlreadyAddedBadge && <Badge variant="success" size="sm">Already added</Badge>}
                       <span className="text-success-600 text-xl">✓</span>
                     </div>
                   ) : (
