@@ -34,6 +34,9 @@ const Flashcards = () => {
   const [touchStart, setTouchStart] = useState(null)
   const [touchEnd, setTouchEnd] = useState(null)
 
+  // Detect if device has touch capability
+  const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0
+
   // Swipe threshold (minimum distance for a swipe)
   const minSwipeDistance = 50
 
@@ -586,12 +589,14 @@ const Flashcards = () => {
           )}
           {!showTranslation && (
             <div className="text-tertiary mt-8 animate-fade-in" style={{ fontSize: 'clamp(1rem, 2.5vw, 1.5rem)' }}>
-              Tap to reveal translation
+              {isTouchDevice ? 'Tap to reveal translation' : 'Click to reveal translation'}
             </div>
           )}
           {showTranslation && (
             <div className="text-tertiary mt-4 animate-fade-in" style={{ fontSize: 'clamp(0.875rem, 2vw, 1.125rem)', animationDelay: '0.3s' }}>
-              Swipe horizontally for next • Swipe up to mark as learned
+              {isTouchDevice
+                ? 'Swipe horizontally for next • Swipe up to mark as learned'
+                : 'Click anywhere to continue'}
             </div>
           )}
         </Card>

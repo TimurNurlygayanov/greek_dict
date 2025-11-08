@@ -153,19 +153,20 @@ const Dictionary = () => {
                 onClick={() => handleSuggestionClick(word)}
                 role="option"
                 aria-selected={highlightedIndex === index}
+                style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}
               >
-                <div className="flex items-center gap-2 mb-1">
-                  <div className="suggestion-greek">{word.greek}</div>
-                  {word.level && (
-                    <Badge variant={getLevelBadgeVariant(word.level)} size="sm">
-                      {word.level}
-                    </Badge>
+                <div style={{ flex: 1 }}>
+                  <div className="suggestion-greek" style={{ marginBottom: '4px' }}>{word.greek}</div>
+                  {word.pos && (
+                    <div className="suggestion-pos">{word.pos}</div>
                   )}
+                  <div className="suggestion-english">{word.english}</div>
                 </div>
-                {word.pos && (
-                  <div className="suggestion-pos">{word.pos}</div>
+                {word.level && (
+                  <Badge variant={getLevelBadgeVariant(word.level)} size="sm" style={{ marginLeft: '12px', flexShrink: 0 }}>
+                    {word.level}
+                  </Badge>
                 )}
-                <div className="suggestion-english">{word.english}</div>
               </div>
             ))}
           </div>
@@ -237,11 +238,10 @@ const Dictionary = () => {
             variant="primary"
             size="lg"
             onClick={() => setShowAddCustomWordModal(true)}
-            icon={<span>+</span>}
           >
             Add as Custom Word
           </Button>
-          <p className="text-xs text-secondary mt-3">
+          <p className="text-xs text-secondary mt-6">
             Custom words are saved to your personal dictionary and work just like regular words.
           </p>
         </Card>

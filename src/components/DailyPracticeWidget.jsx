@@ -65,25 +65,9 @@ const DailyPracticeWidget = ({ onSelectDailyPractice }) => {
     }
   }
 
-  const handleMouseMove = (e) => {
-    const rect = e.currentTarget.getBoundingClientRect()
-    const x = (e.clientX - rect.left) / rect.width
-    const y = (e.clientY - rect.top) / rect.height
-    setMousePosition({ x, y })
-  }
-
   const getCardTransform = () => {
-    if (!isHovering) return 'perspective(1000px) rotateX(0deg) rotateY(0deg)'
-    const rotateX = (mousePosition.y - 0.5) * -10
-    const rotateY = (mousePosition.x - 0.5) * 10
-    return `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`
-  }
-
-  const getGlowPosition = () => {
-    return {
-      left: `${mousePosition.x * 100}%`,
-      top: `${mousePosition.y * 100}%`
-    }
+    if (!isHovering) return 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)'
+    return `perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1.03)`
   }
 
   if (loading || isHidden) {
@@ -97,7 +81,6 @@ const DailyPracticeWidget = ({ onSelectDailyPractice }) => {
           variant="elevated"
           padding="lg"
           className="mb-6 animate-fade-in-up"
-          onMouseMove={handleMouseMove}
           onMouseEnter={() => setIsHovering(true)}
           onMouseLeave={() => setIsHovering(false)}
           style={{
@@ -106,26 +89,64 @@ const DailyPracticeWidget = ({ onSelectDailyPractice }) => {
             position: 'relative',
             overflow: 'hidden',
             transform: getCardTransform(),
-            transition: 'transform 0.1s ease-out, box-shadow 0.3s ease',
+            transition: 'transform 0.3s ease, box-shadow 0.3s ease',
             boxShadow: isHovering
-              ? '0 20px 60px rgba(102, 126, 234, 0.4), 0 0 40px rgba(118, 75, 162, 0.3)'
-              : '0 10px 30px rgba(0, 0, 0, 0.2)'
+              ? '0 0 30px rgba(102, 126, 234, 0.8), 0 0 60px rgba(118, 75, 162, 0.6), inset 0 0 20px rgba(255, 255, 255, 0.1)'
+              : '0 10px 30px rgba(0, 0, 0, 0.2)',
+            border: isHovering ? '2px solid rgba(255, 255, 255, 0.3)' : '2px solid transparent'
           }}
         >
-          {/* Lighting effect */}
+          {/* Neon glow borders */}
           {isHovering && (
-            <div
-              style={{
-                position: 'absolute',
-                width: '200px',
-                height: '200px',
-                background: 'radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%)',
-                ...getGlowPosition(),
-                transform: 'translate(-50%, -50%)',
-                pointerEvents: 'none',
-                transition: 'left 0.1s ease, top 0.1s ease'
-              }}
-            />
+            <>
+              <div
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  height: '2px',
+                  background: 'linear-gradient(90deg, transparent, #fff, transparent)',
+                  animation: 'shimmer 2s infinite',
+                  pointerEvents: 'none'
+                }}
+              />
+              <div
+                style={{
+                  position: 'absolute',
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  height: '2px',
+                  background: 'linear-gradient(90deg, transparent, #fff, transparent)',
+                  animation: 'shimmer 2s infinite',
+                  animationDelay: '1s',
+                  pointerEvents: 'none'
+                }}
+              />
+            </>
+          )}
+
+          {/* Magic particles */}
+          {isHovering && (
+            <>
+              {[...Array(8)].map((_, i) => (
+                <div
+                  key={i}
+                  style={{
+                    position: 'absolute',
+                    width: '4px',
+                    height: '4px',
+                    background: 'rgba(255, 255, 255, 0.8)',
+                    borderRadius: '50%',
+                    boxShadow: '0 0 10px rgba(255, 255, 255, 0.8)',
+                    animation: `particle${i % 4} ${2 + (i % 3)}s ease-in-out infinite`,
+                    animationDelay: `${i * 0.2}s`,
+                    pointerEvents: 'none'
+                  }}
+                />
+              ))}
+            </>
           )}
 
           <button
@@ -213,7 +234,6 @@ const DailyPracticeWidget = ({ onSelectDailyPractice }) => {
         variant="elevated"
         padding="lg"
         className="mb-6 animate-fade-in-up"
-        onMouseMove={handleMouseMove}
         onMouseEnter={() => setIsHovering(true)}
         onMouseLeave={() => setIsHovering(false)}
         style={{
@@ -222,27 +242,67 @@ const DailyPracticeWidget = ({ onSelectDailyPractice }) => {
           position: 'relative',
           overflow: 'hidden',
           transform: getCardTransform(),
-          transition: 'transform 0.1s ease-out, box-shadow 0.3s ease',
+          transition: 'transform 0.3s ease, box-shadow 0.3s ease',
           boxShadow: isHovering
-            ? '0 20px 60px rgba(102, 126, 234, 0.4), 0 0 40px rgba(118, 75, 162, 0.3)'
-            : '0 10px 30px rgba(0, 0, 0, 0.2)'
+            ? '0 0 30px rgba(102, 126, 234, 0.8), 0 0 60px rgba(118, 75, 162, 0.6), inset 0 0 20px rgba(255, 255, 255, 0.1)'
+            : '0 10px 30px rgba(0, 0, 0, 0.2)',
+          border: isHovering ? '2px solid rgba(255, 255, 255, 0.3)' : '2px solid transparent'
         }}
       >
-        {/* Lighting effect */}
+        {/* Neon glow borders */}
         {isHovering && (
-          <div
-            style={{
-              position: 'absolute',
-              width: '200px',
-              height: '200px',
-              background: 'radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%)',
-              ...getGlowPosition(),
-              transform: 'translate(-50%, -50%)',
-              pointerEvents: 'none',
-              transition: 'left 0.1s ease, top 0.1s ease',
-              zIndex: 0
-            }}
-          />
+          <>
+            <div
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                right: 0,
+                height: '2px',
+                background: 'linear-gradient(90deg, transparent, #fff, transparent)',
+                animation: 'shimmer 2s infinite',
+                pointerEvents: 'none',
+                zIndex: 2
+              }}
+            />
+            <div
+              style={{
+                position: 'absolute',
+                bottom: 0,
+                left: 0,
+                right: 0,
+                height: '2px',
+                background: 'linear-gradient(90deg, transparent, #fff, transparent)',
+                animation: 'shimmer 2s infinite',
+                animationDelay: '1s',
+                pointerEvents: 'none',
+                zIndex: 2
+              }}
+            />
+          </>
+        )}
+
+        {/* Magic particles */}
+        {isHovering && (
+          <>
+            {[...Array(8)].map((_, i) => (
+              <div
+                key={i}
+                style={{
+                  position: 'absolute',
+                  width: '4px',
+                  height: '4px',
+                  background: 'rgba(255, 255, 255, 0.8)',
+                  borderRadius: '50%',
+                  boxShadow: '0 0 10px rgba(255, 255, 255, 0.8)',
+                  animation: `particle${i % 4} ${2 + (i % 3)}s ease-in-out infinite`,
+                  animationDelay: `${i * 0.2}s`,
+                  pointerEvents: 'none',
+                  zIndex: 1
+                }}
+              />
+            ))}
+          </>
         )}
 
         {/* Sparkle animation background */}
@@ -336,6 +396,30 @@ const DailyPracticeWidget = ({ onSelectDailyPractice }) => {
           @keyframes pulse {
             0%, 100% { opacity: 0.5; }
             50% { opacity: 1; }
+          }
+          @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(200%); }
+          }
+          @keyframes particle0 {
+            0% { left: 10%; top: 20%; opacity: 0; }
+            50% { opacity: 1; }
+            100% { left: 90%; top: 80%; opacity: 0; }
+          }
+          @keyframes particle1 {
+            0% { left: 90%; top: 30%; opacity: 0; }
+            50% { opacity: 1; }
+            100% { left: 10%; top: 70%; opacity: 0; }
+          }
+          @keyframes particle2 {
+            0% { left: 50%; top: 10%; opacity: 0; }
+            50% { opacity: 1; }
+            100% { left: 50%; top: 90%; opacity: 0; }
+          }
+          @keyframes particle3 {
+            0% { left: 20%; top: 80%; opacity: 0; }
+            50% { opacity: 1; }
+            100% { left: 80%; top: 20%; opacity: 0; }
           }
         `}</style>
       </Card>
