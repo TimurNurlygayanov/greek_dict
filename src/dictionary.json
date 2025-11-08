@@ -9800,24 +9800,17 @@
     "level": "A1"
   },
   {
-    "greek": "mar]",
-    "greek_normalized": "mar]",
+    "greek": "άτομο",
+    "greek_normalized": "ατομο",
     "pos": "",
     "english": "person",
     "level": "A1"
   },
   {
-    "greek": "tr.]",
-    "greek_normalized": "tr.]",
+    "greek": "του",
+    "greek_normalized": "του",
     "pos": "",
     "english": "its",
-    "level": "A1"
-  },
-  {
-    "greek": "you”]",
-    "greek_normalized": "you”]",
-    "pos": "",
-    "english": "You’re welcome!",
     "level": "A1"
   },
   {
@@ -9825,13 +9818,6 @@
     "greek_normalized": "‘Ιδρυμα), τo",
     "pos": "",
     "english": "Technological",
-    "level": "A2"
-  },
-  {
-    "greek": "“Thank you!”]",
-    "greek_normalized": "“Thank you!”]",
-    "pos": "",
-    "english": "You ’re welcome!",
     "level": "A2"
   },
   {
@@ -9859,7 +9845,7 @@
     "greek": "(στη) συνέχεια",
     "greek_normalized": "(στη) συνεχεια",
     "pos": "",
-    "english": "afterwards,",
+    "english": "afterwards",
     "level": "A2"
   },
   {
@@ -10997,8 +10983,8 @@
     "level": "A2"
   },
   {
-    "greek": "διάσημος]",
-    "greek_normalized": "διασημος]",
+    "greek": "διάσημος",
+    "greek_normalized": "διασημος",
     "pos": "",
     "english": "famous, celebrity",
     "level": "A2"
@@ -11774,8 +11760,8 @@
     "level": "A2"
   },
   {
-    "greek": "επώνυμος]",
-    "greek_normalized": "επωνυμος]",
+    "greek": "επώνυμος",
+    "greek_normalized": "επωνυμος",
     "pos": "",
     "english": "(well) known, famous",
     "level": "A2"
@@ -15057,8 +15043,8 @@
     "level": "A2"
   },
   {
-    "greek": "στός, επώνυμος]",
-    "greek_normalized": "στος, επωνυμος]",
+    "greek": "στός, επώνυμος",
+    "greek_normalized": "στος, επωνυμος",
     "pos": "",
     "english": "famous, well known",
     "level": "A2"
@@ -16212,85 +16198,85 @@
     "level": "A2"
   },
   {
-    "greek": "appliance]",
-    "greek_normalized": "appliance]",
+    "greek": "ηλεκτρική κουζίνα",
+    "greek_normalized": "ηλεκτρικη κουζινα",
     "pos": "",
     "english": "(electric) stove, (electric) cooker",
     "level": "A2"
   },
   {
-    "greek": "composer/singer of rebetiko]",
-    "greek_normalized": "composer/singer of rebetiko]",
+    "greek": "Βασίλης Τσιτσάνης",
+    "greek_normalized": "Βασιλης Τσιτσανης",
     "pos": "",
     "english": "Vassilis Tsitsanis",
     "level": "A2"
   },
   {
-    "greek": "dent]",
-    "greek_normalized": "dent]",
+    "greek": "Αβραάμ Λίνκολν",
+    "greek_normalized": "Αβρααμ Λινκολν",
     "pos": "",
     "english": "Abraham Lincoln",
     "level": "A2"
   },
   {
-    "greek": "electronic devices]",
-    "greek_normalized": "electronic devices]",
+    "greek": "κλειστός",
+    "greek_normalized": "κλειστος",
     "pos": "",
     "english": "turned off",
     "level": "A2"
   },
   {
-    "greek": "event]",
-    "greek_normalized": "event]",
+    "greek": "αίθουσα",
+    "greek_normalized": "αιθουσα",
     "pos": "",
     "english": "hall",
     "level": "A2"
   },
   {
-    "greek": "grammar]",
-    "greek_normalized": "grammar]",
+    "greek": "πρόσωπο",
+    "greek_normalized": "προσωπο",
     "pos": "",
     "english": "person",
     "level": "A2"
   },
   {
-    "greek": "married]",
-    "greek_normalized": "married]",
+    "greek": "ανύπαντρος",
+    "greek_normalized": "ανυπαντρος",
     "pos": "",
     "english": "single",
     "level": "A2"
   },
   {
-    "greek": "Paris]",
-    "greek_normalized": "Paris]",
+    "greek": "Πύργος του Άιφελ",
+    "greek_normalized": "Πυργος του Αιφελ",
     "pos": "",
     "english": "Eiffer Tower",
     "level": "A2"
   },
   {
-    "greek": "see also καλώ]",
-    "greek_normalized": "see also καλω]",
+    "greek": "προσκαλώ",
+    "greek_normalized": "προσκαλω",
     "pos": "",
     "english": "to invite",
     "level": "A2"
   },
   {
-    "greek": "Thessaloniki]",
-    "greek_normalized": "Thessaloniki]",
+    "greek": "Αψίδα του Γαλέριου",
+    "greek_normalized": "Αψιδα του Γαλεριου",
     "pos": "",
     "english": "Galerius arch",
     "level": "A2"
   },
   {
-    "greek": "William Shakespeare]",
-    "greek_normalized": "William Shakespeare]",
+    "greek": "Ουίλιαμ Σαίξπηρ",
+    "greek_normalized": "Ουιλιαμ Σαιξπηρ",
     "pos": "",
     "english": "“Romeo and Juliet”",
     "level": "A2"
   },
   {
-    "greek": "work]",
-    "greek_normalized": "work]",
+    "greek": "επισκευάζω",
+    "greek_normalized": "επισκευαζω",
     "pos": "",
     "english": "to fix, to repair",
     "level": "A2"
@@ -23912,8 +23898,8 @@
     "level": "B1"
   },
   {
-    "greek": "καινούριος]",
-    "greek_normalized": "καινουριος]",
+    "greek": "καινούριος",
+    "greek_normalized": "καινουριος",
     "pos": "",
     "english": "new",
     "level": "B1"
@@ -25802,8 +25788,8 @@
     "level": "B1"
   },
   {
-    "greek": "λεφτά]",
-    "greek_normalized": "λεφτα]",
+    "greek": "λεφτά",
+    "greek_normalized": "λεφτα",
     "pos": "",
     "english": "money",
     "level": "B1"
@@ -34387,7 +34373,7 @@
     "greek": "ψητός, -ή, -ό",
     "greek_normalized": "ψητος, -η, -ο",
     "pos": "",
-    "english": "grilled, roasted, baked,",
+    "english": "grilled, roasted, baked",
     "level": "B1"
   },
   {
@@ -34580,38 +34566,31 @@
     "level": "B1"
   },
   {
-    "greek": "also προσκαλώ]",
-    "greek_normalized": "also προσκαλω]",
+    "greek": "προσκαλώ",
+    "greek_normalized": "προσκαλω",
     "pos": "",
     "english": "to invite",
     "level": "B1"
   },
   {
-    "greek": "etc.]",
-    "greek_normalized": "etc.]",
+    "greek": "κλείνω",
+    "greek_normalized": "κλεινω",
     "pos": "",
     "english": "to book",
     "level": "B1"
   },
   {
-    "greek": "food]",
-    "greek_normalized": "food]",
+    "greek": "τυροσαλάτα",
+    "greek_normalized": "τυροσαλατα",
     "pos": "",
     "english": "tyrosalata, a feta dip (sometimes spicy)",
     "level": "B1"
   },
   {
-    "greek": "person]",
-    "greek_normalized": "person]",
+    "greek": "οποίος",
+    "greek_normalized": "οποιος",
     "pos": "",
     "english": "whom",
-    "level": "B1"
-  },
-  {
-    "greek": "to “Thank you!”]",
-    "greek_normalized": "to “Thank you!”]",
-    "pos": "",
-    "english": "You ’re welcome!",
     "level": "B1"
   },
   {
@@ -38808,8 +38787,8 @@
     "level": "B2"
   },
   {
-    "greek": "ενοικιαστής]",
-    "greek_normalized": "ενοικιαστης]",
+    "greek": "ενοικιαστής",
+    "greek_normalized": "ενοικιαστης",
     "pos": "",
     "english": "renter, tenant",
     "level": "B2"
@@ -39179,8 +39158,8 @@
     "level": "B2"
   },
   {
-    "greek": "επαρκής]",
-    "greek_normalized": "επαρκης]",
+    "greek": "επαρκής",
+    "greek_normalized": "επαρκης",
     "pos": "",
     "english": "insufficient, deficient",
     "level": "B2"
@@ -45867,7 +45846,7 @@
     "greek": "υπέρ",
     "greek_normalized": "υπερ",
     "pos": "",
-    "english": "pro, for",
+    "english": "for, in favor of",
     "level": "B2"
   },
   {
@@ -46613,8 +46592,8 @@
     "level": "B2"
   },
   {
-    "greek": "ty]",
-    "greek_normalized": "ty]",
+    "greek": "ξεπερνώ",
+    "greek_normalized": "ξεπερνω",
     "pos": "",
     "english": "to overcome",
     "level": "B2"

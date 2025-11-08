@@ -74,7 +74,7 @@ const Landing = () => {
             </Card>
           </Link>
 
-          <Link to="/lists" style={{ textDecoration: 'none' }}>
+          <Link to="/word-lists" style={{ textDecoration: 'none' }}>
             <Card variant="elevated" padding="lg" className="feature-card animate-fade-in-up" style={{ animationDelay: '0.3s' }} hoverable>
               <div className="feature-icon">
                 <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -88,7 +88,7 @@ const Landing = () => {
                   <line x1="28" y1="42" x2="44" y2="42" stroke="#6A1B9A" strokeWidth="2" strokeLinecap="round"/>
                 </svg>
               </div>
-              <h3 className="feature-title">Create Custom Lists</h3>
+              <h3 className="feature-title">Create Custom Words Lists</h3>
               <p className="feature-description">
                 Create personalized word lists to focus on the vocabulary you need most.
               </p>

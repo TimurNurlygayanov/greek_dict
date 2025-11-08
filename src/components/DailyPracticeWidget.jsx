@@ -11,6 +11,8 @@ const DailyPracticeWidget = ({ onSelectDailyPractice }) => {
   const [showLevelModal, setShowLevelModal] = useState(false)
   const [selectedLevel, setSelectedLevel] = useState(null)
   const [isHidden, setIsHidden] = useState(false)
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
+  const [isHovering, setIsHovering] = useState(false)
 
   useEffect(() => {
     loadDailyPractice()
@@ -63,6 +65,27 @@ const DailyPracticeWidget = ({ onSelectDailyPractice }) => {
     }
   }
 
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect()
+    const x = (e.clientX - rect.left) / rect.width
+    const y = (e.clientY - rect.top) / rect.height
+    setMousePosition({ x, y })
+  }
+
+  const getCardTransform = () => {
+    if (!isHovering) return 'perspective(1000px) rotateX(0deg) rotateY(0deg)'
+    const rotateX = (mousePosition.y - 0.5) * -10
+    const rotateY = (mousePosition.x - 0.5) * 10
+    return `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`
+  }
+
+  const getGlowPosition = () => {
+    return {
+      left: `${mousePosition.x * 100}%`,
+      top: `${mousePosition.y * 100}%`
+    }
+  }
+
   if (loading || isHidden) {
     return null
   }
@@ -74,12 +97,37 @@ const DailyPracticeWidget = ({ onSelectDailyPractice }) => {
           variant="elevated"
           padding="lg"
           className="mb-6 animate-fade-in-up"
+          onMouseMove={handleMouseMove}
+          onMouseEnter={() => setIsHovering(true)}
+          onMouseLeave={() => setIsHovering(false)}
           style={{
             background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
             color: 'white',
-            position: 'relative'
+            position: 'relative',
+            overflow: 'hidden',
+            transform: getCardTransform(),
+            transition: 'transform 0.1s ease-out, box-shadow 0.3s ease',
+            boxShadow: isHovering
+              ? '0 20px 60px rgba(102, 126, 234, 0.4), 0 0 40px rgba(118, 75, 162, 0.3)'
+              : '0 10px 30px rgba(0, 0, 0, 0.2)'
           }}
         >
+          {/* Lighting effect */}
+          {isHovering && (
+            <div
+              style={{
+                position: 'absolute',
+                width: '200px',
+                height: '200px',
+                background: 'radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%)',
+                ...getGlowPosition(),
+                transform: 'translate(-50%, -50%)',
+                pointerEvents: 'none',
+                transition: 'left 0.1s ease, top 0.1s ease'
+              }}
+            />
+          )}
+
           <button
             onClick={() => setIsHidden(true)}
             style={{
@@ -97,19 +145,20 @@ const DailyPracticeWidget = ({ onSelectDailyPractice }) => {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              transition: 'background 0.2s'
+              transition: 'background 0.2s',
+              zIndex: 2
             }}
             onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.3)'}
             onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.2)'}
           >
             ×
           </button>
-          <div className="text-center" onClick={() => setShowLevelModal(true)} style={{ cursor: 'pointer' }}>
-            <div className="text-5xl mb-3">✨</div>
-            <h3 className="text-2xl font-bold mb-2" style={{ margin: 0, color: 'white' }}>
+          <div className="text-center" onClick={() => setShowLevelModal(true)} style={{ cursor: 'pointer', position: 'relative', zIndex: 1 }}>
+            <div className="text-3xl mb-4">✨</div>
+            <h3 className="text-2xl font-bold mb-3" style={{ margin: 0, color: 'white' }}>
               Daily Practice
             </h3>
-            <p className="text-sm mb-3" style={{ color: 'rgba(255, 255, 255, 0.9)' }}>
+            <p className="text-sm mb-5" style={{ color: 'rgba(255, 255, 255, 0.9)' }}>
               Start your learning journey with 10 words a day!
             </p>
             <Button variant="secondary" size="lg">
@@ -164,13 +213,38 @@ const DailyPracticeWidget = ({ onSelectDailyPractice }) => {
         variant="elevated"
         padding="lg"
         className="mb-6 animate-fade-in-up"
+        onMouseMove={handleMouseMove}
+        onMouseEnter={() => setIsHovering(true)}
+        onMouseLeave={() => setIsHovering(false)}
         style={{
           background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
           color: 'white',
           position: 'relative',
-          overflow: 'hidden'
+          overflow: 'hidden',
+          transform: getCardTransform(),
+          transition: 'transform 0.1s ease-out, box-shadow 0.3s ease',
+          boxShadow: isHovering
+            ? '0 20px 60px rgba(102, 126, 234, 0.4), 0 0 40px rgba(118, 75, 162, 0.3)'
+            : '0 10px 30px rgba(0, 0, 0, 0.2)'
         }}
       >
+        {/* Lighting effect */}
+        {isHovering && (
+          <div
+            style={{
+              position: 'absolute',
+              width: '200px',
+              height: '200px',
+              background: 'radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%)',
+              ...getGlowPosition(),
+              transform: 'translate(-50%, -50%)',
+              pointerEvents: 'none',
+              transition: 'left 0.1s ease, top 0.1s ease',
+              zIndex: 0
+            }}
+          />
+        )}
+
         {/* Sparkle animation background */}
         <div
           style={{
@@ -181,7 +255,8 @@ const DailyPracticeWidget = ({ onSelectDailyPractice }) => {
             bottom: 0,
             background: 'radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%), radial-gradient(circle at 80% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%)',
             animation: 'pulse 3s ease-in-out infinite',
-            pointerEvents: 'none'
+            pointerEvents: 'none',
+            zIndex: 0
           }}
         />
 
@@ -214,7 +289,7 @@ const DailyPracticeWidget = ({ onSelectDailyPractice }) => {
         <div style={{ position: 'relative', zIndex: 1 }}>
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-3">
-              <div className="text-4xl">✨</div>
+              <div className="text-3xl">✨</div>
               <div>
                 <h3 className="text-2xl font-bold" style={{ margin: 0, color: 'white' }}>
                   Today's Practice
