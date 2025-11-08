@@ -48,7 +48,26 @@ const AddToListModal = ({ word, onClose, onSuccess }) => {
     <Modal
       isOpen={true}
       onClose={onClose}
-      title="Add to List"
+      title={
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
+          <span>Add to List</span>
+          <Button
+            variant="primary"
+            size="md"
+            onClick={() => setShowCreateForm(true)}
+            style={{
+              width: '40px',
+              height: '40px',
+              borderRadius: 'var(--radius-full)',
+              fontSize: 'var(--text-2xl)',
+              padding: 0,
+              minWidth: 'unset'
+            }}
+          >
+            +
+          </Button>
+        </div>
+      }
       size="md"
     >
       <div className="mb-4 text-center">
@@ -58,9 +77,7 @@ const AddToListModal = ({ word, onClose, onSuccess }) => {
       {lists.length === 0 && !showCreateForm && (
         <div className="text-center py-6">
           <p className="text-secondary mb-4">You don't have any lists yet.</p>
-          <Button variant="primary" onClick={() => setShowCreateForm(true)}>
-            Create New List
-          </Button>
+          <p className="text-secondary">Click the + button above to create your first list!</p>
         </div>
       )}
 
@@ -124,12 +141,6 @@ const AddToListModal = ({ word, onClose, onSuccess }) => {
               </div>
             )
           })}
-          <div
-            onClick={() => setShowCreateForm(true)}
-            className="flex items-center justify-between p-4 rounded-lg border-2 border-dashed border-gray-300 hover:border-primary hover:bg-gray-50 transition cursor-pointer"
-          >
-            <span className="font-medium text-primary">+ Create New List</span>
-          </div>
         </div>
       )}
     </Modal>

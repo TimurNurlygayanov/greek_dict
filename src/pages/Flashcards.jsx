@@ -225,9 +225,6 @@ const Flashcards = () => {
           <h1 className="text-5xl font-bold mb-2" style={{ color: 'white', margin: 0 }}>
             Choose Your Practice List
           </h1>
-          <p className="text-lg" style={{ color: 'rgba(255, 255, 255, 0.8)' }}>
-            Select which words you want to practice
-          </p>
         </div>
 
         {lists.length === 0 ? (
