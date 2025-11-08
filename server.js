@@ -111,32 +111,6 @@ const ensureDefaultLists = (userId, userLists) => {
     }
   })
 
-  let unstudiedList = userLists.find(list => list.id === 'unstudied')
-  if (!unstudiedList) {
-    unstudiedList = {
-      id: 'unstudied',
-      name: 'B2 Required Words',
-      words: [],
-      learnedWords: [],
-      isDefault: true
-    }
-    userLists.push(unstudiedList)
-    updated = true
-  }
-
-  let learnedList = userLists.find(list => list.id === 'learned')
-  if (!learnedList) {
-    learnedList = {
-      id: 'learned',
-      name: 'Learned Words',
-      words: [],
-      learnedWords: [],
-      isDefault: true
-    }
-    userLists.push(learnedList)
-    updated = true
-  }
-
   return updated
 }
 
@@ -354,25 +328,7 @@ app.post('/api/lists/:userId/:listId/words', (req, res) => {
   if (!list.words.some(w => w.greek === word.greek)) {
     list.words.push(word)
   }
-  
-  // Handle "Unstudied Words" logic
-  if (listId === 'unstudied') {
-    // When adding to "Unstudied Words", check if word is in any custom list
-    const customLists = allData[userId].filter(l => l.id !== 'unstudied' && l.id !== 'learned')
-    const wordInCustomLists = customLists.some(l => l.words.some(w => w.greek === word.greek))
-    
-    if (wordInCustomLists) {
-      // Remove from unstudied if it was there
-      list.words = list.words.filter(w => w.greek !== word.greek)
-    }
-  } else if (listId !== 'learned') {
-    // If added to custom list, remove from "Unstudied Words"
-    const unstudiedList = allData[userId].find(l => l.id === 'unstudied')
-    if (unstudiedList) {
-      unstudiedList.words = unstudiedList.words.filter(w => w.greek !== word.greek)
-    }
-  }
-  
+
   writeWordLists(allData)
   
   res.json({ list })
@@ -423,22 +379,7 @@ app.post('/api/lists/:userId/:listId/learned', (req, res) => {
   if (!list.learnedWords.includes(wordGreek)) {
     list.learnedWords.push(wordGreek)
   }
-  
-  // Add to learned list
-  const learnedList = allData[userId].find(l => l.id === 'learned')
-  if (learnedList && !learnedList.words.some(w => w.greek === wordGreek)) {
-    const word = dictionary.find(w => w.greek === wordGreek)
-    if (word) {
-      learnedList.words.push(word)
-    }
-  }
-  
-  // Remove from unstudied
-  const unstudiedList = allData[userId].find(l => l.id === 'unstudied')
-  if (unstudiedList) {
-    unstudiedList.words = unstudiedList.words.filter(w => w.greek !== wordGreek)
-  }
-  
+
   writeWordLists(allData)
   
   res.json({ list })

@@ -5,17 +5,18 @@
   position: sticky;
   top: 0;
   z-index: var(--z-index-sticky);
-  padding: var(--space-4) 0;
+  padding: var(--space-6) 0;
   border-bottom: 3px solid var(--color-primary-500);
 }
 
 .nav-container {
   max-width: var(--container-max-width);
   margin: 0 auto;
-  padding: 0 var(--space-5);
+  padding: 0 var(--space-8);
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: var(--space-8);
 }
 
 .nav-logo {
@@ -26,7 +27,6 @@
   transition: var(--transition-base);
   cursor: pointer;
   text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
-  margin-left: calc(-1 * var(--space-5));
 }
 
 .nav-logo:hover {

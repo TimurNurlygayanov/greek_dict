@@ -6,8 +6,6 @@ import Card from '../components/common/Card'
 import Button from '../components/common/Button'
 import Input from '../components/common/Input'
 import Badge from '../components/common/Badge'
-import { addWordToList } from '../utils/wordLists'
-import { getUserId } from '../utils/storage'
 import './Dictionary.css'
 
 const Dictionary = () => {
@@ -52,19 +50,6 @@ const Dictionary = () => {
     // Remove focus from input field
     if (inputRef.current) {
       inputRef.current.blur()
-    }
-    
-    // Add word to "B2 Required Words" if user views it (tracks words user is interested in)
-    const userId = getUserId()
-    if (userId && !userId.startsWith('user_')) {
-      try {
-        // Check if word is already in any custom list by trying to add to unstudied
-        // Server will handle the logic
-        await addWordToList('unstudied', word)
-      } catch (error) {
-        // Silently fail - word might already be in lists
-        console.log('Word might already be in lists')
-      }
     }
   }
 

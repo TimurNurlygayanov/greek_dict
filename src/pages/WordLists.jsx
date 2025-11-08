@@ -203,14 +203,15 @@ const WordLists = () => {
         <div className="card-grid">
           {lists
             .sort((a, b) => {
-              const aIsDefault = a.isDefault || a.id === 'unstudied' || a.id === 'learned'
-              const bIsDefault = b.isDefault || b.id === 'unstudied' || b.id === 'learned'
-              if (aIsDefault && !bIsDefault) return 1
-              if (!aIsDefault && bIsDefault) return -1
-              return 0
+              // Sort: default lists first, then custom lists alphabetically
+              if (a.isDefault && !b.isDefault) return -1
+              if (!a.isDefault && b.isDefault) return 1
+              return a.name.localeCompare(b.name)
             })
             .map((list) => {
-              const isDefault = list.isDefault || list.id === 'unstudied' || list.id === 'learned'
+              const totalWords = list.words.length
+              const learnedWords = list.learnedWords.length
+              const percentage = totalWords > 0 ? Math.round((learnedWords / totalWords) * 100) : 0
 
               return (
                 <Card
@@ -223,23 +224,36 @@ const WordLists = () => {
                 >
                   <div className="flex-between mb-3">
                     <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-1">
+                      <div className="flex items-center gap-2 mb-2">
                         <h3 className="text-lg font-semibold" style={{ margin: 0 }}>
                           {list.name}
                         </h3>
-                        {isDefault && <Badge variant="info" size="sm">Default</Badge>}
+                        {list.isDefault && <Badge variant="info" size="sm">Default</Badge>}
                       </div>
-                      <div className="text-sm text-secondary">
-                        {list.words.length} word{list.words.length !== 1 ? 's' : ''}
-                        {list.learnedWords.length > 0 && (
-                          <span style={{ color: 'var(--color-success-600)', fontWeight: 'var(--font-weight-semibold)' }}>
-                            {' • '}{list.learnedWords.length} learned
-                          </span>
-                        )}
+                      <div className="text-xs text-secondary mb-2">
+                        {learnedWords} / {totalWords} words learned
+                      </div>
+                      {/* Progress Bar */}
+                      <div style={{
+                        width: '100%',
+                        height: '8px',
+                        backgroundColor: 'var(--color-gray-200)',
+                        borderRadius: 'var(--radius-full)',
+                        overflow: 'hidden'
+                      }}>
+                        <div style={{
+                          width: `${percentage}%`,
+                          height: '100%',
+                          background: 'linear-gradient(90deg, var(--color-success-500), var(--color-success-600))',
+                          transition: 'width 0.3s ease'
+                        }} />
+                      </div>
+                      <div className="text-xs text-secondary mt-1">
+                        {percentage}% complete
                       </div>
                     </div>
-                    {!isDefault && (
-                      <div onClick={(e) => e.stopPropagation()}>
+                    {!list.isDefault && (
+                      <div onClick={(e) => e.stopPropagation()} style={{ marginLeft: 'var(--space-3)' }}>
                         <Button
                           variant="ghost"
                           size="sm"

@@ -11,15 +11,17 @@
   max-width: 1200px;
   width: 100%;
   margin: 0 auto;
-  padding-bottom: 100px;
+  padding-bottom: 300px;
   position: relative;
   z-index: 2;
+  min-height: 80vh;
 }
 
 @media (max-width: 768px) {
   .main-content {
     padding: 15px;
-    padding-bottom: 100px;
+    padding-bottom: 200px;
+    min-height: 70vh;
   }
 }
 

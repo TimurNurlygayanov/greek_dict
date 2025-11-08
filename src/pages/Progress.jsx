@@ -187,10 +187,6 @@ const Progress = () => {
     ? Math.round((memorizedCount / totalWords) * 100)
     : 0
 
-  // Get default lists
-  const unstudiedList = lists.find(l => l.id === 'unstudied')
-  const learnedList = lists.find(l => l.id === 'learned')
-
   // Progress Bar Component
   const ProgressBar = ({ value, max, showLabel = true, size = 'md' }) => {
     const percentage = max > 0 ? Math.round((value / max) * 100) : 0
@@ -274,27 +270,17 @@ const Progress = () => {
       {/* Quick Stats */}
       <Card variant="elevated" padding="lg" className="mb-8">
         <h2 className="text-2xl font-semibold mb-4" style={{ margin: 0 }}>Overview</h2>
-        <div className="grid grid-cols-4 gap-6">
+        <div className="grid grid-cols-3 gap-6">
           <div>
             <div className="text-sm text-secondary mb-1">Total Words</div>
             <div className="text-3xl font-bold text-primary">{totalWords}</div>
           </div>
-          {learnedList && (
-            <div>
-              <div className="text-sm text-secondary mb-1">Learned</div>
-              <div className="text-3xl font-bold" style={{ color: 'var(--color-success-600)' }}>
-                {learnedList.words.length}
-              </div>
+          <div>
+            <div className="text-sm text-secondary mb-1">Learned</div>
+            <div className="text-3xl font-bold" style={{ color: 'var(--color-success-600)' }}>
+              {memorizedCount}
             </div>
-          )}
-          {unstudiedList && (
-            <div>
-              <div className="text-sm text-secondary mb-1">B2 Required</div>
-              <div className="text-3xl font-bold" style={{ color: 'var(--color-warning-600)' }}>
-                {unstudiedList.words.length}
-              </div>
-            </div>
-          )}
+          </div>
           <div>
             <div className="text-sm text-secondary mb-1">To Learn</div>
             <div className="text-3xl font-bold text-primary">{totalWords - memorizedCount}</div>
@@ -337,51 +323,53 @@ const Progress = () => {
       </div>
 
       {/* Achievements */}
-      {achievements.length > 0 && (
-        <div className="mb-8">
-          <div className="flex items-center gap-4 mb-4">
-            <h2 className="text-3xl font-bold flex-1" style={{ color: 'white', margin: 0 }}>
-              Achievements
-            </h2>
-            <div className="text-sm text-secondary">
-              {achievements.filter(a => a.unlocked).length} / {achievements.length} unlocked
+      {achievements.filter(a => a.unlocked).length > 0 && (
+        <Card variant="elevated" padding="lg" className="mb-8">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-2xl font-semibold" style={{ margin: 0 }}>Achievements</h2>
+            <div className="text-sm" style={{ color: 'var(--color-text-secondary)' }}>
+              Unlocked {achievements.filter(a => a.unlocked).length} / {achievements.length}
             </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {achievements.map((achievement) => (
-              <Card
+          <div
+            style={{
+              display: 'flex',
+              gap: 'var(--space-3)',
+              overflowX: 'auto',
+              paddingBottom: 'var(--space-2)',
+              scrollbarWidth: 'thin'
+            }}
+          >
+            {achievements.filter(a => a.unlocked).map((achievement) => (
+              <div
                 key={achievement.id}
-                variant={achievement.unlocked ? 'glass' : 'elevated'}
-                padding="md"
-                className={`animate-scale-in text-center ${!achievement.unlocked ? 'opacity-50' : ''}`}
                 style={{
-                  filter: achievement.unlocked ? 'none' : 'grayscale(0.5)',
-                  border: achievement.unlocked ? `2px solid ${achievement.color}20` : 'none'
+                  minWidth: '120px',
+                  textAlign: 'center',
+                  padding: 'var(--space-3)',
+                  borderRadius: 'var(--radius-lg)',
+                  background: `linear-gradient(135deg, ${achievement.color}10, ${achievement.color}05)`,
+                  border: `2px solid ${achievement.color}30`
                 }}
+                title={achievement.description}
               >
-                <div className="text-5xl mb-2" style={{ filter: achievement.unlocked ? 'none' : 'grayscale(1)' }}>
+                <div style={{ fontSize: '2rem', marginBottom: 'var(--space-1)' }}>
                   {achievement.icon}
                 </div>
-                <div className="font-bold mb-1" style={{ color: achievement.unlocked ? achievement.color : 'var(--color-text-secondary)' }}>
+                <div
+                  style={{
+                    fontSize: 'var(--text-xs)',
+                    fontWeight: 'var(--font-weight-semibold)',
+                    color: achievement.color,
+                    lineHeight: '1.2'
+                  }}
+                >
                   {achievement.title}
                 </div>
-                <div className="text-xs" style={{ color: achievement.unlocked ? 'var(--color-text-secondary)' : 'var(--color-text-tertiary)' }}>
-                  {achievement.description}
-                </div>
-                {achievement.unlocked && (
-                  <div className="mt-2">
-                    <Badge variant="success" size="sm">Unlocked</Badge>
-                  </div>
-                )}
-                {!achievement.unlocked && (
-                  <div className="mt-2">
-                    <Badge variant="outline" size="sm">Locked</Badge>
-                  </div>
-                )}
-              </Card>
+              </div>
             ))}
           </div>
-        </div>
+        </Card>
       )}
 
       {/* Progress by Lists */}

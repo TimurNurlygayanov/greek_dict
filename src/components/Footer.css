@@ -3,6 +3,7 @@
   border-top: 1px solid var(--color-border);
   margin-top: auto;
   padding: var(--space-8) 0 var(--space-6);
+  opacity: 0.8;
 }
 
 .footer-container {
