@@ -48,15 +48,14 @@ const AddToListModal = ({ word, onClose, onSuccess }) => {
     <Modal
       isOpen={true}
       onClose={onClose}
-      title={null}
+      title={
+        <div style={{ textAlign: 'center' }}>
+          <div className="text-2xl font-bold text-primary" style={{ marginBottom: '4px' }}>{word.greek}</div>
+          <div className="text-sm text-secondary">{word.english}</div>
+        </div>
+      }
       size="md"
     >
-      {/* Word Header */}
-      <div className="mb-6 pb-4 border-b-2" style={{ borderColor: 'var(--color-border)' }}>
-        <div className="text-sm text-secondary mb-1">Adding word to list:</div>
-        <div className="text-3xl font-bold text-primary">{word.greek}</div>
-        <div className="text-sm text-secondary mt-1">{word.english}</div>
-      </div>
 
       {lists.length === 0 && !showCreateForm && (
         <div className="text-center py-6">
@@ -69,11 +68,7 @@ const AddToListModal = ({ word, onClose, onSuccess }) => {
       )}
 
       {showCreateForm && (
-        <div className="mb-4">
-          <div className="mb-3">
-            <h3 className="text-lg font-semibold mb-1" style={{ margin: 0 }}>Create New List</h3>
-            <p className="text-xs text-secondary">Enter a name for your new word list</p>
-          </div>
+        <div className="mb-3">
           <form onSubmit={handleCreateList} className="flex flex-col gap-3">
             <Input
               type="text"
@@ -111,11 +106,7 @@ const AddToListModal = ({ word, onClose, onSuccess }) => {
 
       {lists.length > 0 && !showCreateForm && (
         <>
-          <div className="mb-3">
-            <h3 className="text-lg font-semibold mb-1" style={{ margin: 0 }}>Your Lists</h3>
-            <p className="text-xs text-secondary">Click a list to add this word</p>
-          </div>
-          <div className="flex flex-col gap-2 mb-4" style={{ maxHeight: '300px', overflowY: 'auto' }}>
+          <div className="flex flex-col gap-2 mb-3" style={{ maxHeight: '320px', overflowY: 'auto' }}>
             {lists.map((list) => {
               const isWordInList = list.words.some(w => w.greek === word.greek)
               const isDefault = list.isDefault || list.id === 'unstudied' || list.id === 'learned'
@@ -129,7 +120,7 @@ const AddToListModal = ({ word, onClose, onSuccess }) => {
                   key={list.id}
                   onClick={() => !isWordInList && !loading && handleAddToList(list.id)}
                   className={`
-                    flex items-center justify-between p-4 rounded-lg border-2 transition
+                    flex items-center justify-between p-3 rounded-lg border-2 transition
                     ${isWordInList
                       ? 'bg-success-50 border-success-300 cursor-default'
                       : 'border-gray-200 hover:border-primary hover:bg-primary-50 cursor-pointer'}
@@ -158,7 +149,7 @@ const AddToListModal = ({ word, onClose, onSuccess }) => {
             })}
           </div>
 
-          <div className="pt-3 border-t" style={{ borderColor: 'var(--color-border)' }}>
+          <div className="pt-2">
             <Button
               variant="outline"
               size="md"
