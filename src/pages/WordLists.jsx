@@ -23,6 +23,7 @@ const WordLists = () => {
   const [showAddWordsMode, setShowAddWordsMode] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
   const [searchResults, setSearchResults] = useState([])
+  const [hoveredCardId, setHoveredCardId] = useState(null)
 
   const handleCreateList = async (e) => {
     e.preventDefault()
@@ -100,8 +101,8 @@ const WordLists = () => {
   const handleRemoveWord = async (listId, wordGreek) => {
     const list = lists.find(l => l.id === listId)
 
-    // Check if list is read-only
-    if (list?.isReadOnly) {
+    // Check if list is read-only or topic list
+    if (list?.isReadOnly || list?.isTopic) {
       alert('Cannot remove words from this list. You can practice and mark words as learned.')
       return
     }
@@ -219,46 +220,55 @@ const WordLists = () => {
                   hoverable
                   onClick={() => handleListClick(list)}
                   className="animate-fade-in-up"
+                  onMouseEnter={() => setHoveredCardId(list.id)}
+                  onMouseLeave={() => setHoveredCardId(null)}
+                  style={{ position: 'relative' }}
                 >
-                  <div className="flex-between mb-3">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-2">
-                        <h3 className="text-lg font-semibold" style={{ margin: 0 }}>
-                          {list.name}
-                        </h3>
-                      </div>
-                      <div className="text-xs text-secondary mb-2">
-                        {learnedWords} / {totalWords} words learned
-                      </div>
-                      {/* Progress Bar */}
-                      <div style={{
-                        width: '100%',
-                        height: '8px',
-                        backgroundColor: 'var(--color-gray-200)',
-                        borderRadius: 'var(--radius-full)',
-                        overflow: 'hidden'
-                      }}>
-                        <div style={{
-                          width: `${percentage}%`,
-                          height: '100%',
-                          background: 'linear-gradient(90deg, var(--color-success-500), var(--color-success-600))',
-                          transition: 'width 0.3s ease'
-                        }} />
-                      </div>
-                      <div className="text-xs text-secondary mt-1">
-                        {percentage}% complete
-                      </div>
-                    </div>
-                    <div onClick={(e) => e.stopPropagation()} style={{ marginLeft: 'var(--space-3)' }}>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => handleDeleteList(list.id)}
-                        title="Delete list"
-                      >
-                        🗑️
-                      </Button>
-                    </div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <h3 className="text-lg font-semibold flex-1" style={{ margin: 0 }}>
+                      {list.name}
+                    </h3>
+                  </div>
+                  <div className="text-xs text-secondary mb-2">
+                    {learnedWords} / {totalWords} words learned
+                  </div>
+                  {/* Progress Bar */}
+                  <div style={{
+                    width: '100%',
+                    height: '8px',
+                    backgroundColor: 'var(--color-gray-200)',
+                    borderRadius: 'var(--radius-full)',
+                    overflow: 'hidden'
+                  }}>
+                    <div style={{
+                      width: `${percentage}%`,
+                      height: '100%',
+                      background: 'linear-gradient(90deg, var(--color-success-500), var(--color-success-600))',
+                      transition: 'width 0.3s ease'
+                    }} />
+                  </div>
+                  <div className="text-xs text-secondary mt-1">
+                    {percentage}% complete
+                  </div>
+                  {/* Delete Icon - Bottom Right */}
+                  <div
+                    onClick={(e) => e.stopPropagation()}
+                    style={{
+                      position: 'absolute',
+                      bottom: 'var(--space-3)',
+                      right: 'var(--space-3)',
+                      opacity: hoveredCardId === list.id ? 1 : 0,
+                      transition: 'opacity 0.2s ease'
+                    }}
+                  >
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => handleDeleteList(list.id)}
+                      title="Delete list"
+                    >
+                      🗑️
+                    </Button>
                   </div>
                 </Card>
               )
@@ -360,47 +370,56 @@ const WordLists = () => {
                     hoverable
                     onClick={() => handleListClick(list)}
                     className="animate-fade-in-up"
+                    onMouseEnter={() => setHoveredCardId(list.id)}
+                    onMouseLeave={() => setHoveredCardId(null)}
+                    style={{ position: 'relative' }}
                   >
-                    <div className="flex-between mb-3">
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2 mb-2">
-                          <h3 className="text-lg font-semibold" style={{ margin: 0 }}>
-                            {list.name}
-                          </h3>
-                          <Badge variant="secondary" size="sm">Topic</Badge>
-                        </div>
-                        <div className="text-xs text-secondary mb-2">
-                          {learnedWords} / {totalWords} words learned
-                        </div>
-                        {/* Progress Bar */}
-                        <div style={{
-                          width: '100%',
-                          height: '8px',
-                          backgroundColor: 'var(--color-gray-200)',
-                          borderRadius: 'var(--radius-full)',
-                          overflow: 'hidden'
-                        }}>
-                          <div style={{
-                            width: `${percentage}%`,
-                            height: '100%',
-                            background: 'linear-gradient(90deg, var(--color-success-500), var(--color-success-600))',
-                            transition: 'width 0.3s ease'
-                          }} />
-                        </div>
-                        <div className="text-xs text-secondary mt-1">
-                          {percentage}% complete
-                        </div>
-                      </div>
-                      <div onClick={(e) => e.stopPropagation()} style={{ marginLeft: 'var(--space-3)' }}>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => handleDeleteList(list.id)}
-                          title="Delete list"
-                        >
-                          🗑️
-                        </Button>
-                      </div>
+                    <div className="flex items-center gap-2 mb-2">
+                      <h3 className="text-lg font-semibold flex-1" style={{ margin: 0 }}>
+                        {list.name}
+                      </h3>
+                      <Badge variant="secondary" size="sm">Topic</Badge>
+                    </div>
+                    <div className="text-xs text-secondary mb-2">
+                      {learnedWords} / {totalWords} words learned
+                    </div>
+                    {/* Progress Bar */}
+                    <div style={{
+                      width: '100%',
+                      height: '8px',
+                      backgroundColor: 'var(--color-gray-200)',
+                      borderRadius: 'var(--radius-full)',
+                      overflow: 'hidden'
+                    }}>
+                      <div style={{
+                        width: `${percentage}%`,
+                        height: '100%',
+                        background: 'linear-gradient(90deg, var(--color-success-500), var(--color-success-600))',
+                        transition: 'width 0.3s ease'
+                      }} />
+                    </div>
+                    <div className="text-xs text-secondary mt-1">
+                      {percentage}% complete
+                    </div>
+                    {/* Delete Icon - Bottom Right */}
+                    <div
+                      onClick={(e) => e.stopPropagation()}
+                      style={{
+                        position: 'absolute',
+                        bottom: 'var(--space-3)',
+                        right: 'var(--space-3)',
+                        opacity: hoveredCardId === list.id ? 1 : 0,
+                        transition: 'opacity 0.2s ease'
+                      }}
+                    >
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleDeleteList(list.id)}
+                        title="Delete list"
+                      >
+                        🗑️
+                      </Button>
                     </div>
                   </Card>
                 )
@@ -433,36 +452,32 @@ const WordLists = () => {
                     onClick={() => handleListClick(list)}
                     className="animate-fade-in-up"
                   >
-                    <div className="flex-between mb-3">
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2 mb-2">
-                          <h3 className="text-lg font-semibold" style={{ margin: 0 }}>
-                            {list.name}
-                          </h3>
-                          <Badge variant="info" size="sm">Level</Badge>
-                        </div>
-                        <div className="text-xs text-secondary mb-2">
-                          {learnedWords} / {totalWords} words learned
-                        </div>
-                        {/* Progress Bar */}
-                        <div style={{
-                          width: '100%',
-                          height: '8px',
-                          backgroundColor: 'var(--color-gray-200)',
-                          borderRadius: 'var(--radius-full)',
-                          overflow: 'hidden'
-                        }}>
-                          <div style={{
-                            width: `${percentage}%`,
-                            height: '100%',
-                            background: 'linear-gradient(90deg, var(--color-success-500), var(--color-success-600))',
-                            transition: 'width 0.3s ease'
-                          }} />
-                        </div>
-                        <div className="text-xs text-secondary mt-1">
-                          {percentage}% complete
-                        </div>
-                      </div>
+                    <div className="flex items-center gap-2 mb-2">
+                      <h3 className="text-lg font-semibold flex-1" style={{ margin: 0 }}>
+                        {list.name}
+                      </h3>
+                      <Badge variant="info" size="sm">Level</Badge>
+                    </div>
+                    <div className="text-xs text-secondary mb-2">
+                      {learnedWords} / {totalWords} words learned
+                    </div>
+                    {/* Progress Bar */}
+                    <div style={{
+                      width: '100%',
+                      height: '8px',
+                      backgroundColor: 'var(--color-gray-200)',
+                      borderRadius: 'var(--radius-full)',
+                      overflow: 'hidden'
+                    }}>
+                      <div style={{
+                        width: `${percentage}%`,
+                        height: '100%',
+                        background: 'linear-gradient(90deg, var(--color-success-500), var(--color-success-600))',
+                        transition: 'width 0.3s ease'
+                      }} />
+                    </div>
+                    <div className="text-xs text-secondary mt-1">
+                      {percentage}% complete
                     </div>
                   </Card>
                 )
@@ -538,16 +553,16 @@ const WordLists = () => {
             </div>
           )}
 
-          {selectedListModal.isReadOnly && (
+          {(selectedListModal.isReadOnly || selectedListModal.isTopic) && (
             <div className="mb-4 p-3 rounded-lg" style={{ backgroundColor: 'var(--color-info-100)', border: '1px solid var(--color-info-300)' }}>
               <div className="text-sm" style={{ color: 'var(--color-info-800)' }}>
-                ℹ️ This is a read-only list. You can practice these words and mark them as learned, but you cannot remove words from this list.
+                ℹ️ This is a read-only list. You can practice these words and mark them as learned, but you cannot add or remove words from this list.
               </div>
             </div>
           )}
 
-          {/* Add Words Button for custom lists */}
-          {!selectedListModal.isReadOnly && !isRenamingModal && (
+          {/* Add Words Button for custom lists only */}
+          {!selectedListModal.isReadOnly && !selectedListModal.isTopic && !isRenamingModal && (
             <div className="mb-4">
               <Button
                 variant={showAddWordsMode ? "secondary" : "primary"}
@@ -615,7 +630,7 @@ const WordLists = () => {
             <div>
               {selectedListModal.words.length === 0 ? (
                 <div className="text-center py-8 text-secondary">
-                  This list is empty. {!selectedListModal.isReadOnly && 'Click "+ Add Words" to add words to this list!'}
+                  This list is empty. {!selectedListModal.isReadOnly && !selectedListModal.isTopic && 'Click "+ Add Words" to add words to this list!'}
                 </div>
               ) : (
                 <div className="flex flex-col gap-2" style={{ maxHeight: '60vh', overflowY: 'auto' }}>
@@ -635,7 +650,7 @@ const WordLists = () => {
                         <div className="text-sm text-secondary">{word.english}</div>
                         {isLearned && <Badge variant="success" size="sm" className="mt-1">✓ Learned</Badge>}
                       </div>
-                      {!selectedListModal.isReadOnly && (
+                      {!selectedListModal.isReadOnly && !selectedListModal.isTopic && (
                         <Button
                           variant="ghost"
                           size="sm"
