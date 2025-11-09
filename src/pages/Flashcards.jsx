@@ -31,6 +31,7 @@ const Flashcards = () => {
   const [selectedAnswer, setSelectedAnswer] = useState(null)
   const [isCorrect, setIsCorrect] = useState(null)
   const [showAddToListModal, setShowAddToListModal] = useState(false)
+  const [showModeTooltip, setShowModeTooltip] = useState(false)
 
   // Word order tracking for consistent practice
   const [wordOrder, setWordOrder] = useState([])
@@ -138,6 +139,20 @@ const Flashcards = () => {
     }
   }, [selectedList, showAuthModal, refreshLists])
 
+  // Show tooltip on first game start
+  useEffect(() => {
+    if (mode && !localStorage.getItem('flashcards_modeSwitcherSeen')) {
+      setShowModeTooltip(true)
+    }
+  }, [mode])
+
+  // Auto-start mode when list is selected
+  useEffect(() => {
+    if (selectedList && mode) {
+      startMode(mode)
+    }
+  }, [selectedList])
+
   // Get available words (excluding learned ones)
   const getAvailableWords = () => {
     if (!selectedList) return []
@@ -176,7 +191,11 @@ const Flashcards = () => {
 
   const handleListSelect = (list) => {
     setSelectedList(list)
-    setMode(null)
+
+    // Auto-start game with last-used mode or default
+    const lastMode = localStorage.getItem('flashcards_lastMode') || MODES.GREEK_TO_ENGLISH
+    setMode(lastMode)
+
     setCurrentWord(null)
   }
 
@@ -475,8 +494,8 @@ const Flashcards = () => {
     )
   }
 
-  // Show mode selection
-  if (!mode) {
+  // Show game - if no words available
+  if (!currentWord && selectedList) {
     const availableWords = getAvailableWords()
     if (availableWords.length === 0) {
       return (
@@ -494,7 +513,7 @@ const Flashcards = () => {
 
           <Card variant="elevated" padding="lg" className="text-center">
             <h2 className="text-4xl font-bold mb-4" style={{ margin: 0 }}>
-              All words learned! 🎉
+              All words learned!
             </h2>
             <p className="text-lg text-secondary mb-6">
               Great job! You've mastered all words in "{selectedList.name}"
@@ -524,85 +543,26 @@ const Flashcards = () => {
           </Button>
         </div>
 
-        <div className="mb-8">
-          <h1 className="text-5xl font-bold mb-2" style={{ color: 'white', margin: 0 }}>
-            Choose Game Mode
-          </h1>
-          <p className="text-lg mb-6" style={{ color: 'rgba(255, 255, 255, 0.8)' }}>
-            Playing with: {selectedList.name} ({availableWords.length} words)
-          </p>
-        </div>
-
-        <div className="grid grid-cols-3 gap-6">
-          <Card
-            variant="elevated"
-            padding="lg"
-            hoverable
-            onClick={() => startMode(MODES.GREEK_TO_ENGLISH)}
-            className="animate-fade-in-up text-center"
-          >
-            <h3 className="text-2xl font-bold mb-3" style={{ margin: 0 }}>
-              Greek → English
-            </h3>
-            <p className="text-secondary">
-              See the Greek word and guess the translation
-            </p>
-          </Card>
-
-          <Card
-            variant="elevated"
-            padding="lg"
-            hoverable
-            onClick={() => startMode(MODES.ENGLISH_TO_GREEK)}
-            className="animate-fade-in-up text-center"
-          >
-            <h3 className="text-2xl font-bold mb-3" style={{ margin: 0 }}>
-              English → Greek
-            </h3>
-            <p className="text-secondary">
-              See the translation and remember the Greek word
-            </p>
-          </Card>
-
-          <Card
-            variant="elevated"
-            padding="lg"
-            hoverable
-            onClick={() => startMode(MODES.MULTIPLE_CHOICE)}
-            className="animate-fade-in-up text-center"
-          >
-            <h3 className="text-2xl font-bold mb-3" style={{ margin: 0 }}>
-              Multiple Choice
-            </h3>
-            <p className="text-secondary">
-              Choose the correct translation from three options
-            </p>
-          </Card>
-        </div>
-      </div>
-    )
-  }
-
-  // Show game
-  if (!currentWord) {
-    return (
-      <div className="container" style={{ paddingTop: 'var(--space-8)', paddingBottom: 'var(--space-20)' }}>
-        <div className="mb-6">
-          <Button
-            variant="ghost"
-            size="lg"
-            onClick={() => setMode(null)}
-            icon={<span>←</span>}
-          >
-            Back to modes
-          </Button>
-        </div>
-
         <Card variant="elevated" padding="lg" className="text-center">
           <h2 className="text-4xl font-bold" style={{ margin: 0 }}>No words available!</h2>
         </Card>
       </div>
     )
+  }
+
+  const handleModeChange = (newMode) => {
+    setMode(newMode)
+    localStorage.setItem('flashcards_lastMode', newMode)
+    localStorage.setItem('flashcards_modeSwitcherSeen', 'true')
+    setShowModeTooltip(false)
+
+    // Restart game with new mode
+    startMode(newMode)
+  }
+
+  const handleModeSwitcherClick = () => {
+    localStorage.setItem('flashcards_modeSwitcherSeen', 'true')
+    setShowModeTooltip(false)
   }
 
   return (
@@ -611,15 +571,88 @@ const Flashcards = () => {
         <Button
           variant="ghost"
           size="lg"
-          onClick={() => setMode(null)}
+          onClick={() => setSelectedList(null)}
           icon={<span>←</span>}
         >
-          Back to modes
+          Back to lists
         </Button>
         <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)' }}>
           <div className="text-lg" style={{ color: 'rgba(255, 255, 255, 0.9)' }}>
             {selectedList.name} • {getAvailableWords().length} words left
           </div>
+
+          {/* Mode Switcher */}
+          <div style={{ position: 'relative' }}>
+            <select
+              value={mode}
+              onChange={(e) => handleModeChange(e.target.value)}
+              onClick={handleModeSwitcherClick}
+              style={{
+                padding: 'var(--space-2) var(--space-3)',
+                borderRadius: 'var(--radius-md)',
+                border: '1px solid rgba(255, 255, 255, 0.2)',
+                backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                color: 'white',
+                fontSize: '1rem',
+                cursor: 'pointer',
+                outline: 'none',
+                transition: 'all 0.2s ease',
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.15)'
+                e.target.style.borderColor = 'rgba(255, 255, 255, 0.3)'
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.1)'
+                e.target.style.borderColor = 'rgba(255, 255, 255, 0.2)'
+              }}
+            >
+              <option value={MODES.GREEK_TO_ENGLISH} style={{ backgroundColor: '#1a1a1a', color: 'white' }}>
+                Greek → English
+              </option>
+              <option value={MODES.ENGLISH_TO_GREEK} style={{ backgroundColor: '#1a1a1a', color: 'white' }}>
+                English → Greek
+              </option>
+              <option value={MODES.MULTIPLE_CHOICE} style={{ backgroundColor: '#1a1a1a', color: 'white' }}>
+                Multiple Choice
+              </option>
+            </select>
+
+            {/* Tooltip */}
+            {showModeTooltip && (
+              <div
+                style={{
+                  position: 'absolute',
+                  top: 'calc(100% + 8px)',
+                  right: 0,
+                  backgroundColor: 'var(--color-primary-600)',
+                  color: 'white',
+                  padding: 'var(--space-3) var(--space-4)',
+                  borderRadius: 'var(--radius-md)',
+                  fontSize: '0.875rem',
+                  whiteSpace: 'nowrap',
+                  zIndex: 1000,
+                  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)',
+                  animation: 'fadeIn 0.3s ease'
+                }}
+              >
+                Try different game modes!
+                <div
+                  style={{
+                    position: 'absolute',
+                    top: '-6px',
+                    right: '20px',
+                    width: 0,
+                    height: 0,
+                    borderLeft: '6px solid transparent',
+                    borderRight: '6px solid transparent',
+                    borderBottom: '6px solid var(--color-primary-600)'
+                  }}
+                />
+              </div>
+            )}
+          </div>
+
           <Button
             variant="outline"
             size="md"

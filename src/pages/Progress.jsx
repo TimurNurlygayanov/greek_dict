@@ -333,7 +333,18 @@ const Progress = () => {
       ) : (
         <Card variant="elevated" padding="lg" className="mb-8">
           <div className="text-center" style={{ padding: 'var(--space-8) 0' }}>
-            <div style={{ fontSize: '4rem', marginBottom: 'var(--space-4)' }}>📊</div>
+            <div style={{ marginBottom: 'var(--space-4)', display: 'flex', justifyContent: 'center' }}>
+              <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="14" y="44" width="8" height="12" rx="2" fill="#FFF3E0" stroke="#E65100" strokeWidth="2"/>
+                <rect x="28" y="32" width="8" height="24" rx="2" fill="#FFE0B2" stroke="#E65100" strokeWidth="2"/>
+                <rect x="42" y="24" width="8" height="32" rx="2" fill="#FFCC80" stroke="#E65100" strokeWidth="2"/>
+                <polyline points="18,28 32,22 46,12 54,8" stroke="#E65100" strokeWidth="2" fill="none"/>
+                <circle cx="18" cy="28" r="3" fill="#E65100"/>
+                <circle cx="22" cy="28" r="3" fill="#E65100"/>
+                <circle cx="34" cy="22" r="3" fill="#E65100"/>
+                <circle cx="54" cy="12" r="3" fill="#E65100"/>
+              </svg>
+            </div>
             <h2 className="text-2xl font-semibold mb-3" style={{ margin: 0, marginBottom: 'var(--space-3)' }}>
               Start Your Learning Journey
             </h2>
