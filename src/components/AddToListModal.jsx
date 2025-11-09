@@ -13,6 +13,9 @@ const AddToListModal = ({ word, onClose, onSuccess }) => {
   const [showCreateForm, setShowCreateForm] = useState(false)
   const [loading, setLoading] = useState(false)
 
+  // Filter out default lists - only show custom user lists
+  const customLists = lists.filter(list => !list.isDefault && list.id !== 'unstudied' && list.id !== 'learned')
+
   const handleAddToList = async (listId) => {
     setLoading(true)
     try {
@@ -58,7 +61,7 @@ const AddToListModal = ({ word, onClose, onSuccess }) => {
       size="md"
     >
 
-      {lists.length === 0 && !showCreateForm && (
+      {customLists.length === 0 && !showCreateForm && (
         <div className="text-center py-6">
           <p className="text-secondary mb-4">You don't have any lists yet.</p>
           <p className="text-secondary mb-4">Create your first list to start organizing words!</p>
@@ -105,14 +108,11 @@ const AddToListModal = ({ word, onClose, onSuccess }) => {
         </div>
       )}
 
-      {lists.length > 0 && !showCreateForm && (
+      {customLists.length > 0 && !showCreateForm && (
         <>
           <div className="flex flex-col gap-3 mb-4" style={{ maxHeight: '400px', overflowY: 'auto' }}>
-            {lists.map((list) => {
+            {customLists.map((list) => {
               const isWordInList = list.words.some(w => w.greek === word.greek)
-              const isDefault = list.isDefault || list.id === 'unstudied' || list.id === 'learned'
-              // Check if this is a default level list that matches the word's level (e.g., "A1 Words" for an A1 word)
-              const isDefaultLevelList = isDefault && word.level && list.name.includes(word.level)
 
               return (
                 <Card
@@ -132,7 +132,6 @@ const AddToListModal = ({ word, onClose, onSuccess }) => {
                         <span className="text-lg font-semibold" style={{ margin: 0 }}>
                           {list.name}
                         </span>
-                        {isDefault && <Badge variant="info" size="sm">Default</Badge>}
                         {isWordInList && <Badge variant="success" size="sm">Added</Badge>}
                       </div>
                       <div className="text-sm text-secondary">{list.words.length} words</div>

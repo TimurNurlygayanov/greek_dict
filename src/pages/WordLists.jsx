@@ -159,9 +159,6 @@ const WordLists = () => {
       ) : (
         <>
           {/* Custom Lists Section */}
-          <h3 className="text-xl font-semibold mb-10" style={{ color: 'white', margin: 0 }}>
-            My Lists
-          </h3>
           <div className="card-grid mb-8">
             {customLists.map((list) => {
               const totalWords = list.words.length
@@ -304,9 +301,6 @@ const WordLists = () => {
           {/* Default Lists Section */}
           {defaultLists.length > 0 && (
             <>
-              <h3 className="text-xl font-semibold mb-10" style={{ color: 'white', margin: 0 }}>
-                Level-Based Lists
-              </h3>
               <div className="card-grid">
                 {defaultLists.map((list) => {
               const totalWords = list.words.length

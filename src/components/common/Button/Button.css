@@ -178,9 +178,19 @@
 
 .btn:disabled,
 .btn-disabled {
-  opacity: 0.6;
+  opacity: 0.5;
   cursor: not-allowed;
   pointer-events: none;
+  filter: saturate(0.6);
+}
+
+/* Ensure primary button stays visible when disabled */
+.btn-primary:disabled,
+.btn-primary.btn-disabled {
+  background: var(--color-gray-400);
+  color: var(--color-gray-600);
+  opacity: 1;
+  box-shadow: none;
 }
 
 .btn-loading {
