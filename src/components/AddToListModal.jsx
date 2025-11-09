@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { createList, addWordToList } from '../utils/wordLists'
 import Modal from './common/Modal'
+import Card from './common/Card'
 import Button from './common/Button'
 import Input from './common/Input'
 import Badge from './common/Badge'
@@ -50,8 +51,8 @@ const AddToListModal = ({ word, onClose, onSuccess }) => {
       onClose={onClose}
       title={
         <div style={{ textAlign: 'center' }}>
-          <div className="text-2xl font-bold text-primary" style={{ marginBottom: '4px' }}>{word.greek}</div>
-          <div className="text-sm text-secondary">{word.english}</div>
+          <div className="text-2xl font-bold text-primary" style={{ marginBottom: '8px' }}>{word.greek}</div>
+          <div className="text-base text-secondary" style={{ fontSize: '1rem', fontWeight: '500' }}>{word.english}</div>
         </div>
       }
       size="md"
@@ -106,60 +107,66 @@ const AddToListModal = ({ word, onClose, onSuccess }) => {
 
       {lists.length > 0 && !showCreateForm && (
         <>
-          <div className="flex flex-col gap-2 mb-3" style={{ maxHeight: '320px', overflowY: 'auto' }}>
+          <div className="flex flex-col gap-3 mb-4" style={{ maxHeight: '400px', overflowY: 'auto' }}>
             {lists.map((list) => {
               const isWordInList = list.words.some(w => w.greek === word.greek)
               const isDefault = list.isDefault || list.id === 'unstudied' || list.id === 'learned'
               // Check if this is a default level list that matches the word's level (e.g., "A1 Words" for an A1 word)
               const isDefaultLevelList = isDefault && word.level && list.name.includes(word.level)
-              // Only show "Already added" badge for custom lists or default lists that don't match word level
-              const showAlreadyAddedBadge = isWordInList && !isDefaultLevelList
 
               return (
-                <div
+                <Card
                   key={list.id}
+                  variant="elevated"
+                  padding="md"
+                  hoverable={!isWordInList}
                   onClick={() => !isWordInList && !loading && handleAddToList(list.id)}
-                  className={`
-                    flex items-center justify-between p-3 rounded-lg border-2 transition
-                    ${isWordInList
-                      ? 'bg-success-50 border-success-300 cursor-default'
-                      : 'border-gray-200 hover:border-primary hover:bg-primary-50 cursor-pointer'}
-                  `}
-                  style={{ cursor: isWordInList || loading ? 'default' : 'pointer' }}
+                  style={{
+                    cursor: isWordInList || loading ? 'default' : 'pointer',
+                    opacity: loading ? 0.6 : 1
+                  }}
                 >
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className={`font-medium ${isWordInList ? 'text-success-700' : ''}`}>
-                        {list.name}
-                      </span>
-                      {isDefault && <Badge variant="info" size="sm">Default</Badge>}
+                  <div className="flex items-center justify-between">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="text-lg font-semibold" style={{ margin: 0 }}>
+                          {list.name}
+                        </span>
+                        {isDefault && <Badge variant="info" size="sm">Default</Badge>}
+                        {isWordInList && <Badge variant="success" size="sm">Added</Badge>}
+                      </div>
+                      <div className="text-sm text-secondary">{list.words.length} words</div>
                     </div>
-                    <div className="text-xs text-secondary">{list.words.length} words</div>
+                    {isWordInList ? (
+                      <span className="text-success-600 text-2xl" style={{ marginLeft: '12px' }}>✓</span>
+                    ) : (
+                      <Button
+                        variant="primary"
+                        size="sm"
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          handleAddToList(list.id)
+                        }}
+                        disabled={loading}
+                      >
+                        Add
+                      </Button>
+                    )}
                   </div>
-                  {isWordInList ? (
-                    <div className="flex items-center gap-2">
-                      {showAlreadyAddedBadge && <Badge variant="success" size="sm">Already added</Badge>}
-                      <span className="text-success-600 text-xl">✓</span>
-                    </div>
-                  ) : (
-                    <span className="text-primary text-sm font-medium">+ Add</span>
-                  )}
-                </div>
+                </Card>
               )
             })}
           </div>
 
-          <div className="pt-2">
-            <Button
-              variant="outline"
-              size="md"
-              onClick={() => setShowCreateForm(true)}
-              fullWidth
-              icon={<span>+</span>}
-            >
-              Create New List
-            </Button>
-          </div>
+          <Button
+            variant="outline"
+            size="md"
+            onClick={() => setShowCreateForm(true)}
+            fullWidth
+            icon={<span>+</span>}
+          >
+            Create New List
+          </Button>
         </>
       )}
     </Modal>

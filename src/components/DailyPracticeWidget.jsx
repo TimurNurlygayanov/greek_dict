@@ -104,11 +104,12 @@ const DailyPracticeWidget = ({ onSelectDailyPractice }) => {
             overflow: 'hidden',
             cursor: 'pointer',
             transform: getCardTransform(),
-            transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+            transition: 'transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease',
             boxShadow: isHovering
-              ? '0 8px 30px rgba(0, 102, 204, 0.4), 0 0 0 3px rgba(255, 255, 255, 0.3)'
-              : '0 4px 20px rgba(0, 0, 0, 0.15)',
-            border: '3px solid white'
+              ? '0 0 40px rgba(0, 150, 255, 0.8), 0 0 80px rgba(0, 150, 255, 0.6), 0 0 120px rgba(0, 150, 255, 0.4), 0 8px 30px rgba(0, 102, 204, 0.5)'
+              : '0 0 20px rgba(0, 150, 255, 0.4), 0 0 40px rgba(0, 150, 255, 0.2), 0 4px 20px rgba(0, 0, 0, 0.15)',
+            border: '3px solid white',
+            filter: isHovering ? 'brightness(1.1)' : 'brightness(1)'
           }}
         >
           {/* Greek key pattern border */}
@@ -266,11 +267,12 @@ const DailyPracticeWidget = ({ onSelectDailyPractice }) => {
           overflow: 'hidden',
           cursor: wordsCount > 0 ? 'pointer' : 'default',
           transform: getCardTransform(),
-          transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+          transition: 'transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease',
           boxShadow: isHovering
-            ? '0 8px 30px rgba(0, 102, 204, 0.4), 0 0 0 3px rgba(255, 255, 255, 0.3)'
-            : '0 4px 20px rgba(0, 0, 0, 0.15)',
-          border: '3px solid white'
+            ? '0 0 40px rgba(0, 150, 255, 0.8), 0 0 80px rgba(0, 150, 255, 0.6), 0 0 120px rgba(0, 150, 255, 0.4), 0 8px 30px rgba(0, 102, 204, 0.5)'
+            : '0 0 20px rgba(0, 150, 255, 0.4), 0 0 40px rgba(0, 150, 255, 0.2), 0 4px 20px rgba(0, 0, 0, 0.15)',
+          border: '3px solid white',
+          filter: isHovering ? 'brightness(1.1)' : 'brightness(1)'
         }}
       >
         {/* Greek key pattern border */}
@@ -346,68 +348,25 @@ const DailyPracticeWidget = ({ onSelectDailyPractice }) => {
           ×
         </button>
 
-        <div style={{ position: 'relative', zIndex: 1, padding: '20px 0' }}>
-          <div className="flex items-center gap-3 mb-4">
-            <div style={{ fontSize: '3rem', filter: 'drop-shadow(0 2px 8px rgba(0,0,0,0.3))' }}>🏛️</div>
-            <div style={{ flex: 1 }}>
-              <h3 className="text-2xl font-bold" style={{ margin: 0, color: 'white', textShadow: '0 2px 8px rgba(0,0,0,0.3)' }}>
-                Today's Practice
-              </h3>
-              <div className="flex items-center gap-2 mt-1">
-                <Badge variant="secondary" size="sm" style={{ backgroundColor: 'white', color: '#0066cc', fontWeight: 'bold' }}>
-                  {dailyData.level}
-                </Badge>
-                <span className="text-sm font-medium" style={{ color: 'rgba(255, 255, 255, 0.95)', textShadow: '0 1px 4px rgba(0,0,0,0.2)' }}>
-                  {dailyData.topic}
-                </span>
-              </div>
-            </div>
+        <div style={{ position: 'relative', zIndex: 1, padding: '20px 0', textAlign: 'center' }}>
+          <div style={{ fontSize: '3rem', marginBottom: '16px', filter: 'drop-shadow(0 2px 8px rgba(0,0,0,0.3))' }}>🏛️</div>
+
+          <h3 className="text-2xl font-bold" style={{ margin: 0, marginBottom: '12px', color: 'white', textShadow: '0 2px 8px rgba(0,0,0,0.3)' }}>
+            Today's Practice
+          </h3>
+
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', marginBottom: '16px' }}>
+            <Badge variant="secondary" size="sm" style={{ backgroundColor: 'white', color: '#0066cc', fontWeight: 'bold' }}>
+              {dailyData.level}
+            </Badge>
+            <span className="text-sm font-medium" style={{ color: 'rgba(255, 255, 255, 0.95)', textShadow: '0 1px 4px rgba(0,0,0,0.2)' }}>
+              {dailyData.topic}
+            </span>
           </div>
 
-          <p className="text-base mb-4" style={{ color: 'rgba(255, 255, 255, 0.95)', textShadow: '0 1px 4px rgba(0,0,0,0.2)', fontWeight: '500' }}>
-            {wordsCount} {wordsCount === 10 ? 'new words' : 'words'} to practice today
+          <p className="text-lg" style={{ color: 'rgba(255, 255, 255, 0.95)', textShadow: '0 1px 4px rgba(0,0,0,0.2)', fontWeight: '500', margin: 0 }}>
+            {wordsCount > 0 ? `${wordsCount} ${wordsCount === 10 ? 'new words' : 'words'} to practice today` : 'All words learned! 🎉'}
           </p>
-
-          <div style={{ marginBottom: '16px' }}>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={(e) => {
-                e.stopPropagation()
-                setShowLevelModal(true)
-              }}
-              style={{
-                color: 'white',
-                border: '2px solid rgba(255, 255, 255, 0.5)',
-                background: 'rgba(255, 255, 255, 0.1)',
-                fontWeight: '600',
-                padding: '8px 16px'
-              }}
-            >
-              Change Level
-            </Button>
-          </div>
-
-          <div
-            style={{
-              display: wordsCount > 0 ? 'inline-block' : 'block',
-              background: 'white',
-              color: '#0066cc',
-              padding: '14px 40px',
-              borderRadius: '50px',
-              fontSize: '1.1rem',
-              fontWeight: 'bold',
-              boxShadow: '0 4px 12px rgba(0, 0, 0, 0.2)',
-              transition: 'all 0.2s',
-              transform: isHovering && wordsCount > 0 ? 'scale(1.05)' : 'scale(1)',
-              textAlign: 'center',
-              width: wordsCount > 0 ? 'auto' : '100%',
-              cursor: wordsCount > 0 ? 'pointer' : 'default',
-              opacity: wordsCount > 0 ? 1 : 0.7
-            }}
-          >
-            {wordsCount > 0 ? 'Start Practice →' : 'All words learned! 🎉'}
-          </div>
         </div>
 
       </Card>
