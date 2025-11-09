@@ -5,9 +5,21 @@ import Button from './common/Button'
 import Badge from './common/Badge'
 import Modal from './common/Modal'
 
+const CACHE_KEY = 'daily_practice_cache'
+
 const DailyPracticeWidget = ({ onSelectDailyPractice }) => {
-  const [dailyData, setDailyData] = useState(null)
-  const [loading, setLoading] = useState(true)
+  // Initialize with cached data if available for instant display
+  const getCachedData = () => {
+    try {
+      const cached = localStorage.getItem(CACHE_KEY)
+      return cached ? JSON.parse(cached) : null
+    } catch {
+      return null
+    }
+  }
+
+  const [dailyData, setDailyData] = useState(getCachedData())
+  const [loading, setLoading] = useState(false) // Start false since we might have cached data
   const [showLevelModal, setShowLevelModal] = useState(false)
   const [selectedLevel, setSelectedLevel] = useState(null)
   const [isHidden, setIsHidden] = useState(false)
@@ -18,11 +30,21 @@ const DailyPracticeWidget = ({ onSelectDailyPractice }) => {
   }, [])
 
   const loadDailyPractice = async () => {
-    setLoading(true)
+    // Only show loading if we don't have cached data
+    if (!dailyData) {
+      setLoading(true)
+    }
+
     try {
       const data = await getDailyPractice()
       setDailyData(data)
-      // Don't auto-show modal, only show when user clicks widget
+
+      // Cache the data for instant display next time
+      try {
+        localStorage.setItem(CACHE_KEY, JSON.stringify(data))
+      } catch (e) {
+        console.warn('Failed to cache daily practice data:', e)
+      }
     } catch (error) {
       console.error('Error loading daily practice:', error)
     } finally {
@@ -36,6 +58,13 @@ const DailyPracticeWidget = ({ onSelectDailyPractice }) => {
       const data = await setupDailyPractice(level)
       setDailyData(data)
       setShowLevelModal(false)
+
+      // Cache the data
+      try {
+        localStorage.setItem(CACHE_KEY, JSON.stringify(data))
+      } catch (e) {
+        console.warn('Failed to cache daily practice data:', e)
+      }
 
       // Automatically navigate to flashcard game after setup
       // Use setTimeout to ensure modal closes before navigation
@@ -61,6 +90,13 @@ const DailyPracticeWidget = ({ onSelectDailyPractice }) => {
       const data = await updateDailyPracticeLevel(level)
       setDailyData(data)
       setShowLevelModal(false)
+
+      // Cache the data
+      try {
+        localStorage.setItem(CACHE_KEY, JSON.stringify(data))
+      } catch (e) {
+        console.warn('Failed to cache daily practice data:', e)
+      }
     } catch (error) {
       alert(error.message || 'Failed to update level')
     }
@@ -359,9 +395,6 @@ const DailyPracticeWidget = ({ onSelectDailyPractice }) => {
             <Badge variant="secondary" size="sm" style={{ backgroundColor: 'white', color: '#0066cc', fontWeight: 'bold' }}>
               {dailyData.level}
             </Badge>
-            <span className="text-sm font-medium" style={{ color: 'rgba(255, 255, 255, 0.95)', textShadow: '0 1px 4px rgba(0,0,0,0.2)' }}>
-              {dailyData.topic}
-            </span>
           </div>
 
           <p className="text-lg" style={{ color: 'rgba(255, 255, 255, 0.95)', textShadow: '0 1px 4px rgba(0,0,0,0.2)', fontWeight: '500', margin: 0 }}>

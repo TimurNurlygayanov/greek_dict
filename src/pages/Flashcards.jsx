@@ -517,7 +517,7 @@ const Flashcards = () => {
                 size="lg"
                 onClick={handleNextQuestion}
               >
-                {countdown !== null ? `Next Question (${countdown}s)` : 'Next Question'}
+                {countdown !== null ? `Next Word (${countdown}s)` : 'Next Word'}
               </Button>
             </div>
           )}

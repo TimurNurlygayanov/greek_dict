@@ -11,7 +11,7 @@ const Landing = () => {
           <h1 className="landing-title">Ellinaki</h1>
           <p className="landing-subtitle">Master Greek vocabulary</p>
           <p className="landing-description">
-            Interactive learning tools with 6,660+ words tagged by level. Practice at your own pace, from beginner to advanced.
+            Interactive learning tools with 11,125+ words tagged by level. Practice at your own pace, from beginner to advanced.
           </p>
         </div>
 
@@ -30,7 +30,7 @@ const Landing = () => {
               </div>
               <h3 className="feature-title">Greek Dictionary</h3>
               <p className="feature-description">
-                6,660+ Greek words tagged by level (A1-B2). Search and explore vocabulary.
+                11,125+ Greek words tagged by level (A1-B2). Search and explore vocabulary.
               </p>
             </Card>
           </Link>

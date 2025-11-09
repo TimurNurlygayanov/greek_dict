@@ -199,37 +199,15 @@ const generateDailyWords = (level, learnedWords = []) => {
   const unlearnedWords = levelWords.filter(w => !learnedWords.includes(w.greek))
 
   if (unlearnedWords.length === 0) {
-    return { words: [], topic: 'All learned!' }
+    return { words: [] }
   }
 
-  // Group by topic
-  const grouped = groupWordsByTopic(unlearnedWords)
-
-  // Find topic with most words (prioritize focused learning)
-  let bestTopic = 'General'
-  let maxWords = 0
-
-  for (const [topic, words] of Object.entries(grouped)) {
-    if (topic !== 'General' && words.length > maxWords && words.length >= 5) {
-      bestTopic = topic
-      maxWords = words.length
-    }
-  }
-
-  // If no good topic found, use General or the biggest available
-  if (maxWords === 0) {
-    const sortedTopics = Object.entries(grouped).sort((a, b) => b[1].length - a[1].length)
-    if (sortedTopics.length > 0) {
-      bestTopic = sortedTopics[0][0]
-    }
-  }
-
-  // Take up to 10 words from the selected topic
-  const selectedWords = (grouped[bestTopic] || []).slice(0, 10)
+  // Shuffle and pick 10 random words
+  const shuffled = [...unlearnedWords].sort(() => Math.random() - 0.5)
+  const selectedWords = shuffled.slice(0, 10)
 
   return {
-    words: selectedWords,
-    topic: bestTopic
+    words: selectedWords
   }
 }
 

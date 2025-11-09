@@ -27,8 +27,8 @@ We took the list of words required for the Greek exams from web site https://www
 ## TODO:
 
 1) Fix Add Word To List from Dictionary UI
-2) Check all words in all dictionaries
-3) Fix "jumping" of elements while i go between pages (get the from cache)
+2) [DONE] Check all words in all dictionaries
+3) [In Progress] Fix "jumping" of elements while i go between pages (get the from cache)
 4) Come up with idea to show something meaningful to the user on Progress page 
 or hide it until the user has some Progress to show - for instance we can do 
 "target of the day" and make it a part of onboarding for new user

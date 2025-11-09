@@ -2,10 +2,10 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { lazy, Suspense } from 'react'
 import Navigation from './components/Navigation'
 import ErrorBoundary from './components/ErrorBoundary'
+import Landing from './pages/Landing' // Not lazy-loaded - static content
 import './App.css'
 
 // Lazy load page components for better performance
-const Landing = lazy(() => import('./pages/Landing'))
 const Dictionary = lazy(() => import('./pages/Dictionary'))
 const Flashcards = lazy(() => import('./pages/Flashcards'))
 const Progress = lazy(() => import('./pages/Progress'))
@@ -43,16 +43,37 @@ function App() {
         <div className="app">
           <Navigation />
           <main className="main-content">
-            <Suspense fallback={<PageLoader />}>
-              <Routes>
-                <Route path="/" element={<Landing />} />
-                <Route path="/dictionary" element={<Dictionary />} />
-                <Route path="/flashcards" element={<Flashcards />} />
-                <Route path="/progress" element={<Progress />} />
-                <Route path="/word-lists" element={<WordLists />} />
-                <Route path="/about" element={<About />} />
-              </Routes>
-            </Suspense>
+            <Routes>
+              {/* Landing page loads immediately - no suspense needed */}
+              <Route path="/" element={<Landing />} />
+
+              {/* Other pages are lazy-loaded */}
+              <Route path="/dictionary" element={
+                <Suspense fallback={<PageLoader />}>
+                  <Dictionary />
+                </Suspense>
+              } />
+              <Route path="/flashcards" element={
+                <Suspense fallback={<PageLoader />}>
+                  <Flashcards />
+                </Suspense>
+              } />
+              <Route path="/progress" element={
+                <Suspense fallback={<PageLoader />}>
+                  <Progress />
+                </Suspense>
+              } />
+              <Route path="/word-lists" element={
+                <Suspense fallback={<PageLoader />}>
+                  <WordLists />
+                </Suspense>
+              } />
+              <Route path="/about" element={
+                <Suspense fallback={<PageLoader />}>
+                  <About />
+                </Suspense>
+              } />
+            </Routes>
           </main>
         </div>
       </ErrorBoundary>

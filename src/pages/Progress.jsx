@@ -159,7 +159,7 @@ const Progress = () => {
     achievements.push({
       id: 'polyglot',
       title: 'Greek Polyglot',
-      description: allComplete ? 'Mastered all 6,660 words!' : 'Master all Greek vocabulary levels',
+      description: allComplete ? 'Mastered all 11,125 words!' : 'Master all Greek vocabulary levels',
       icon: '🌟',
       color: 'gold',
       unlocked: allComplete,
