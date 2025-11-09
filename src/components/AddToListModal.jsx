@@ -13,8 +13,8 @@ const AddToListModal = ({ word, onClose, onSuccess }) => {
   const [showCreateForm, setShowCreateForm] = useState(false)
   const [loading, setLoading] = useState(false)
 
-  // Filter out default lists - only show custom user lists
-  const customLists = lists.filter(list => !list.isDefault && list.id !== 'unstudied' && list.id !== 'learned')
+  // Filter out default lists and topic lists - only show custom user lists
+  const customLists = lists.filter(list => !list.isDefault && !list.isTopic && list.id !== 'unstudied' && list.id !== 'learned')
 
   const handleAddToList = async (listId) => {
     setLoading(true)
@@ -125,33 +125,44 @@ const AddToListModal = ({ word, onClose, onSuccess }) => {
                     cursor: isWordInList || loading ? 'default' : 'pointer',
                     opacity: loading ? 0.6 : 1,
                     border: '1px solid var(--color-gray-200)',
-                    marginBottom: '8px'
+                    marginBottom: '8px',
+                    minHeight: '70px'
                   }}
                 >
-                  <div className="flex items-center justify-between">
-                    <div className="flex-1">
+                  <div className="flex items-center justify-between" style={{ gap: '12px', minHeight: '46px' }}>
+                    <div className="flex-1" style={{ minWidth: 0, overflow: 'hidden' }}>
                       <div className="flex items-center gap-2 mb-1">
-                        <span className="text-lg font-semibold" style={{ margin: 0 }}>
+                        <span
+                          className="text-lg font-semibold"
+                          style={{
+                            margin: 0,
+                            wordBreak: 'break-word',
+                            overflowWrap: 'break-word',
+                            hyphens: 'auto'
+                          }}
+                        >
                           {list.name}
                         </span>
                       </div>
                       <div className="text-sm text-secondary">{list.words.length} words</div>
                     </div>
-                    {isWordInList ? (
-                      <Badge variant="success" size="sm" style={{ marginLeft: '12px' }}>Added</Badge>
-                    ) : (
-                      <Button
-                        variant="primary"
-                        size="sm"
-                        onClick={(e) => {
-                          e.stopPropagation()
-                          handleAddToList(list.id)
-                        }}
-                        disabled={loading}
-                      >
-                        Add
-                      </Button>
-                    )}
+                    <div style={{ flexShrink: 0 }}>
+                      {isWordInList ? (
+                        <Badge variant="success" size="sm">Added</Badge>
+                      ) : (
+                        <Button
+                          variant="primary"
+                          size="sm"
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            handleAddToList(list.id)
+                          }}
+                          disabled={loading}
+                        >
+                          Add
+                        </Button>
+                      )}
+                    </div>
                   </div>
                 </Card>
               )
