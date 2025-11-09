@@ -28,11 +28,11 @@ We took the list of words required for the Greek exams from web site https://www
 
 1) [DONE] Fix Add Word To List from Dictionary UI
 2) [DONE] Check all words in all dictionaries
-3) [In Progress] Fix "jumping" of elements while i go between pages (get the from cache)
+3) [DONE] Fix "jumping" of elements while i go between pages (get the from cache)
 4) [DONE] Come up with idea to show something meaningful to the user on Progress page 
 or hide it until the user has some Progress to show - for instance we can do 
 "target of the day" and make it a part of onboarding for new user
-5) Remove "Back to modes" button while playing flashcards
+5) [DONE] Remove "Back to modes" button while playing flashcards
 6) [In Progress] Add logic to repeat the learned words over time
 7) Add prononciation for the words in dictionary & flashcards
 8) Mode where AI generates some text or dialog with learned words and asks
@@ -40,3 +40,6 @@ you questions or maybe actually you are "practicing" the new words by chating / 
 9) [DONE] Add space between headers "My List" and Words Lists
 10) [DONE] Fix styling of "Add New Words List" widget
 11) Add feature to import others people words lists?
+12) Add "Dialogs" game mode where user selects a topic and chats with AI about the topic in Greek
+13) Do not show pre-defined words lists in scenario when user adds word to the lists
+14) 

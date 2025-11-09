@@ -50,6 +50,7 @@ const Navigation = () => {
             to="/flashcards"
             className={`nav-link ${isActive('/flashcards') ? 'active' : ''}`}
             aria-current={isActive('/flashcards') ? 'page' : undefined}
+            state={{ timestamp: Date.now() }}
           >
             Flashcards
           </Link>
@@ -115,6 +116,7 @@ const Navigation = () => {
           <Link
             to="/flashcards"
             className={`mobile-nav-link ${isActive('/flashcards') ? 'active' : ''}`}
+            state={{ timestamp: Date.now() }}
           >
             <span className="mobile-nav-icon">🎮</span>
             Flashcards

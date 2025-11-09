@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import { useLocation } from 'react-router-dom'
 import dictionaryData from '../dictionary.json'
 import { incrementTodayExercises } from '../utils/storage'
 import { getUserLists, markWordAsLearned } from '../utils/wordLists'
@@ -22,6 +23,7 @@ const MODES = {
 const Flashcards = () => {
   const { showAuthModal, closeAuthModal } = useAuthGuard(true)
   const { lists, refreshLists } = useWordLists(!showAuthModal)
+  const location = useLocation()
 
   const [selectedList, setSelectedList] = useState(null)
   const [mode, setMode] = useState(null)
@@ -138,6 +140,15 @@ const Flashcards = () => {
       refreshLists()
     }
   }, [selectedList, showAuthModal, refreshLists])
+
+  // Reset to list view when clicking Flashcards menu item
+  useEffect(() => {
+    if (location.state?.timestamp) {
+      setSelectedList(null)
+      setMode(null)
+      setCurrentWord(null)
+    }
+  }, [location.state])
 
   // Show tooltip on first game start
   useEffect(() => {
@@ -500,17 +511,6 @@ const Flashcards = () => {
     if (availableWords.length === 0) {
       return (
         <div className="container" style={{ paddingTop: 'var(--space-8)', paddingBottom: 'var(--space-20)' }}>
-          <div className="mb-6">
-            <Button
-              variant="ghost"
-              size="lg"
-              onClick={() => setSelectedList(null)}
-              icon={<span>←</span>}
-            >
-              Back to lists
-            </Button>
-          </div>
-
           <Card variant="elevated" padding="lg" className="text-center">
             <h2 className="text-4xl font-bold mb-4" style={{ margin: 0 }}>
               All words learned!
@@ -532,17 +532,6 @@ const Flashcards = () => {
 
     return (
       <div className="container" style={{ paddingTop: 'var(--space-8)', paddingBottom: 'var(--space-20)' }}>
-        <div className="mb-6">
-          <Button
-            variant="ghost"
-            size="lg"
-            onClick={() => setSelectedList(null)}
-            icon={<span>←</span>}
-          >
-            Back to lists
-          </Button>
-        </div>
-
         <Card variant="elevated" padding="lg" className="text-center">
           <h2 className="text-4xl font-bold" style={{ margin: 0 }}>No words available!</h2>
         </Card>
@@ -567,16 +556,7 @@ const Flashcards = () => {
 
   return (
     <div className="container" style={{ paddingTop: 'var(--space-8)', paddingBottom: 'var(--space-20)' }}>
-      <div className="flex-between mb-6">
-        <Button
-          variant="ghost"
-          size="lg"
-          onClick={() => setSelectedList(null)}
-          icon={<span>←</span>}
-        >
-          Back to lists
-        </Button>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)' }}>
+      <div className="mb-6" style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: 'var(--space-4)' }}>
           <div className="text-lg" style={{ color: 'rgba(255, 255, 255, 0.9)' }}>
             {selectedList.name} • {getAvailableWords().length} words left
           </div>
@@ -662,7 +642,6 @@ const Flashcards = () => {
           >
             Shuffle
           </Button>
-        </div>
       </div>
 
       {mode === MODES.MULTIPLE_CHOICE ? (
