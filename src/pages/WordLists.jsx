@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { createList, deleteList, removeWordFromList, unmarkWordAsLearned, getUserLists, updateListName, addWordToList } from '../utils/wordLists'
+import { categorizeAndSortLists } from '../utils/listCategorization'
 import dictionaryData from '../dictionary.json'
 import AuthModal from '../components/AuthModal'
 import Card from '../components/common/Card'
@@ -189,9 +190,8 @@ const WordLists = () => {
     setSearchResults([])
   }
 
-  // Separate custom and default lists
-  const customLists = lists.filter(l => !l.isDefault).sort((a, b) => a.name.localeCompare(b.name))
-  const defaultLists = lists.filter(l => l.isDefault).sort((a, b) => a.name.localeCompare(b.name))
+  // Categorize and sort lists by learned percentage
+  const { customLists, topicLists, levelLists } = categorizeAndSortLists(lists)
 
   return (
     <div className="container" style={{ paddingTop: 'var(--space-6)', paddingBottom: 'var(--space-20)' }}>
@@ -336,63 +336,61 @@ const WordLists = () => {
             )}
           </div>
 
-          {/* Separator */}
-          {defaultLists.length > 0 && (
+          {/* Separator before Topic Lists */}
+          {topicLists.length > 0 && (
             <div style={{
               borderTop: '2px solid rgba(255, 255, 255, 0.2)',
               margin: 'var(--space-8) 0'
             }} />
           )}
 
-          {/* Default Lists Section */}
-          {defaultLists.length > 0 && (
-            <>
-              <div className="card-grid">
-                {defaultLists.map((list) => {
-              const totalWords = list.words.length
-              const learnedWords = list.learnedWords.length
-              const percentage = totalWords > 0 ? Math.round((learnedWords / totalWords) * 100) : 0
+          {/* Topic Lists Section */}
+          {topicLists.length > 0 && (
+            <div className="card-grid">
+              {topicLists.map((list) => {
+                const totalWords = list.words.length
+                const learnedWords = list.learnedWords.length
+                const percentage = totalWords > 0 ? Math.round((learnedWords / totalWords) * 100) : 0
 
-              return (
-                <Card
-                  key={list.id}
-                  variant="elevated"
-                  padding="md"
-                  hoverable
-                  onClick={() => handleListClick(list)}
-                  className="animate-fade-in-up"
-                >
-                  <div className="flex-between mb-3">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-2">
-                        <h3 className="text-lg font-semibold" style={{ margin: 0 }}>
-                          {list.name}
-                        </h3>
-                        {list.isDefault && <Badge variant="info" size="sm">Default</Badge>}
-                      </div>
-                      <div className="text-xs text-secondary mb-2">
-                        {learnedWords} / {totalWords} words learned
-                      </div>
-                      {/* Progress Bar */}
-                      <div style={{
-                        width: '100%',
-                        height: '8px',
-                        backgroundColor: 'var(--color-gray-200)',
-                        borderRadius: 'var(--radius-full)',
-                        overflow: 'hidden'
-                      }}>
+                return (
+                  <Card
+                    key={list.id}
+                    variant="elevated"
+                    padding="md"
+                    hoverable
+                    onClick={() => handleListClick(list)}
+                    className="animate-fade-in-up"
+                  >
+                    <div className="flex-between mb-3">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-2">
+                          <h3 className="text-lg font-semibold" style={{ margin: 0 }}>
+                            {list.name}
+                          </h3>
+                          <Badge variant="secondary" size="sm">Topic</Badge>
+                        </div>
+                        <div className="text-xs text-secondary mb-2">
+                          {learnedWords} / {totalWords} words learned
+                        </div>
+                        {/* Progress Bar */}
                         <div style={{
-                          width: `${percentage}%`,
-                          height: '100%',
-                          background: 'linear-gradient(90deg, var(--color-success-500), var(--color-success-600))',
-                          transition: 'width 0.3s ease'
-                        }} />
+                          width: '100%',
+                          height: '8px',
+                          backgroundColor: 'var(--color-gray-200)',
+                          borderRadius: 'var(--radius-full)',
+                          overflow: 'hidden'
+                        }}>
+                          <div style={{
+                            width: `${percentage}%`,
+                            height: '100%',
+                            background: 'linear-gradient(90deg, var(--color-success-500), var(--color-success-600))',
+                            transition: 'width 0.3s ease'
+                          }} />
+                        </div>
+                        <div className="text-xs text-secondary mt-1">
+                          {percentage}% complete
+                        </div>
                       </div>
-                      <div className="text-xs text-secondary mt-1">
-                        {percentage}% complete
-                      </div>
-                    </div>
-                    {!list.isDefault && (
                       <div onClick={(e) => e.stopPropagation()} style={{ marginLeft: 'var(--space-3)' }}>
                         <Button
                           variant="ghost"
@@ -403,15 +401,75 @@ const WordLists = () => {
                           🗑️
                         </Button>
                       </div>
-                    )}
-                  </div>
-                </Card>
-              )
-            })}
-        </div>
-      </>
-    )}
-  </>
+                    </div>
+                  </Card>
+                )
+              })}
+            </div>
+          )}
+
+          {/* Separator before Level Lists */}
+          {levelLists.length > 0 && (
+            <div style={{
+              borderTop: '2px solid rgba(255, 255, 255, 0.2)',
+              margin: 'var(--space-8) 0'
+            }} />
+          )}
+
+          {/* Level Lists Section */}
+          {levelLists.length > 0 && (
+            <div className="card-grid">
+              {levelLists.map((list) => {
+                const totalWords = list.words.length
+                const learnedWords = list.learnedWords.length
+                const percentage = totalWords > 0 ? Math.round((learnedWords / totalWords) * 100) : 0
+
+                return (
+                  <Card
+                    key={list.id}
+                    variant="elevated"
+                    padding="md"
+                    hoverable
+                    onClick={() => handleListClick(list)}
+                    className="animate-fade-in-up"
+                  >
+                    <div className="flex-between mb-3">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-2">
+                          <h3 className="text-lg font-semibold" style={{ margin: 0 }}>
+                            {list.name}
+                          </h3>
+                          <Badge variant="info" size="sm">Level</Badge>
+                        </div>
+                        <div className="text-xs text-secondary mb-2">
+                          {learnedWords} / {totalWords} words learned
+                        </div>
+                        {/* Progress Bar */}
+                        <div style={{
+                          width: '100%',
+                          height: '8px',
+                          backgroundColor: 'var(--color-gray-200)',
+                          borderRadius: 'var(--radius-full)',
+                          overflow: 'hidden'
+                        }}>
+                          <div style={{
+                            width: `${percentage}%`,
+                            height: '100%',
+                            background: 'linear-gradient(90deg, var(--color-success-500), var(--color-success-600))',
+                            transition: 'width 0.3s ease'
+                          }} />
+                        </div>
+                        <div className="text-xs text-secondary mt-1">
+                          {percentage}% complete
+                        </div>
+                      </div>
+                    </div>
+                  </Card>
+                )
+              })}
+            </div>
+          )}
+        </>
 )}
 
       {selectedListModal && (

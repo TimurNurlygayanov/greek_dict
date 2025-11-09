@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import dictionaryData from '../dictionary.json'
 import { incrementTodayExercises } from '../utils/storage'
 import { getUserLists, markWordAsLearned } from '../utils/wordLists'
+import { categorizeAndSortLists } from '../utils/listCategorization'
 import AuthModal from '../components/AuthModal'
 import AddToListModal from '../components/AddToListModal'
 import DailyPracticeWidget from '../components/DailyPracticeWidget'
@@ -323,9 +324,8 @@ const Flashcards = () => {
 
   // Show list selection
   if (!selectedList) {
-    // Separate custom and default lists
-    const customLists = lists.filter(l => !l.isDefault).sort((a, b) => a.name.localeCompare(b.name))
-    const defaultLists = lists.filter(l => l.isDefault).sort((a, b) => a.name.localeCompare(b.name))
+    // Categorize and sort lists by learned percentage
+    const { customLists, topicLists, levelLists } = categorizeAndSortLists(lists)
 
     return (
       <div className="container" style={{ paddingTop: 'var(--space-8)', paddingBottom: 'var(--space-20)' }}>
@@ -380,18 +380,18 @@ const Flashcards = () => {
               </div>
             )}
 
-            {/* Separator */}
-            {customLists.length > 0 && defaultLists.length > 0 && (
+            {/* Separator before Topic Lists */}
+            {topicLists.length > 0 && (
               <div style={{
                 borderTop: '2px solid rgba(255, 255, 255, 0.2)',
                 margin: 'var(--space-8) 0'
               }} />
             )}
 
-            {/* Default Lists Section */}
-            {defaultLists.length > 0 && (
+            {/* Topic Lists Section */}
+            {topicLists.length > 0 && (
               <div className="card-grid">
-                {defaultLists.map((list) => {
+                {topicLists.map((list) => {
                   const availableCount = list.words.filter(
                     w => !list.learnedWords.includes(w.greek)
                   ).length
@@ -409,7 +409,52 @@ const Flashcards = () => {
                         <h3 className="text-xl font-semibold flex-1" style={{ margin: 0 }}>
                           {list.name}
                         </h3>
-                        <Badge variant="info" size="sm">Default</Badge>
+                        <Badge variant="secondary" size="sm">Topic</Badge>
+                      </div>
+                      <div className="flex flex-col gap-2">
+                        <div className="text-lg font-medium" style={{ color: 'var(--color-primary-600)' }}>
+                          {availableCount} words to learn
+                        </div>
+                        <div className="text-sm text-secondary">
+                          {list.words.length} total words
+                        </div>
+                      </div>
+                    </Card>
+                  )
+                })}
+              </div>
+            )}
+
+            {/* Separator before Level Lists */}
+            {levelLists.length > 0 && (
+              <div style={{
+                borderTop: '2px solid rgba(255, 255, 255, 0.2)',
+                margin: 'var(--space-8) 0'
+              }} />
+            )}
+
+            {/* Level Lists Section */}
+            {levelLists.length > 0 && (
+              <div className="card-grid">
+                {levelLists.map((list) => {
+                  const availableCount = list.words.filter(
+                    w => !list.learnedWords.includes(w.greek)
+                  ).length
+
+                  return (
+                    <Card
+                      key={list.id}
+                      variant="elevated"
+                      padding="lg"
+                      hoverable
+                      onClick={() => handleListSelect(list)}
+                      className="animate-fade-in-up"
+                    >
+                      <div className="flex items-center gap-2 mb-3">
+                        <h3 className="text-xl font-semibold flex-1" style={{ margin: 0 }}>
+                          {list.name}
+                        </h3>
+                        <Badge variant="info" size="sm">Level</Badge>
                       </div>
                       <div className="flex flex-col gap-2">
                         <div className="text-lg font-medium" style={{ color: 'var(--color-primary-600)' }}>

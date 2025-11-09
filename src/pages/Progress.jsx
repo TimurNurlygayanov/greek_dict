@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import dictionaryData from '../dictionary.json'
 import { getTodayExercises, getMemorizedWords, getUserId } from '../utils/storage'
+import { categorizeAndSortLists } from '../utils/listCategorization'
 import AuthModal from '../components/AuthModal'
 import Card from '../components/common/Card'
 import Badge from '../components/common/Badge'
@@ -364,25 +365,11 @@ const Progress = () => {
         </Card>
       )}
 
-      {/* Exercises Today - Only show if not shown in chart */}
-      {(!learningPointsData || learningPointsData.totalPoints < 10) && (
-        <div className="grid grid-cols-2 gap-4 mb-8">
-          <StatCard
-            title="EXERCISES TODAY"
-            value={exercisesToday}
-            subtitle="Words practiced in all game modes"
-          />
-          <StatCard
-            title="WORDS MASTERED"
-            value={`${memorizedCount} / ${totalWords}`}
-            subtitle="Correctly answered in multiple choice"
-            progress={{ value: memorizedCount, max: totalWords }}
-          />
-        </div>
-      )}
-
-      {/* Level Distribution */}
-      <div className="mb-8">
+      {/* Hide all progress details until user gets 10 learning points */}
+      {learningPointsData && learningPointsData.totalPoints >= 10 && (
+        <>
+          {/* Level Distribution */}
+          <div className="mb-8">
         <h2 className="text-3xl font-bold mb-4" style={{ color: 'white', margin: 0 }}>
           Progress by Level
         </h2>
@@ -466,55 +453,99 @@ const Progress = () => {
       )}
 
       {/* Progress by Lists */}
-      {lists.length > 0 && (
-        <div>
-          <h2 className="text-3xl font-bold mb-4" style={{ color: 'white', margin: 0 }}>
-            Progress by Lists
-          </h2>
-          <div className="grid grid-cols-2 gap-4">
-            {lists.map((list) => {
-              const totalInList = list.words.length
-              const learnedInList = list.learnedWords.length
-              const toLearn = totalInList - learnedInList
-              const percentage = totalInList > 0
-                ? Math.round((learnedInList / totalInList) * 100)
-                : 0
-              const isDefault = list.isDefault || list.id === 'unstudied' || list.id === 'learned'
+      {lists.length > 0 && (() => {
+        const { customLists, topicLists, levelLists } = categorizeAndSortLists(lists)
 
-              return (
-                <Card key={list.id} variant="elevated" padding="md" className="animate-fade-in-up">
-                  <div className="flex items-center gap-2 mb-3">
-                    <h3 className="text-lg font-semibold flex-1" style={{ margin: 0 }}>
-                      {list.name}
-                    </h3>
-                    {isDefault && <Badge variant="info" size="sm">Default</Badge>}
+        const renderListCard = (list) => {
+          const totalInList = list.words.length
+          const learnedInList = list.learnedWords.length
+          const toLearn = totalInList - learnedInList
+          const percentage = totalInList > 0
+            ? Math.round((learnedInList / totalInList) * 100)
+            : 0
+          const isTopic = list.isTopic === true
+          const isLevel = list.isDefault === true
+
+          return (
+            <Card key={list.id} variant="elevated" padding="md" className="animate-fade-in-up">
+              <div className="flex items-center gap-2 mb-3">
+                <h3 className="text-lg font-semibold flex-1" style={{ margin: 0 }}>
+                  {list.name}
+                </h3>
+                {isTopic && <Badge variant="secondary" size="sm">Topic</Badge>}
+                {isLevel && <Badge variant="info" size="sm">Level</Badge>}
+              </div>
+
+              <div className="grid grid-cols-3 gap-4 mb-3">
+                <div>
+                  <div className="text-xs text-secondary mb-1">Learned</div>
+                  <div className="text-xl font-bold" style={{ color: 'var(--color-success-600)' }}>
+                    {learnedInList}
                   </div>
+                </div>
+                <div>
+                  <div className="text-xs text-secondary mb-1">To Learn</div>
+                  <div className="text-xl font-bold text-primary">{toLearn}</div>
+                </div>
+                <div>
+                  <div className="text-xs text-secondary mb-1">Total</div>
+                  <div className="text-xl font-bold text-secondary">{totalInList}</div>
+                </div>
+              </div>
 
-                  <div className="grid grid-cols-3 gap-4 mb-3">
-                    <div>
-                      <div className="text-xs text-secondary mb-1">Learned</div>
-                      <div className="text-xl font-bold" style={{ color: 'var(--color-success-600)' }}>
-                        {learnedInList}
-                      </div>
-                    </div>
-                    <div>
-                      <div className="text-xs text-secondary mb-1">To Learn</div>
-                      <div className="text-xl font-bold text-primary">{toLearn}</div>
-                    </div>
-                    <div>
-                      <div className="text-xs text-secondary mb-1">Total</div>
-                      <div className="text-xl font-bold text-secondary">{totalInList}</div>
-                    </div>
-                  </div>
+              {totalInList > 0 && (
+                <ProgressBar value={learnedInList} max={totalInList} />
+              )}
+            </Card>
+          )
+        }
 
-                  {totalInList > 0 && (
-                    <ProgressBar value={learnedInList} max={totalInList} />
-                  )}
-                </Card>
-              )
-            })}
+        return (
+          <div>
+            <h2 className="text-3xl font-bold mb-4" style={{ color: 'white', margin: 0 }}>
+              Progress by Lists
+            </h2>
+
+            {/* Custom Lists */}
+            {customLists.length > 0 && (
+              <div className="grid grid-cols-2 gap-4 mb-6">
+                {customLists.map(renderListCard)}
+              </div>
+            )}
+
+            {/* Separator before Topic Lists */}
+            {topicLists.length > 0 && (
+              <div style={{
+                borderTop: '2px solid rgba(255, 255, 255, 0.2)',
+                margin: 'var(--space-6) 0'
+              }} />
+            )}
+
+            {/* Topic Lists */}
+            {topicLists.length > 0 && (
+              <div className="grid grid-cols-2 gap-4 mb-6">
+                {topicLists.map(renderListCard)}
+              </div>
+            )}
+
+            {/* Separator before Level Lists */}
+            {levelLists.length > 0 && (
+              <div style={{
+                borderTop: '2px solid rgba(255, 255, 255, 0.2)',
+                margin: 'var(--space-6) 0'
+              }} />
+            )}
+
+            {/* Level Lists */}
+            {levelLists.length > 0 && (
+              <div className="grid grid-cols-2 gap-4">
+                {levelLists.map(renderListCard)}
+              </div>
+            )}
           </div>
-        </div>
+        )
+      })()}
+        </>
       )}
     </div>
   )
