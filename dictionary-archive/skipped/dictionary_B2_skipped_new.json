@@ -1,0 +1,481 @@
+{
+  "empty_greek": [
+    {
+      "greek": "",
+      "english": "American"
+    },
+    {
+      "greek": "",
+      "english": "competitor"
+    },
+    {
+      "greek": "",
+      "english": "young king or prince, young queen or princess"
+    },
+    {
+      "greek": "",
+      "english": "Berber (an ethnic group indigenous to North Africa)"
+    },
+    {
+      "greek": "",
+      "english": "his"
+    },
+    {
+      "greek": "",
+      "english": "its"
+    },
+    {
+      "greek": "",
+      "english": "coordinator, organizer, host"
+    },
+    {
+      "greek": "",
+      "english": "renter, tenant"
+    },
+    {
+      "greek": "",
+      "english": "grower, farmer"
+    },
+    {
+      "greek": "",
+      "english": "consumer"
+    },
+    {
+      "greek": "",
+      "english": "cinema, movies"
+    },
+    {
+      "greek": "",
+      "english": "to book"
+    },
+    {
+      "greek": "",
+      "english": "blond-haired, blondy"
+    },
+    {
+      "greek": "ty]",
+      "english": "to overcome"
+    },
+    {
+      "greek": "O, o",
+      "english": "όμικρον"
+    },
+    {
+      "greek": "to “Thank you!”]",
+      "english": "You ’re welcome!"
+    },
+    {
+      "greek": "",
+      "english": "observer"
+    },
+    {
+      "greek": "",
+      "english": "information, info"
+    },
+    {
+      "greek": "person]",
+      "english": "whom ποιος, -α, -ο [not for human beings]"
+    },
+    {
+      "greek": "",
+      "english": "which"
+    },
+    {
+      "greek": "",
+      "english": "developer, computer programmer"
+    },
+    {
+      "greek": "grammar]",
+      "english": "person"
+    },
+    {
+      "greek": "",
+      "english": "cinema, movie theater"
+    },
+    {
+      "greek": "",
+      "english": "student"
+    },
+    {
+      "greek": "",
+      "english": "cheers"
+    },
+    {
+      "greek": "",
+      "english": "patron, sponsor"
+    },
+    {
+      "greek": "",
+      "english": "year"
+    }
+  ],
+  "empty_english": [
+    {
+      "greek": "Α, α",
+      "english": "άλφα"
+    },
+    {
+      "greek": "Β, β",
+      "english": "βήτα"
+    },
+    {
+      "greek": "Γ, γ",
+      "english": "γάμα"
+    },
+    {
+      "greek": "Δ, δ",
+      "english": "δέλτα"
+    },
+    {
+      "greek": "Ε, ε",
+      "english": "έψιλον"
+    },
+    {
+      "greek": "Ζ, ζ",
+      "english": "ζήτα"
+    },
+    {
+      "greek": "Η, η",
+      "english": "ήτα"
+    },
+    {
+      "greek": "Θ, θ",
+      "english": "θήτα"
+    },
+    {
+      "greek": "Ι, ι",
+      "english": "γιώτα"
+    },
+    {
+      "greek": "Κ, κ",
+      "english": "κάπα"
+    },
+    {
+      "greek": "Λ, λ",
+      "english": "λάμδα"
+    },
+    {
+      "greek": "Μ, μ",
+      "english": "μι"
+    },
+    {
+      "greek": "Ν, ν",
+      "english": "νι"
+    },
+    {
+      "greek": "Ξ, ξ",
+      "english": "ξι"
+    },
+    {
+      "greek": "Π, π",
+      "english": "πι"
+    },
+    {
+      "greek": "Ρ, ρ",
+      "english": "ρο"
+    },
+    {
+      "greek": "Σ, σ",
+      "english": "σίγμα"
+    },
+    {
+      "greek": "Τ, τ",
+      "english": "ταυ"
+    },
+    {
+      "greek": "Υ, υ",
+      "english": "ύψιλον"
+    },
+    {
+      "greek": "Φ, φ",
+      "english": "φι"
+    },
+    {
+      "greek": "Χ, χ",
+      "english": "χι"
+    },
+    {
+      "greek": "Ψ, ψ",
+      "english": "ψι"
+    },
+    {
+      "greek": "Ω, ω",
+      "english": "ωμέγα"
+    }
+  ],
+  "corrupted": [],
+  "proper_nouns": [
+    {
+      "greek": "Αβορίγινας, ο/η",
+      "english": "Aborigine"
+    },
+    {
+      "greek": "Αγγλία, η",
+      "english": "England"
+    },
+    {
+      "greek": "Αθήνα, η",
+      "english": "Athens"
+    },
+    {
+      "greek": "Αλβανία, η",
+      "english": "Albania"
+    },
+    {
+      "greek": "Αμαζόνιος, ο",
+      "english": "Amazon"
+    },
+    {
+      "greek": "Αμερική, η",
+      "english": "USA, America"
+    },
+    {
+      "greek": "Αναγέννηση, η",
+      "english": "Renaissance"
+    },
+    {
+      "greek": "Αποστόλης, ο",
+      "english": "Apostolis"
+    },
+    {
+      "greek": "Απρίλης, ο",
+      "english": "April"
+    },
+    {
+      "greek": "Άρης, ο",
+      "english": "Mars"
+    },
+    {
+      "greek": "Αριζόνα, η",
+      "english": "Arizona"
+    },
+    {
+      "greek": "Αύγουστος, ο",
+      "english": "August"
+    },
+    {
+      "greek": "Αυστραλία, η",
+      "english": "Australia"
+    },
+    {
+      "greek": "Αυστρία, η",
+      "english": "Austria"
+    },
+    {
+      "greek": "Αφρική, η",
+      "english": "Africa"
+    },
+    {
+      "greek": "Βόλος, ο",
+      "english": "Volos"
+    },
+    {
+      "greek": "Βουλγαρία, η",
+      "english": "Bulgaria"
+    },
+    {
+      "greek": "Βραζιλία, η",
+      "english": "Brazil"
+    },
+    {
+      "greek": "Γαλλία, η",
+      "english": "France"
+    },
+    {
+      "greek": "Γερμανία, η",
+      "english": "Germany"
+    },
+    {
+      "greek": "Γουατεμάλα, η",
+      "english": "Guatemala"
+    },
+    {
+      "greek": "Δανία, η",
+      "english": "Denmark"
+    },
+    {
+      "greek": "Έβρος, ο",
+      "english": "Evros"
+    },
+    {
+      "greek": "Εδιμβούργο, το",
+      "english": "Edinburgh"
+    },
+    {
+      "greek": "Ελλάδα, η",
+      "english": "Greece"
+    },
+    {
+      "greek": "Έλληνας, ο — Ελληνίδα, η",
+      "english": "Greek"
+    },
+    {
+      "greek": "Ερμής, ο",
+      "english": "Mercury"
+    },
+    {
+      "greek": "Ευρωπαίος, ο — Ευρωπαία, η",
+      "english": "European"
+    },
+    {
+      "greek": "Ευρώπη, η",
+      "english": "Europe"
+    },
+    {
+      "greek": "Ηνωμένο Βασίλειο, το",
+      "english": "United Kingdom"
+    },
+    {
+      "greek": "Ήπειρος, η",
+      "english": "Epirus"
+    },
+    {
+      "greek": "Θράκη, η",
+      "english": "Thrace"
+    },
+    {
+      "greek": "Ιαπωνία, η",
+      "english": "Japan"
+    },
+    {
+      "greek": "Ιάσονας, ο",
+      "english": "Jason"
+    },
+    {
+      "greek": "Ινδία, η",
+      "english": "India"
+    },
+    {
+      "greek": "Ιούνιος, ο",
+      "english": "June"
+    },
+    {
+      "greek": "Ισπανία, η",
+      "english": "Spain"
+    },
+    {
+      "greek": "Ιταλία, η",
+      "english": "Italy"
+    },
+    {
+      "greek": "Κέλτης, ο — Κέλτισσα, η",
+      "english": "Celt"
+    },
+    {
+      "greek": "Κίνα, η",
+      "english": "China"
+    },
+    {
+      "greek": "Κοπεγχάγη, η",
+      "english": "Copenhagen"
+    },
+    {
+      "greek": "Κρόνος, ο",
+      "english": "Saturn"
+    },
+    {
+      "greek": "Λάπωνας, ο",
+      "english": "Sami, Lapp, Laplander"
+    },
+    {
+      "greek": "Λήμνος, η",
+      "english": "Limnos"
+    },
+    {
+      "greek": "Λονδίνο, το",
+      "english": "London"
+    },
+    {
+      "greek": "Μαδρίτη, η",
+      "english": "Madrid"
+    },
+    {
+      "greek": "Μάρτιος, ο",
+      "english": "March"
+    },
+    {
+      "greek": "Μικρά Ασία, η",
+      "english": "Asia Minor"
+    },
+    {
+      "greek": "Μογγολία, η",
+      "english": "Mongolia"
+    },
+    {
+      "greek": "Μογγόλος, ο — Μογγόλα, η",
+      "english": "Mongol"
+    },
+    {
+      "greek": "Νέα Υόρκη, η",
+      "english": "New York"
+    },
+    {
+      "greek": "Ουγγαρία, η",
+      "english": "Hungary"
+    },
+    {
+      "greek": "Ουρανός, ο",
+      "english": "Uranus"
+    },
+    {
+      "greek": "Σε/Σας παρακαλώ!",
+      "english": "Please!"
+    },
+    {
+      "greek": "Πέμπτη, η",
+      "english": "Thursday"
+    },
+    {
+      "greek": "Περαστικά!",
+      "english": "Get well soon!"
+    },
+    {
+      "greek": "Πέτρος, ο",
+      "english": "Peter"
+    },
+    {
+      "greek": "Πολυνησία, η",
+      "english": "Polynesia"
+    },
+    {
+      "greek": "Πόντος, ο",
+      "english": "Pontus"
+    },
+    {
+      "greek": "Ποσειδώνας, ο",
+      "english": "Neptune"
+    },
+    {
+      "greek": "Πρωτοχρονιά, η",
+      "english": "New Year’s Day"
+    },
+    {
+      "greek": "Σαμοθράκη, η",
+      "english": "Samothraki"
+    },
+    {
+      "greek": "Σεπτέμβριος, ο",
+      "english": "September"
+    },
+    {
+      "greek": "Συγγνώμη!",
+      "english": "I’m sorry!"
+    },
+    {
+      "greek": "Τουαρέγκ, ο/η",
+      "english": "Tuareg"
+    },
+    {
+      "greek": "Τρωικός, -ή, -ό",
+      "english": "Trojan"
+    },
+    {
+      "greek": "Φεβρουάριος, ο",
+      "english": "February"
+    },
+    {
+      "greek": "Ωκεανία, η",
+      "english": "Oceania"
+    }
+  ]
+}

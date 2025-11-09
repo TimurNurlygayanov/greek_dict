@@ -1,0 +1,65 @@
+================================================================================
+QUALITY REPORT FOR LEVEL B1
+================================================================================
+
+Total valid entries: 4018
+
+Skipped entries breakdown:
+  - Empty Greek words: 37
+  - Empty English translations: 24
+  - Corrupted data: 0
+  - Proper nouns (filtered): 130
+
+Total skipped: 191
+Success rate: 95.5%
+
+
+Empty Greek words (first 10):
+  Greek: '' | English: 'buyer, purchaser, shopper, customer'
+  Greek: '' | English: 'Einstein, Albert (a famous physicist)'
+  Greek: '' | English: 'reader'
+  Greek: '' | English: 'grading'
+  Greek: '' | English: 'young king or prince, young queen or princess'
+  Greek: '' | English: 'decorator'
+  Greek: '' | English: 'his'
+  Greek: '' | English: 'its'
+  Greek: '' | English: 'Greek'
+  Greek: '' | English: 'consumer'
+
+
+Filtered proper nouns (first 20):
+  Άγιος Μαυρίκιος, ο = Mauritius
+  Αγρίνιο, το = Agrinio
+  Αθήνα, η = Athens
+  Ακρόπολη, η = Acropolis
+  Αλέξανδρος, ο = Alexander
+  Αμερική, η = America, USA
+  Αμοργός, η = Amorgos
+  Άμστερνταμ, το = Amsterdam
+  Άννα, η = Anna
+  Αντώνης, o = Anthony
+  Άνω Πορόια = Ano Poroia
+  Αποστόλης, ο = Apostolis
+  Αργεντινή, η = Argentina
+  Άργος, το = Argos
+  Άρης, ο = Mars
+  Άρης, ο = Aris, Ares
+  Αρίων, ο = Arion
+  Άρτεμη, η = Artemis
+  Ασία, η = Asia
+  Αστυπάλαια, η = Astypalaia
+
+
+Sample valid entries (first 10):
+  αβγό/αυγό, το = egg
+  αγαπάω & -ώ = to love
+  αγάπη, η = love
+  αγαπημένος, -η, -ο = favorite, beloved, dear
+  αγαπητός, -ή, -ό = dear, darling, popular
+  αγγελία, η = announcement, advertisement
+  αγγίζω = to touch
+  αγγλική γλώσσα, η — αγγλικά, τα = Εnglish
+  αγγούρι, το = cucumber
+  αγελάδα, η = cow
+
+================================================================================

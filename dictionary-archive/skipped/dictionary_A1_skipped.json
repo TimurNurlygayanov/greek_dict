@@ -1,0 +1,833 @@
+{
+  "empty_greek": [
+    {
+      "greek": "",
+      "english": "un­ known, unfamiliar"
+    },
+    {
+      "greek": "",
+      "english": "���� ��� Al­ banian"
+    },
+    {
+      "greek": "",
+      "english": "contest, compe­ tition"
+    },
+    {
+      "greek": "",
+      "english": "���� ��� Ar­ menian"
+    },
+    {
+      "greek": "",
+      "english": "policewoman, po­ lice officer"
+    },
+    {
+      "greek": "",
+      "english": "Brazilian"
+    },
+    {
+      "greek": "",
+      "english": "man­ ager, director"
+    },
+    {
+      "greek": "",
+      "english": "his"
+    },
+    {
+      "greek": "tr.]",
+      "english": "its"
+    },
+    {
+      "greek": "",
+      "english": "������������������ ����������������� workshop��������� , ������� labora­ tory"
+    },
+    {
+      "greek": "",
+      "english": "to get ready, to be pre­ pared"
+    },
+    {
+      "greek": "",
+      "english": "sev­ en hundred"
+    },
+    {
+      "greek": "",
+      "english": "����� ���� Ice­ landic"
+    },
+    {
+      "greek": "",
+      "english": "������ ����� Span­ ish"
+    },
+    {
+      "greek": "",
+      "english": "cuisine"
+    },
+    {
+      "greek": "",
+      "english": "���������������� ��������������� means���������� ��������� of������� ������ trans­ port"
+    },
+    {
+      "greek": "",
+      "english": "����� ���� any­ one, any"
+    },
+    {
+      "greek": "you”]",
+      "english": "You’re welcome!"
+    },
+    {
+      "greek": ", o",
+      "english": "black­ board"
+    },
+    {
+      "greek": "",
+      "english": "appartment build­ ing"
+    },
+    {
+      "greek": "",
+      "english": "Portuguese"
+    },
+    {
+      "greek": "mar]",
+      "english": "person"
+    },
+    {
+      "greek": "",
+      "english": "����� ���� Rus­ sian"
+    },
+    {
+      "greek": "",
+      "english": "���������������� ��������������� important������ , ���� sig­ nificant"
+    },
+    {
+      "greek": "",
+      "english": "travel agen­ cy"
+    },
+    {
+      "greek": "",
+      "english": "at the same time, simul­ taneously"
+    },
+    {
+      "greek": "",
+      "english": "������ ����� Turk­ ish"
+    },
+    {
+      "greek": "",
+      "english": "in charge, respon­ sible"
+    },
+    {
+      "greek": "",
+      "english": "���� ��� re­ gards, greetings"
+    },
+    {
+      "greek": "",
+      "english": "�������� ������� Christ­ mas tree"
+    },
+    {
+      "greek": "",
+      "english": "������������ ����������� nice������� , ����� beau­ tiful"
+    }
+  ],
+  "empty_english": [
+    {
+      "greek": "άγνωστος, o / άγνωστη, η",
+      "english": "unknown, stranger άγνωστος������������j������������� , -���������j������������� η��������j������������� , -�����j������������� ο����j�������������"
+    },
+    {
+      "greek": "Αλβανία, η",
+      "english": "Albania αλβανική γλώσσα (/αλβανικά)������"
+    },
+    {
+      "greek": "ανοιχτά",
+      "english": "open ανταγωνισμός��������������������� , ������������������� ο������������������"
+    },
+    {
+      "greek": "Αρμενία, η",
+      "english": "Armenia αρμενική γλώσσα (/αρμενικά)������"
+    },
+    {
+      "greek": "αστυνομία, η",
+      "english": "police αστυνομικός���������������������� , �������������������� η�������������������"
+    },
+    {
+      "greek": "διεύθυνση, η",
+      "english": "address διευθυντής���������������������������� , -������������������������� ντρια��������������������"
+    },
+    {
+      "greek": "εργασία, η",
+      "english": "work εργαστήριο, το��������������������"
+    },
+    {
+      "greek": "ετικέτα, η",
+      "english": "label ετοιμάζομαι���������������������������"
+    },
+    {
+      "greek": "εφτά/επτά",
+      "english": "seven εφτακόσιοι��������������������������� /�������������������������� επτακόσιοι���������������� , -������������� ες����������� , -�������� α�������"
+    },
+    {
+      "greek": "Ισλανδία, η",
+      "english": "Iceland ισλανδική γλώσσα (/ισλανδικά)�������"
+    },
+    {
+      "greek": "Ισπανία, η",
+      "english": "Spain ισπανική γλώσσα (/ισπανικά)��������"
+    },
+    {
+      "greek": "μέσα σε",
+      "english": "in μέσα μεταφοράς, τα������������������"
+    },
+    {
+      "greek": "όποιος, -α, -ο",
+      "english": "whoever, any οποιοσδήποτε, οποιαδήποτε, οποιο­ δήποτε [noun, adjective]�������"
+    },
+    {
+      "greek": "πιθανώς",
+      "english": "probably, possibly πίνακας�����������������������������"
+    },
+    {
+      "greek": "πολυκατάστημα, το",
+      "english": "department store πολυκατοικία����������������������� , ��������������������� η��������������������"
+    },
+    {
+      "greek": "προσφέρω",
+      "english": "to offer πρόσωπο����������������������������� , ��������������������������� το������������������������� [individual, or in gram­"
+    },
+    {
+      "greek": "ρωσσικός, -ή, -ό",
+      "english": "Russian ρωσσική γλώσσα (/ρωσσικά)�������"
+    },
+    {
+      "greek": "σημαίνω",
+      "english": "to mean σημαντικός, -ή, -ό������������������"
+    },
+    {
+      "greek": "ταξίδι, το",
+      "english": "travel, journey, trip ταξιδιωτικό��������������������������� �������������������������� γραφείο������������������� , ����������������� το���������������"
+    },
+    {
+      "greek": "ταράτσα, η",
+      "english": "rooftop ταυτόχρονα���������������������������"
+    },
+    {
+      "greek": "τουρκικός, -ή, -ό",
+      "english": "Turkish τουρκική γλώσσα (/τουρκικά)��������"
+    },
+    {
+      "greek": "υπερωρία, η",
+      "english": "overtime υπεύθυνος����������������������������� , -�������������������������� η������������������������� , -���������������������� ο���������������������"
+    },
+    {
+      "greek": "χαιρετάω, -ώ",
+      "english": "to say hello χαιρετισμοί/χαιρετίσματα, οι/τα������"
+    },
+    {
+      "greek": "Χριστούγεννα, τα",
+      "english": "Christmas χριστουγεννιάτικο δέντρο, το����������"
+    },
+    {
+      "greek": "Η ώρα είναι τεσσερισήμισι",
+      "english": "(It is) half past four ωραίος, -α, -ο����j���������������������"
+    }
+  ],
+  "corrupted": [],
+  "proper_nouns": [
+    {
+      "greek": "Αγγελική, η",
+      "english": "Angelica"
+    },
+    {
+      "greek": "Άγγελος, ο",
+      "english": "Angelo"
+    },
+    {
+      "greek": "Αγγλία, η",
+      "english": "England"
+    },
+    {
+      "greek": "Αθανασία, η",
+      "english": "Athanassia"
+    },
+    {
+      "greek": "Αθηνά, η",
+      "english": "Athina"
+    },
+    {
+      "greek": "Αίγινα, η",
+      "english": "Aegina"
+    },
+    {
+      "greek": "Αίγυπτος, η",
+      "english": "Egypt"
+    },
+    {
+      "greek": "Αιθιοπία, η",
+      "english": "Ethiopia"
+    },
+    {
+      "greek": "Αιμιλία, η",
+      "english": "Emilia"
+    },
+    {
+      "greek": "Αϊτή, η",
+      "english": "Haiti"
+    },
+    {
+      "greek": "Άιφελ (Πύργος)",
+      "english": "Eiffel Τower"
+    },
+    {
+      "greek": "Αλεξάνδρα, η",
+      "english": "Alexandra"
+    },
+    {
+      "greek": "Αλεξάνδρεια, η",
+      "english": "Alexandria"
+    },
+    {
+      "greek": "Αλεξανδρούπολη, η",
+      "english": "Alexandroupoli"
+    },
+    {
+      "greek": "Αλέξης, ο",
+      "english": "Alex"
+    },
+    {
+      "greek": "Αλεξία, η",
+      "english": "Alexia"
+    },
+    {
+      "greek": "Αλίκη, η",
+      "english": "Alice"
+    },
+    {
+      "greek": "Αμερική (ΗΠΑ)",
+      "english": "United Statesof America (USA)"
+    },
+    {
+      "greek": "Άμστερνταμ, το",
+      "english": "Amsterdam"
+    },
+    {
+      "greek": "Αναστασία, η",
+      "english": "Anastasia"
+    },
+    {
+      "greek": "Ανδριανούπολη, η",
+      "english": "Andrianoupoli"
+    },
+    {
+      "greek": "Ανέστης, ο",
+      "english": "Anestis"
+    },
+    {
+      "greek": "Άννα, η",
+      "english": "Anna"
+    },
+    {
+      "greek": "Αντιγόνη, η",
+      "english": "Antigone"
+    },
+    {
+      "greek": "Αντρέας, ο",
+      "english": "Andrew"
+    },
+    {
+      "greek": "Αντώνης, o",
+      "english": "Anthony"
+    },
+    {
+      "greek": "Αόριστος, ο",
+      "english": "Past tense"
+    },
+    {
+      "greek": "Απρίλιος, ο",
+      "english": "April"
+    },
+    {
+      "greek": "Ασία, η",
+      "english": "Asia"
+    },
+    {
+      "greek": "Αύγουστος, ο",
+      "english": "August"
+    },
+    {
+      "greek": "Αυστραλία, η",
+      "english": "Australia"
+    },
+    {
+      "greek": "Αυστρία, η",
+      "english": "Austria"
+    },
+    {
+      "greek": "Αφρική, η",
+      "english": "Africa"
+    },
+    {
+      "greek": "Ανδρέας, ο",
+      "english": "Andrew"
+    },
+    {
+      "greek": "Απόστολος/Αποστόλης, ο",
+      "english": "Apostolos"
+    },
+    {
+      "greek": "Αργοστόλι, το",
+      "english": "Argostoli"
+    },
+    {
+      "greek": "Αύγουστος, ο",
+      "english": "AugustΒ, β"
+    },
+    {
+      "greek": "Βασίλης, ο",
+      "english": "Vassilis"
+    },
+    {
+      "greek": "Βασιλική, η",
+      "english": "Vassiliki"
+    },
+    {
+      "greek": "Βάσω, η",
+      "english": "Vasso"
+    },
+    {
+      "greek": "Βέλγιο, το",
+      "english": "Belgium"
+    },
+    {
+      "greek": "Βελιγράδι, το",
+      "english": "Belgrade"
+    },
+    {
+      "greek": "Βενεζουέλα, η",
+      "english": "Venezuela"
+    },
+    {
+      "greek": "Βερολίνο, το",
+      "english": "Berlin"
+    },
+    {
+      "greek": "Βιέννη, η",
+      "english": "Vienna"
+    },
+    {
+      "greek": "Βουλγαρία, η",
+      "english": "Bulgaria"
+    },
+    {
+      "greek": "Βραζιλία, η",
+      "english": "Brazil"
+    },
+    {
+      "greek": "Βρετανία, η",
+      "english": "Britain"
+    },
+    {
+      "greek": "Βρυξέλλες, οι",
+      "english": "Brussels"
+    },
+    {
+      "greek": "Γαλλία, η",
+      "english": "France"
+    },
+    {
+      "greek": "Γεια!",
+      "english": "Hi! / Hello!"
+    },
+    {
+      "greek": "Γερμανία, η",
+      "english": "Germany"
+    },
+    {
+      "greek": "Γιάννης, ο",
+      "english": "John"
+    },
+    {
+      "greek": "Γιώργος, ο",
+      "english": "George"
+    },
+    {
+      "greek": "Γρηγόρης, o",
+      "english": "Gregory"
+    },
+    {
+      "greek": "Γυμνάσιο, το",
+      "english": "High School"
+    },
+    {
+      "greek": "Δανία, η",
+      "english": "Denmark"
+    },
+    {
+      "greek": "Δεκέμβριος, ο",
+      "english": "December"
+    },
+    {
+      "greek": "Δευτέρα, η",
+      "english": "Monday"
+    },
+    {
+      "greek": "Δήμητρα, η",
+      "english": "Dimitra"
+    },
+    {
+      "greek": "Δημήτρης, ο",
+      "english": "Jim/Dimitris"
+    },
+    {
+      "greek": "Δημοτικό σχολείο, το",
+      "english": "Elementary/ Primary School"
+    },
+    {
+      "greek": "Δουβλίνο, το",
+      "english": "Dublin"
+    },
+    {
+      "greek": "Δούναβης, ο",
+      "english": "Danube"
+    },
+    {
+      "greek": "Δύση, η",
+      "english": "West"
+    },
+    {
+      "greek": "Ελλάδα, η",
+      "english": "Greece"
+    },
+    {
+      "greek": "Έλληνας/Ελληνίδα, ο/η",
+      "english": "Greek"
+    },
+    {
+      "greek": "Ευρωπαίος, -α",
+      "english": "European"
+    },
+    {
+      "greek": "Ευρώπη, η",
+      "english": "Europe"
+    },
+    {
+      "greek": "Ευχαριστώ!",
+      "english": "Thanks! / Thankyou!"
+    },
+    {
+      "greek": "Ζαΐρ, το",
+      "english": "Zaïr"
+    },
+    {
+      "greek": "Ζάκυνθος, η",
+      "english": "Zakynthos, Zante"
+    },
+    {
+      "greek": "Κάνει ζέστη",
+      "english": "Itis hot"
+    },
+    {
+      "greek": "Ζυρίχη, η",
+      "english": "Zurich"
+    },
+    {
+      "greek": "Ηρακλής",
+      "english": "Hercules"
+    },
+    {
+      "greek": "Θεσσαλονίκη, η",
+      "english": "Thessaloniki"
+    },
+    {
+      "greek": "Θιβέτ, το",
+      "english": "Thibet"
+    },
+    {
+      "greek": "Ιανουάριος, ο",
+      "english": "January"
+    },
+    {
+      "greek": "Ιαπωνία, η",
+      "english": "Japan"
+    },
+    {
+      "greek": "Ιούλιος, ο",
+      "english": "July"
+    },
+    {
+      "greek": "Ιούνιος, ο",
+      "english": "June"
+    },
+    {
+      "greek": "Ιρλανδία, η",
+      "english": "Ireland"
+    },
+    {
+      "greek": "Ισραήλ, το",
+      "english": "Israel"
+    },
+    {
+      "greek": "Ιταλία, η",
+      "english": "Italy"
+    },
+    {
+      "greek": "Τι καιρό κάνει;",
+      "english": "What’sthe weatherlike?"
+    },
+    {
+      "greek": "Καναδάς, ο",
+      "english": "Canada"
+    },
+    {
+      "greek": "Κέρκυρα, η",
+      "english": "Corfou"
+    },
+    {
+      "greek": "Κίνα, η",
+      "english": "China"
+    },
+    {
+      "greek": "Κορέα, η",
+      "english": "Corea"
+    },
+    {
+      "greek": "Κρήτη",
+      "english": "Crete"
+    },
+    {
+      "greek": "Κροατία",
+      "english": "Croatia"
+    },
+    {
+      "greek": "Κυριακή, η",
+      "english": "Sunday"
+    },
+    {
+      "greek": "Λονδίνο, το",
+      "english": "London"
+    },
+    {
+      "greek": "Λουξεμβούργο, το",
+      "english": "Luxembourg"
+    },
+    {
+      "greek": "Λύκειο, το",
+      "english": "High School"
+    },
+    {
+      "greek": "Μαθηματικά",
+      "english": "Mathematics/Maths"
+    },
+    {
+      "greek": "Μάιος, ο",
+      "english": "May"
+    },
+    {
+      "greek": "Μάρτιος, ο",
+      "english": "March"
+    },
+    {
+      "greek": "Μόσχα, η",
+      "english": "Moscow"
+    },
+    {
+      "greek": "Μπράβο!",
+      "english": "Welldone!"
+    },
+    {
+      "greek": "Μύκονος",
+      "english": "Mykonos"
+    },
+    {
+      "greek": "Νοέμβριος, ο",
+      "english": "November"
+    },
+    {
+      "greek": "Νορβηγία, η",
+      "english": "Norway"
+    },
+    {
+      "greek": "Ντουμπάι",
+      "english": "Dumbai"
+    },
+    {
+      "greek": "Νυχτώνει",
+      "english": "Τhe night falls / Ιtgets dark"
+    },
+    {
+      "greek": "Οκτώβριος, ο",
+      "english": "October"
+    },
+    {
+      "greek": "Ολλανδία, η",
+      "english": "Holland"
+    },
+    {
+      "greek": "Όλυμπος, o",
+      "english": "Mount Olympus"
+    },
+    {
+      "greek": "Ορίστε!",
+      "english": "Hereyou are!"
+    },
+    {
+      "greek": "Ουγγαρία, η",
+      "english": "Hungary"
+    },
+    {
+      "greek": "Ουκρανία, η",
+      "english": "Ukraine"
+    },
+    {
+      "greek": "Πακιστάν, το",
+      "english": "Pakistan"
+    },
+    {
+      "greek": "Παναγία, η",
+      "english": "Holy/SaintMary"
+    },
+    {
+      "greek": "Παναμάς, ο",
+      "english": "Panama"
+    },
+    {
+      "greek": "Παρασκευή, η",
+      "english": "Friday"
+    },
+    {
+      "greek": "Παρίσι, το",
+      "english": "Paris"
+    },
+    {
+      "greek": "Πάσχα, το",
+      "english": "Easter"
+    },
+    {
+      "greek": "Παύλος, ο",
+      "english": "Paul"
+    },
+    {
+      "greek": "Πέμπτη, η",
+      "english": "Thursday"
+    },
+    {
+      "greek": "Πέτρος, ο",
+      "english": "Peter"
+    },
+    {
+      "greek": "Πετρούπολη, η",
+      "english": "Petersburg"
+    },
+    {
+      "greek": "Πορτογαλία, η",
+      "english": "Portugal"
+    },
+    {
+      "greek": "Πρωτομαγιά, η",
+      "english": "Firstof May"
+    },
+    {
+      "greek": "Πρωτοχρονιά, η",
+      "english": "NewYear’sEve"
+    },
+    {
+      "greek": "Πώςσε λένε;",
+      "english": "What’syour name? Ρ, ρ"
+    },
+    {
+      "greek": "Ρώμη, η",
+      "english": "Rome"
+    },
+    {
+      "greek": "Ρωσία, η",
+      "english": "Russia"
+    },
+    {
+      "greek": "Σάββατο, το",
+      "english": "Saturday"
+    },
+    {
+      "greek": "Σεπτέμβριος, ο",
+      "english": "September"
+    },
+    {
+      "greek": "Σερβία, η",
+      "english": "Serbia"
+    },
+    {
+      "greek": "Σίδνεϋ, το",
+      "english": "Sydney"
+    },
+    {
+      "greek": "Σουηδία, η",
+      "english": "Sweden"
+    },
+    {
+      "greek": "Συγ(γ)νώμη!",
+      "english": "Sorry! / Excuseme!"
+    },
+    {
+      "greek": "Τάμεσης, ο",
+      "english": "Thames"
+    },
+    {
+      "greek": "Τετάρτη, η",
+      "english": "Wednesday"
+    },
+    {
+      "greek": "Τουρκία, η",
+      "english": "Turkey"
+    },
+    {
+      "greek": "Τρίτη, η",
+      "english": "Tuesday"
+    },
+    {
+      "greek": "Τσεχία, η",
+      "english": "Czech Republic"
+    },
+    {
+      "greek": "Φεβρουάριος, ο",
+      "english": "February"
+    },
+    {
+      "greek": "Φίλιππος, ο",
+      "english": "Philip"
+    },
+    {
+      "greek": "Φινλανδία, η",
+      "english": "Finland"
+    },
+    {
+      "greek": "Φυσάει",
+      "english": "Itis windy"
+    },
+    {
+      "greek": "Φυσικά!",
+      "english": "Of course!"
+    },
+    {
+      "greek": "Χαβάη, η",
+      "english": "Ηawaii"
+    },
+    {
+      "greek": "Χαλκιδική, η",
+      "english": "Chalkidiki"
+    },
+    {
+      "greek": "Χανιά, τα",
+      "english": "Chania"
+    },
+    {
+      "greek": "Χάρηκαπου σας γνώρισα!",
+      "english": "Niceto meetyou!"
+    },
+    {
+      "greek": "Χιονίζει",
+      "english": "Itis snowing"
+    },
+    {
+      "greek": "Χίος, η",
+      "english": "Chios"
+    },
+    {
+      "greek": "Πόσων χρονών είσαι;",
+      "english": "Howold areyou?"
+    }
+  ]
+}

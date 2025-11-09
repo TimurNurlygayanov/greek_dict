@@ -1,0 +1,65 @@
+================================================================================
+QUALITY REPORT FOR LEVEL A2
+================================================================================
+
+Total valid entries: 1543
+
+Skipped entries breakdown:
+  - Empty Greek words: 31
+  - Empty English translations: 23
+  - Corrupted data: 0
+  - Proper nouns (filtered): 131
+
+Total skipped: 185
+Success rate: 89.3%
+
+
+Empty Greek words (first 10):
+  Greek: '' | English: 'Higher Educational Institution'
+  Greek: 'event]' | English: 'hall'
+  Greek: '' | English: 'German'
+  Greek: '' | English: 'Natural Gas Supply Companies'
+  Greek: '' | English: 'his'
+  Greek: '' | English: 'its'
+  Greek: 'married]' | English: 'single'
+  Greek: 'Thessaloniki]' | English: 'Galerius arch'
+  Greek: '' | English: 'to book'
+  Greek: 'window, etc]' | English: 'closed, shut κλειστ-ός, ή, -ό [for eyes, windows etc]'
+
+
+Filtered proper nouns (first 20):
+  Αγγλία, η = England
+  Αθανασία, η = Athanassia
+  Αθήνα, η = Athens
+  Αλέξανδρος, ο = Alexander
+  Αλέξανδρος, ο Μέγας = Alexander the Great
+  Αλέξης, ο = Alex
+  Αλεξία, η = Alexia
+  Αληθώς Ανέστη! = He is risen indeed!
+  Αλίκη, η = Alice
+  Αννα, η = Anna
+  Αναστασία, η = Anastasia
+  Άννα, η = Anna
+  Αντώνης, o = Anthony
+  Απόκριες, οι = Carnival time / Halloween
+  Αύγουστος, ο = August
+  Βασίλης, ο = Vassilis
+  Βασιλική, η = Vassiliki
+  Βάσω, η = Vasso
+  Βερολίνο, το = Berlin
+  Βουλγαρία, η = Bulgaria
+
+
+Sample valid entries (first 10):
+  αβγό, το = egg
+  αγαπάω, -ώ = to love
+  αγάπη, η = love
+  αγαπημέν-ος, -η, -ο = favorite, beloved, dear
+  αγγελία, η = announcement, advertisment
+  αγγλική γλώσσα, η (/αγγλικά, τα) = Εnglish
+  Άγγλος, ο / Αγγλίδα, η = English(man/woman)
+  αγγούρι, το = cucumber
+  άγιος, ο / αγία, η = saint
+  αγκαλιά, η = embrace, hug
+
+================================================================================

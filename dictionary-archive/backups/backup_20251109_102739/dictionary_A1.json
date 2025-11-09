@@ -36,6 +36,36 @@
     "english": "advertisement, ad"
   },
   {
+    "greek": "Αγγελική, η",
+    "greek_normalized": "Αγγελικη, η",
+    "pos": "",
+    "english": "Angelica"
+  },
+  {
+    "greek": "Άγγελος, ο",
+    "greek_normalized": "Αγγελος, ο",
+    "pos": "",
+    "english": "Angelo"
+  },
+  {
+    "greek": "Αγγλία, η",
+    "greek_normalized": "Αγγλια, η",
+    "pos": "",
+    "english": "England"
+  },
+  {
+    "greek": "αγγλική γλώσσα (/αγγλικά)",
+    "greek_normalized": "αγγλικη γλωσσα (/αγγλικα)",
+    "pos": "",
+    "english": "Εnglish"
+  },
+  {
+    "greek": "αγγλικός, -ή, -ό",
+    "greek_normalized": "αγγλικος, -η, -ο",
+    "pos": "",
+    "english": "Εnglish"
+  },
+  {
     "greek": "Άγγλος, -ίδα",
     "greek_normalized": "Αγγλος, -ιδα",
     "pos": "",
@@ -76,6 +106,18 @@
     "greek_normalized": "αγκυρα, η",
     "pos": "",
     "english": "anchor"
+  },
+  {
+    "greek": "άγνωστος, o / άγνωστη, η",
+    "greek_normalized": "αγνωστος, o / αγνωστη, η",
+    "pos": "noun",
+    "english": "unknown, stranger άγνωστος������������j������������� , -���������j������������� η��������j������������� , -�����j������������� ο����j�������������"
+  },
+  {
+    "greek": "",
+    "greek_normalized": "",
+    "pos": "adjective",
+    "english": "un­ known, unfamiliar"
   },
   {
     "greek": "αγορά, η",
@@ -136,6 +178,12 @@
     "greek_normalized": "αδυναμια, η",
     "pos": "",
     "english": "weakness"
+  },
+  {
+    "greek": "αδυνατίζω",
+    "greek_normalized": "αδυνατιζω",
+    "pos": "",
+    "english": "to get thin, to get slim, to lose weight"
   },
   {
     "greek": "αδύνατος, -η, -ο",
@@ -216,6 +264,12 @@
     "english": "Egyptian"
   },
   {
+    "greek": "αιγυπτιακή γλώσσα (/αιγυπτιακά)",
+    "greek_normalized": "αιγυπτιακη γλωσσα (/αιγυπτιακα)",
+    "pos": "",
+    "english": "Egyptian"
+  },
+  {
     "greek": "Αιθιοπία, η",
     "greek_normalized": "Αιθιοπια, η",
     "pos": "",
@@ -256,6 +310,12 @@
     "greek_normalized": "αιτια, η",
     "pos": "",
     "english": "cause, reason"
+  },
+  {
+    "greek": "Άιφελ (Πύργος)",
+    "greek_normalized": "Αιφελ (Πυργος)",
+    "pos": "",
+    "english": "Eiffel Τower"
   },
   {
     "greek": "ακολουθώ",
@@ -322,6 +382,36 @@
     "greek_normalized": "αλατι, το",
     "pos": "",
     "english": "salt"
+  },
+  {
+    "greek": "Αλβανία, η",
+    "greek_normalized": "Αλβανια, η",
+    "pos": "",
+    "english": "Albania αλβανική γλώσσα (/αλβανικά)������"
+  },
+  {
+    "greek": "",
+    "greek_normalized": "",
+    "pos": "",
+    "english": "���� ��� Al­ banian"
+  },
+  {
+    "greek": "αλβανικός, -ή, -ό",
+    "greek_normalized": "αλβανικος, -η, -ο",
+    "pos": "",
+    "english": "Albanian"
+  },
+  {
+    "greek": "Αλβανός, -ή/-ίδα",
+    "greek_normalized": "Αλβανος, -η/-ιδα",
+    "pos": "",
+    "english": "Albanian"
+  },
+  {
+    "greek": "Αλεξάνδρα, η",
+    "greek_normalized": "Αλεξανδρα, η",
+    "pos": "",
+    "english": "Alexandra"
   },
   {
     "greek": "Αλεξάνδρεια, η",
@@ -588,6 +678,18 @@
     "english": "spring"
   },
   {
+    "greek": "ανοιχτά",
+    "greek_normalized": "ανοιχτα",
+    "pos": "",
+    "english": "open ανταγωνισμός��������������������� , ������������������� ο������������������"
+  },
+  {
+    "greek": "",
+    "greek_normalized": "",
+    "pos": "",
+    "english": "contest, compe­ tition"
+  },
+  {
     "greek": "Αντιγόνη, η",
     "greek_normalized": "Αντιγονη, η",
     "pos": "",
@@ -852,6 +954,30 @@
     "english": "to suffice, to be enough"
   },
   {
+    "greek": "Αρμενία, η",
+    "greek_normalized": "Αρμενια, η",
+    "pos": "",
+    "english": "Armenia αρμενική γλώσσα (/αρμενικά)������"
+  },
+  {
+    "greek": "",
+    "greek_normalized": "",
+    "pos": "",
+    "english": "���� ��� Ar­ menian"
+  },
+  {
+    "greek": "αρμενικός, -ή, -ό",
+    "greek_normalized": "αρμενικος, -η, -ο",
+    "pos": "",
+    "english": "Armenian"
+  },
+  {
+    "greek": "Αρμένιος, -ια",
+    "greek_normalized": "Αρμενιος, -ια",
+    "pos": "",
+    "english": "Armenian"
+  },
+  {
     "greek": "αρνούμαι",
     "greek_normalized": "αρνουμαι",
     "pos": "",
@@ -928,6 +1054,18 @@
     "greek_normalized": "ασπρος, -η, -ο",
     "pos": "",
     "english": "white"
+  },
+  {
+    "greek": "αστυνομία, η",
+    "greek_normalized": "αστυνομια, η",
+    "pos": "",
+    "english": "police αστυνομικός���������������������� , �������������������� η�������������������"
+  },
+  {
+    "greek": "",
+    "greek_normalized": "",
+    "pos": "",
+    "english": "policewoman, po­ lice officer"
   },
   {
     "greek": "αστυνομικός, ο",
@@ -1120,6 +1258,12 @@
     "greek_normalized": "Αργοστολι, το",
     "pos": "",
     "english": "Argostoli"
+  },
+  {
+    "greek": "Αύγουστος, ο",
+    "greek_normalized": "Αυγουστος, ο",
+    "pos": "",
+    "english": "August Β, β"
   },
   {
     "greek": "βάζω",
@@ -1398,6 +1542,30 @@
     "english": "walk"
   },
   {
+    "greek": "Βουλγαρία, η",
+    "greek_normalized": "Βουλγαρια, η",
+    "pos": "",
+    "english": "Bulgaria"
+  },
+  {
+    "greek": "βουλγαρικός, -ή, -ό",
+    "greek_normalized": "βουλγαρικος, -η, -ο",
+    "pos": "",
+    "english": "Bulgarian"
+  },
+  {
+    "greek": "βουλγαρική γλώσσα (/βουλγαρικά)",
+    "greek_normalized": "βουλγαρικη γλωσσα (/βουλγαρικα)",
+    "pos": "",
+    "english": "Bulgarian"
+  },
+  {
+    "greek": "Βούλγαρος, -α",
+    "greek_normalized": "Βουλγαρος, -α",
+    "pos": "",
+    "english": "Bulgarian"
+  },
+  {
     "greek": "βουνό, το",
     "greek_normalized": "βουνο, το",
     "pos": "",
@@ -1426,6 +1594,30 @@
     "greek_normalized": "βραδυ, το",
     "pos": "",
     "english": "evening"
+  },
+  {
+    "greek": "Βραζιλία, η",
+    "greek_normalized": "Βραζιλια, η",
+    "pos": "",
+    "english": "Brazil"
+  },
+  {
+    "greek": "βραζιλιανικός, -ή, -ό",
+    "greek_normalized": "βραζιλιανικος, -η, -ο",
+    "pos": "",
+    "english": "Brazilian βραζιλιανική γλώσσα (/βραζιλιανικά)"
+  },
+  {
+    "greek": "",
+    "greek_normalized": "",
+    "pos": "",
+    "english": "Brazilian"
+  },
+  {
+    "greek": "Βραζιλιάνος, -α",
+    "greek_normalized": "Βραζιλιανος, -α",
+    "pos": "",
+    "english": "Brazilian"
   },
   {
     "greek": "Βρετανία, η",
@@ -1458,6 +1650,12 @@
     "english": "Brussels"
   },
   {
+    "greek": "βρύση, η",
+    "greek_normalized": "βρυση, η",
+    "pos": "",
+    "english": "tap Γ, γ"
+  },
+  {
     "greek": "γάιδαρος/γαϊδούρι, ο/το",
     "greek_normalized": "γαιδαρος/γαιδουρι, ο/το",
     "pos": "",
@@ -1476,8 +1674,20 @@
     "english": "blue"
   },
   {
+    "greek": "Γαλλία, η",
+    "greek_normalized": "Γαλλια, η",
+    "pos": "",
+    "english": "France"
+  },
+  {
     "greek": "γαλλικός, -ή -ό",
     "greek_normalized": "γαλλικος, -η -ο",
+    "pos": "",
+    "english": "French"
+  },
+  {
+    "greek": "γαλλική γλώσσα (/γαλλικά)",
+    "greek_normalized": "γαλλικη γλωσσα (/γαλλικα)",
     "pos": "",
     "english": "French"
   },
@@ -1584,6 +1794,18 @@
     "english": "birth"
   },
   {
+    "greek": "Γερμανία, η",
+    "greek_normalized": "Γερμανια, η",
+    "pos": "",
+    "english": "Germany"
+  },
+  {
+    "greek": "γερμανική γλώσσα (/γερμανικά)",
+    "greek_normalized": "γερμανικη γλωσσα (/γερμανικα)",
+    "pos": "",
+    "english": "German"
+  },
+  {
     "greek": "γερμανικός, -ή, -ό",
     "greek_normalized": "γερμανικος, -η, -ο",
     "pos": "",
@@ -1644,6 +1866,18 @@
     "english": "yogurt"
   },
   {
+    "greek": "γιαπωνέζικη γλώσσα (/γιαπωνέζικα)",
+    "greek_normalized": "γιαπωνεζικη γλωσσα (/γιαπωνεζικα)",
+    "pos": "",
+    "english": "Japanese"
+  },
+  {
+    "greek": "Γιαπωνέζος, -α",
+    "greek_normalized": "Γιαπωνεζος, -α",
+    "pos": "",
+    "english": "Japanese"
+  },
+  {
     "greek": "γιασεμί, το",
     "greek_normalized": "γιασεμι, το",
     "pos": "",
@@ -1686,6 +1920,12 @@
     "english": "son"
   },
   {
+    "greek": "Γιώργος, ο",
+    "greek_normalized": "Γιωργος, ο",
+    "pos": "",
+    "english": "George"
+  },
+  {
     "greek": "γκρι",
     "greek_normalized": "γκρι",
     "pos": "",
@@ -1708,6 +1948,24 @@
     "greek_normalized": "γλυκος, -ια, -ο",
     "pos": "adjective",
     "english": "sweet"
+  },
+  {
+    "greek": "γλώσσα, η",
+    "greek_normalized": "γλωσσα, η",
+    "pos": "",
+    "english": "language"
+  },
+  {
+    "greek": "γλώσσα, η",
+    "greek_normalized": "γλωσσα, η",
+    "pos": "part of the body",
+    "english": "tongue"
+  },
+  {
+    "greek": "γλώσσα μητρική",
+    "greek_normalized": "γλωσσα μητρικη",
+    "pos": "",
+    "english": "mother tongue"
   },
   {
     "greek": "γνώμη, η",
@@ -1890,10 +2148,28 @@
     "english": "gyros"
   },
   {
+    "greek": "γωνία, η",
+    "greek_normalized": "γωνια, η",
+    "pos": "",
+    "english": "corner Δ, δ"
+  },
+  {
+    "greek": "δανέζικη γλώσσα (/δανέζικα)",
+    "greek_normalized": "δανεζικη γλωσσα (/δανεζικα)",
+    "pos": "",
+    "english": "Danish"
+  },
+  {
     "greek": "δανέζικος, -η, -ο",
     "greek_normalized": "δανεζικος, -η, -ο",
     "pos": "",
     "english": "Danish"
+  },
+  {
+    "greek": "Δανία, η",
+    "greek_normalized": "Δανια, η",
+    "pos": "",
+    "english": "Denmark"
   },
   {
     "greek": "Δανός, -ή (/-έζα)",
@@ -2106,6 +2382,12 @@
     "english": "test"
   },
   {
+    "greek": "διαδίκτυο, το",
+    "greek_normalized": "διαδικτυο, το",
+    "pos": "",
+    "english": "internet [see also ίντερνετ]"
+  },
+  {
     "greek": "διαδρομή, η",
     "greek_normalized": "διαδρομη, η",
     "pos": "",
@@ -2184,6 +2466,12 @@
     "english": "nutrition"
   },
   {
+    "greek": "διαφήμιση, η",
+    "greek_normalized": "διαφημιση, η",
+    "pos": "",
+    "english": "advertisment, ad [see also αγγελία]"
+  },
+  {
     "greek": "διαφορά, η",
     "greek_normalized": "διαφορα, η",
     "pos": "",
@@ -2226,6 +2514,18 @@
     "english": "international"
   },
   {
+    "greek": "διεύθυνση, η",
+    "greek_normalized": "διευθυνση, η",
+    "pos": "",
+    "english": "address διευθυντής���������������������������� , -������������������������� ντρια��������������������"
+  },
+  {
+    "greek": "",
+    "greek_normalized": "",
+    "pos": "in general",
+    "english": "man­ ager, director"
+  },
+  {
     "greek": "διευθυντής, -ντρια",
     "greek_normalized": "διευθυντης, -ντρια",
     "pos": "in a school",
@@ -2236,6 +2536,18 @@
     "greek_normalized": "δικος, -η, -ο / δικοι, -ες, -α μου",
     "pos": "",
     "english": "my, mine"
+  },
+  {
+    "greek": "δικός, -ή, -ό / δικοί, -ές, -ά σου/σας",
+    "greek_normalized": "δικος, -η, -ο / δικοι, -ες, -α σου/σας",
+    "pos": "",
+    "english": "your, yours δικός, -ή, -ό  / δικοί, -ές, -ά του [masc.]"
+  },
+  {
+    "greek": "",
+    "greek_normalized": "",
+    "pos": "",
+    "english": "his"
   },
   {
     "greek": "δικός, -ή, -ό / δικοί, -ές, -ά της",
@@ -2442,6 +2754,12 @@
     "english": "present"
   },
   {
+    "greek": "δωρεάν",
+    "greek_normalized": "δωρεαν",
+    "pos": "",
+    "english": "free of charge Ε, ε"
+  },
+  {
     "greek": "έβδομος, -η, -ο",
     "greek_normalized": "εβδομος, -η, -ο",
     "pos": "",
@@ -2502,8 +2820,20 @@
     "english": "sixth"
   },
   {
+    "greek": "Ελλάδα, η",
+    "greek_normalized": "Ελλαδα, η",
+    "pos": "",
+    "english": "Greece"
+  },
+  {
     "greek": "Έλληνας/Ελληνίδα, ο/η",
     "greek_normalized": "Ελληνας/Ελληνιδα, ο/η",
+    "pos": "",
+    "english": "Greek"
+  },
+  {
+    "greek": "ελληνική γλώσσα (/ελληνικά)",
+    "greek_normalized": "ελληνικη γλωσσα (/ελληνικα)",
     "pos": "",
     "english": "Greek"
   },
@@ -2670,6 +3000,18 @@
     "english": "surname"
   },
   {
+    "greek": "εργασία, η",
+    "greek_normalized": "εργασια, η",
+    "pos": "",
+    "english": "work εργαστήριο, το��������������������"
+  },
+  {
+    "greek": "",
+    "greek_normalized": "",
+    "pos": "",
+    "english": "������������������ ����������������� workshop��������� , ������� labora­ tory"
+  },
+  {
     "greek": "έρευνα, η",
     "greek_normalized": "ερευνα, η",
     "pos": "",
@@ -2698,6 +3040,18 @@
     "greek_normalized": "εσυ, εσεις",
     "pos": "",
     "english": "you"
+  },
+  {
+    "greek": "ετικέτα, η",
+    "greek_normalized": "ετικετα, η",
+    "pos": "",
+    "english": "label ετοιμάζομαι���������������������������"
+  },
+  {
+    "greek": "",
+    "greek_normalized": "",
+    "pos": "",
+    "english": "to get ready, to be pre­ pared"
   },
   {
     "greek": "ετοιμάζω",
@@ -2820,6 +3174,18 @@
     "english": "since"
   },
   {
+    "greek": "εφτά/επτά",
+    "greek_normalized": "εφτα/επτα",
+    "pos": "",
+    "english": "seven εφτακόσιοι��������������������������� /�������������������������� επτακόσιοι���������������� , -������������� ες����������� , -�������� α�������"
+  },
+  {
+    "greek": "",
+    "greek_normalized": "",
+    "pos": "",
+    "english": "sev­ en hundred"
+  },
+  {
     "greek": "έχω",
     "greek_normalized": "εχω",
     "pos": "",
@@ -2934,6 +3300,12 @@
     "english": "alive, living"
   },
   {
+    "greek": "ζώο, το",
+    "greek_normalized": "ζωο, το",
+    "pos": "",
+    "english": "animal Η, η"
+  },
+  {
     "greek": "ηθοποιός, η",
     "greek_normalized": "ηθοποιος, η",
     "pos": "",
@@ -2968,6 +3340,12 @@
     "greek_normalized": "ηλιος, ο",
     "pos": "",
     "english": "sun"
+  },
+  {
+    "greek": "(η)μέρα, η",
+    "greek_normalized": "(η)μερα, η",
+    "pos": "",
+    "english": "day [see also μέρα]"
   },
   {
     "greek": "ημερολόγιο, το",
@@ -3102,10 +3480,28 @@
     "english": "desk"
   },
   {
+    "greek": "θυμάμαι",
+    "greek_normalized": "θυμαμαι",
+    "pos": "",
+    "english": "to remember Ι, ι"
+  },
+  {
     "greek": "Ιανουάριος, ο",
     "greek_normalized": "Ιανουαριος, ο",
     "pos": "",
     "english": "January"
+  },
+  {
+    "greek": "Ιαπωνία, η",
+    "greek_normalized": "Ιαπωνια, η",
+    "pos": "",
+    "english": "Japan"
+  },
+  {
+    "greek": "ιαπωνικός, -ή, -ό",
+    "greek_normalized": "ιαπωνικος, -η, -ο",
+    "pos": "",
+    "english": "Japanese"
   },
   {
     "greek": "ιατρική, η",
@@ -3156,6 +3552,12 @@
     "english": "Ireland"
   },
   {
+    "greek": "ιρλανδική γλώσσα (/ιρλανδικά)",
+    "greek_normalized": "ιρλανδικη γλωσσα (/ιρλανδικα)",
+    "pos": "",
+    "english": "Irish"
+  },
+  {
     "greek": "ιρλανδικός, -ή, -ό",
     "greek_normalized": "ιρλανδικος, -η, -ο",
     "pos": "",
@@ -3166,6 +3568,18 @@
     "greek_normalized": "Ιρλανδος, -η",
     "pos": "",
     "english": "Irish"
+  },
+  {
+    "greek": "Ισλανδία, η",
+    "greek_normalized": "Ισλανδια, η",
+    "pos": "",
+    "english": "Iceland ισλανδική γλώσσα (/ισλανδικά)�������"
+  },
+  {
+    "greek": "",
+    "greek_normalized": "",
+    "pos": "",
+    "english": "����� ���� Ice­ landic"
   },
   {
     "greek": "ισλανδικός, -ή, -ό",
@@ -3184,6 +3598,18 @@
     "greek_normalized": "ισογειο, το",
     "pos": "",
     "english": "ground floor"
+  },
+  {
+    "greek": "Ισπανία, η",
+    "greek_normalized": "Ισπανια, η",
+    "pos": "",
+    "english": "Spain ισπανική γλώσσα (/ισπανικά)��������"
+  },
+  {
+    "greek": "",
+    "greek_normalized": "",
+    "pos": "",
+    "english": "������ ����� Span­ ish"
   },
   {
     "greek": "ισπανικός, -ή, -ό",
@@ -3228,10 +3654,28 @@
     "english": "maybe, perhaps"
   },
   {
+    "greek": "Ιταλία, η",
+    "greek_normalized": "Ιταλια, η",
+    "pos": "",
+    "english": "Italy"
+  },
+  {
+    "greek": "ιταλική γλώσσα (/ιταλικά)",
+    "greek_normalized": "ιταλικη γλωσσα (/ιταλικα)",
+    "pos": "",
+    "english": "Italian"
+  },
+  {
     "greek": "ιταλικός, -ή, -ό",
     "greek_normalized": "ιταλικος, -η, -ο",
     "pos": "",
     "english": "Italian"
+  },
+  {
+    "greek": "Ιταλός, -ίδα",
+    "greek_normalized": "Ιταλος, -ιδα",
+    "pos": "",
+    "english": "Italian Κ, κ"
   },
   {
     "greek": "καθαρίζω",
@@ -3678,8 +4122,20 @@
     "english": "kilo"
   },
   {
+    "greek": "Κίνα, η",
+    "greek_normalized": "Κινα, η",
+    "pos": "",
+    "english": "China"
+  },
+  {
     "greek": "Κινέζος, -α",
     "greek_normalized": "Κινεζος, -α",
+    "pos": "",
+    "english": "Chinese"
+  },
+  {
+    "greek": "κινεζική γλώσσα (/κινέζικα)",
+    "greek_normalized": "κινεζικη γλωσσα (/κινεζικα)",
     "pos": "",
     "english": "Chinese"
   },
@@ -3712,6 +4168,12 @@
     "greek_normalized": "κλειδι, το",
     "pos": "",
     "english": "key"
+  },
+  {
+    "greek": "κλείνω",
+    "greek_normalized": "κλεινω",
+    "pos": "",
+    "english": "to close, to shut, to turn off"
   },
   {
     "greek": "κλίμα, το",
@@ -3834,6 +4296,12 @@
     "english": "Corean"
   },
   {
+    "greek": "κορεατική γλώσσα (/κορεάτικα)",
+    "greek_normalized": "κορεατικη γλωσσα (/κορεατικα)",
+    "pos": "",
+    "english": "Corean"
+  },
+  {
     "greek": "κόρη, η",
     "greek_normalized": "κορη, η",
     "pos": "",
@@ -3886,6 +4354,18 @@
     "greek_normalized": "κουδουνι, το",
     "pos": "",
     "english": "bell"
+  },
+  {
+    "greek": "κουζίνα, η",
+    "greek_normalized": "κουζινα, η",
+    "pos": "room",
+    "english": "kitchen κουζίνα, η [style of cooking / dishes]"
+  },
+  {
+    "greek": "",
+    "greek_normalized": "",
+    "pos": "",
+    "english": "cuisine"
   },
   {
     "greek": "κούκλα, η",
@@ -4024,6 +4504,12 @@
     "greek_normalized": "Κυριακη, η",
     "pos": "",
     "english": "Sunday"
+  },
+  {
+    "greek": "κύριος, ο",
+    "greek_normalized": "κυριος, ο",
+    "pos": "",
+    "english": "sir, mister Λ, λ"
   },
   {
     "greek": "λαβύρινθος, ο",
@@ -4234,6 +4720,12 @@
     "greek_normalized": "λυπη, η",
     "pos": "",
     "english": "sadness"
+  },
+  {
+    "greek": "λυπημένος, -η, -ο",
+    "greek_normalized": "λυπημενος, -η, -ο",
+    "pos": "",
+    "english": "sad Μ, μ"
   },
   {
     "greek": "μαγαζί, το",
@@ -4468,6 +4960,18 @@
     "greek_normalized": "μεσα (μενω μεσα στο σπιτι)",
     "pos": "",
     "english": "(to stay) indoors"
+  },
+  {
+    "greek": "μέσα σε",
+    "greek_normalized": "μεσα σε",
+    "pos": "",
+    "english": "in μέσα μεταφοράς, τα������������������"
+  },
+  {
+    "greek": "",
+    "greek_normalized": "",
+    "pos": "",
+    "english": "���������������� ��������������� means���������� ��������� of������� ������ trans­ port"
   },
   {
     "greek": "μέση, η",
@@ -4884,6 +5388,12 @@
     "english": "nose"
   },
   {
+    "greek": "μωρό, το",
+    "greek_normalized": "μωρο, το",
+    "pos": "",
+    "english": "baby Ν, ν"
+  },
+  {
     "greek": "ναι",
     "greek_normalized": "ναι",
     "pos": "",
@@ -4958,6 +5468,12 @@
   {
     "greek": "νορβηγικός, -ή, -ό",
     "greek_normalized": "νορβηγικος, -η, -ο",
+    "pos": "",
+    "english": "Norwegian"
+  },
+  {
+    "greek": "νορβηγική γλώσσα (/νορβηγικά)",
+    "greek_normalized": "νορβηγικη γλωσσα (/νορβηγικα)",
     "pos": "",
     "english": "Norwegian"
   },
@@ -5050,6 +5566,18 @@
     "greek_normalized": "νυχτα, η",
     "pos": "",
     "english": "night"
+  },
+  {
+    "greek": "Νυχτώνει",
+    "greek_normalized": "Νυχτωνει",
+    "pos": "",
+    "english": "Τhe night falls / Ιt gets dark"
+  },
+  {
+    "greek": "νωρίς",
+    "greek_normalized": "νωρις",
+    "pos": "",
+    "english": "early Ξ, ξ"
   },
   {
     "greek": "ξάδερφος/-η, ο/η",
@@ -5232,6 +5760,12 @@
     "english": "Dutch"
   },
   {
+    "greek": "ολλανδική γλώσσα (/ολλανδικά)",
+    "greek_normalized": "ολλανδικη γλωσσα (/ολλανδικα)",
+    "pos": "",
+    "english": "Dutch"
+  },
+  {
     "greek": "όλοι, -ες, -α",
     "greek_normalized": "ολοι, -ες, -α",
     "pos": "",
@@ -5302,6 +5836,18 @@
     "greek_normalized": "οποιος, -α, -ο",
     "pos": "person",
     "english": "who"
+  },
+  {
+    "greek": "όποιος, -α, -ο",
+    "greek_normalized": "οποιος, -α, -ο",
+    "pos": "",
+    "english": "whoever, any οποιοσδήποτε, οποιαδήποτε, οποιο­ δήποτε [noun, adjective]�������"
+  },
+  {
+    "greek": "",
+    "greek_normalized": "",
+    "pos": "",
+    "english": "����� ���� any­ one, any"
   },
   {
     "greek": "όποτε",
@@ -5584,6 +6130,12 @@
     "greek_normalized": "παρακαλω",
     "pos": "",
     "english": "to please"
+  },
+  {
+    "greek": "(Σε/Σας) παρακαλώ!",
+    "greek_normalized": "(Σε/Σας) παρακαλω!",
+    "pos": "",
+    "english": "Please! Παρακαλώ! [responding to “thank"
   },
   {
     "greek": "you”]",
@@ -5892,6 +6444,12 @@
     "english": "probable, possible"
   },
   {
+    "greek": "πιθανώς",
+    "greek_normalized": "πιθανως",
+    "pos": "",
+    "english": "probably, possibly πίνακας�����������������������������"
+  },
+  {
     "greek": ", o",
     "greek_normalized": ", o",
     "pos": "in a classroom",
@@ -6042,6 +6600,12 @@
     "english": "football"
   },
   {
+    "greek": "ποιανού, -ής",
+    "greek_normalized": "ποιανου, -ης",
+    "pos": "for a person",
+    "english": "whose [see also τίνος]"
+  },
+  {
     "greek": "ποιος, -α, -ο",
     "greek_normalized": "ποιος, -α, -ο",
     "pos": "not for human beings",
@@ -6078,10 +6642,28 @@
     "english": "armchair"
   },
   {
+    "greek": "πολυκατάστημα, το",
+    "greek_normalized": "πολυκαταστημα, το",
+    "pos": "",
+    "english": "department store πολυκατοικία����������������������� , ��������������������� η��������������������"
+  },
+  {
+    "greek": "",
+    "greek_normalized": "",
+    "pos": "",
+    "english": "appartment build­ ing"
+  },
+  {
     "greek": "πολύς, πολλή, πολύ",
     "greek_normalized": "πολυς, πολλη, πολυ",
     "pos": "non countable",
     "english": "much"
+  },
+  {
+    "greek": "πονάω, -ώ",
+    "greek_normalized": "ποναω, -ω",
+    "pos": "",
+    "english": "to hurt, to feel pain, to be in pain"
   },
   {
     "greek": "πόνος, ο",
@@ -6096,8 +6678,26 @@
     "english": "door"
   },
   {
+    "greek": "Πορτογαλία, η",
+    "greek_normalized": "Πορτογαλια, η",
+    "pos": "",
+    "english": "Portugal"
+  },
+  {
     "greek": "Πορτογάλος, -ίδα",
     "greek_normalized": "Πορτογαλος, -ιδα",
+    "pos": "",
+    "english": "Portuguese"
+  },
+  {
+    "greek": "πορτογαλικός, -ή, -ό",
+    "greek_normalized": "πορτογαλικος, -η, -ο",
+    "pos": "",
+    "english": "Portuguese πορτογαλική γλώσσα (/πορτογαλικά)"
+  },
+  {
+    "greek": "",
+    "greek_normalized": "",
     "pos": "",
     "english": "Portuguese"
   },
@@ -6318,6 +6918,12 @@
     "english": "to try"
   },
   {
+    "greek": "προσφέρω",
+    "greek_normalized": "προσφερω",
+    "pos": "",
+    "english": "to offer πρόσωπο����������������������������� , ��������������������������� το������������������������� [individual, or in gram­"
+  },
+  {
     "greek": "mar]",
     "greek_normalized": "mar]",
     "pos": "",
@@ -6420,6 +7026,12 @@
     "english": "how"
   },
   {
+    "greek": "Πώς σε λένε;",
+    "greek_normalized": "Πως σε λενε;",
+    "pos": "",
+    "english": "What’s your name? Ρ, ρ"
+  },
+  {
     "greek": "ραδιόφωνο, το",
     "greek_normalized": "ραδιοφωνο, το",
     "pos": "",
@@ -6484,6 +7096,36 @@
     "greek_normalized": "Ρωμη, η",
     "pos": "",
     "english": "Rome"
+  },
+  {
+    "greek": "Ρωσία, η",
+    "greek_normalized": "Ρωσια, η",
+    "pos": "",
+    "english": "Russia"
+  },
+  {
+    "greek": "Ρώσσος, -ίδα",
+    "greek_normalized": "Ρωσσος, -ιδα",
+    "pos": "",
+    "english": "Russian"
+  },
+  {
+    "greek": "ρωσσικός, -ή, -ό",
+    "greek_normalized": "ρωσσικος, -η, -ο",
+    "pos": "",
+    "english": "Russian ρωσσική γλώσσα (/ρωσσικά)�������"
+  },
+  {
+    "greek": "",
+    "greek_normalized": "",
+    "pos": "",
+    "english": "����� ���� Rus­ sian"
+  },
+  {
+    "greek": "ρωτάω, -ώ",
+    "greek_normalized": "ρωταω, -ω",
+    "pos": "",
+    "english": "to ask Σ, σ"
   },
   {
     "greek": "Σάββατο, το",
@@ -6624,10 +7266,28 @@
     "english": "waiter"
   },
   {
+    "greek": "σημαίνω",
+    "greek_normalized": "σημαινω",
+    "pos": "",
+    "english": "to mean σημαντικός, -ή, -ό������������������"
+  },
+  {
+    "greek": "",
+    "greek_normalized": "",
+    "pos": "",
+    "english": "���������������� ��������������� important������ , ���� sig­ nificant"
+  },
+  {
     "greek": "σημείωμα, το",
     "greek_normalized": "σημειωμα, το",
     "pos": "",
     "english": "note, memo"
+  },
+  {
+    "greek": "σημειώνω",
+    "greek_normalized": "σημειωνω",
+    "pos": "",
+    "english": "to note, to make a note, to write down"
   },
   {
     "greek": "σήμερα",
@@ -6742,6 +7402,12 @@
     "greek_normalized": "Σουηδια, η",
     "pos": "",
     "english": "Sweden"
+  },
+  {
+    "greek": "σουηδική γλώσσα (/σουηδικά)",
+    "greek_normalized": "σουηδικη γλωσσα (/σουηδικα)",
+    "pos": "",
+    "english": "Swedish"
   },
   {
     "greek": "σουηδικός, -ή, -ό",
@@ -6942,6 +7608,12 @@
     "english": "school mate"
   },
   {
+    "greek": "συμμετέχω",
+    "greek_normalized": "συμμετεχω",
+    "pos": "",
+    "english": "to participate in, to take part in"
+  },
+  {
     "greek": "συμπληρώνω",
     "greek_normalized": "συμπληρωνω",
     "pos": "",
@@ -7134,6 +7806,12 @@
     "english": "a lot of"
   },
   {
+    "greek": "σωστός, -ή, -ό",
+    "greek_normalized": "σωστος, -η, -ο",
+    "pos": "",
+    "english": "right, correct Τ, τ"
+  },
+  {
     "greek": "ταβέρνα, η",
     "greek_normalized": "ταβερνα, η",
     "pos": "",
@@ -7192,6 +7870,36 @@
     "greek_normalized": "ταξι, το",
     "pos": "",
     "english": "taxi"
+  },
+  {
+    "greek": "ταξιδεύω",
+    "greek_normalized": "ταξιδευω",
+    "pos": "",
+    "english": "to travel, to take a trip, to make a journey"
+  },
+  {
+    "greek": "ταξίδι, το",
+    "greek_normalized": "ταξιδι, το",
+    "pos": "",
+    "english": "travel, journey, trip ταξιδιωτικό��������������������������� �������������������������� γραφείο������������������� , ����������������� το���������������"
+  },
+  {
+    "greek": "",
+    "greek_normalized": "",
+    "pos": "",
+    "english": "travel agen­ cy"
+  },
+  {
+    "greek": "ταράτσα, η",
+    "greek_normalized": "ταρατσα, η",
+    "pos": "",
+    "english": "rooftop ταυτόχρονα���������������������������"
+  },
+  {
+    "greek": "",
+    "greek_normalized": "",
+    "pos": "",
+    "english": "at the same time, simul­ taneously"
   },
   {
     "greek": "ταχυδρομείο, το",
@@ -7446,6 +8154,18 @@
     "english": "Turkish"
   },
   {
+    "greek": "τουρκικός, -ή, -ό",
+    "greek_normalized": "τουρκικος, -η, -ο",
+    "pos": "",
+    "english": "Turkish τουρκική γλώσσα (/τουρκικά)��������"
+  },
+  {
+    "greek": "",
+    "greek_normalized": "",
+    "pos": "",
+    "english": "������ ����� Turk­ ish"
+  },
+  {
     "greek": "τούρτα, η",
     "greek_normalized": "τουρτα, η",
     "pos": "",
@@ -7666,6 +8386,18 @@
     "greek_normalized": "υπαρχω",
     "pos": "",
     "english": "to exist"
+  },
+  {
+    "greek": "υπερωρία, η",
+    "greek_normalized": "υπερωρια, η",
+    "pos": "",
+    "english": "overtime υπεύθυνος����������������������������� , -�������������������������� η������������������������� , -���������������������� ο���������������������"
+  },
+  {
+    "greek": "",
+    "greek_normalized": "",
+    "pos": "",
+    "english": "in charge, respon­ sible"
   },
   {
     "greek": "υπηρεσία, η",
@@ -7902,6 +8634,12 @@
     "english": "Finland"
   },
   {
+    "greek": "φινλανδική γλώσσα (/φινλανδικά)",
+    "greek_normalized": "φινλανδικη γλωσσα (/φινλανδικα)",
+    "pos": "",
+    "english": "Finnish"
+  },
+  {
     "greek": "φινλανδικός, -η, -ο",
     "greek_normalized": "φινλανδικος, -η, -ο",
     "pos": "",
@@ -8088,6 +8826,30 @@
     "english": "picture"
   },
   {
+    "greek": "φωτογραφική μηχανή, η",
+    "greek_normalized": "φωτογραφικη μηχανη, η",
+    "pos": "",
+    "english": "camera Χ, χ"
+  },
+  {
+    "greek": "Χαβάη, η",
+    "greek_normalized": "Χαβαη, η",
+    "pos": "",
+    "english": "Ηawaii"
+  },
+  {
+    "greek": "χαιρετάω, -ώ",
+    "greek_normalized": "χαιρεταω, -ω",
+    "pos": "",
+    "english": "to say hello χαιρετισμοί/χαιρετίσματα, οι/τα������"
+  },
+  {
+    "greek": "",
+    "greek_normalized": "",
+    "pos": "",
+    "english": "���� ��� re­ gards, greetings"
+  },
+  {
     "greek": "χαίρομαι",
     "greek_normalized": "χαιρομαι",
     "pos": "",
@@ -8104,6 +8866,12 @@
     "greek_normalized": "χαλαω",
     "pos": "",
     "english": "to break, to break down"
+  },
+  {
+    "greek": "χάλια",
+    "greek_normalized": "χαλια",
+    "pos": "",
+    "english": "in a bad condition, in a mess"
   },
   {
     "greek": "Χαλκιδική, η",
@@ -8298,6 +9066,18 @@
     "english": "user"
   },
   {
+    "greek": "Χριστούγεννα, τα",
+    "greek_normalized": "Χριστουγεννα, τα",
+    "pos": "",
+    "english": "Christmas χριστουγεννιάτικο δέντρο, το����������"
+  },
+  {
+    "greek": "",
+    "greek_normalized": "",
+    "pos": "",
+    "english": "�������� ������� Christ­ mas tree"
+  },
+  {
     "greek": "χρόνος/χρονιά, o/η",
     "greek_normalized": "χρονος/χρονια, o/η",
     "pos": "",
@@ -8448,6 +9228,12 @@
     "english": "shopping"
   },
   {
+    "greek": "ψωνίζω",
+    "greek_normalized": "ψωνιζω",
+    "pos": "",
+    "english": "to shop, to go shopping Ω, ω"
+  },
+  {
     "greek": "ώρα, η",
     "greek_normalized": "ωρα, η",
     "pos": "",
@@ -8458,6 +9244,18 @@
     "greek_normalized": "Η ωρα ειναι τεσσερις",
     "pos": "",
     "english": "(It is) four o’ clock"
+  },
+  {
+    "greek": "Η ώρα είναι τεσσερισήμισι",
+    "greek_normalized": "Η ωρα ειναι τεσσερισημισι",
+    "pos": "",
+    "english": "(It is) half past four ωραίος, -α, -ο����j���������������������"
+  },
+  {
+    "greek": "",
+    "greek_normalized": "",
+    "pos": "adjective",
+    "english": "������������ ����������� nice������� , ����� beau­ tiful"
   },
   {
     "greek": "ωραία",

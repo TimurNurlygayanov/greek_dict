@@ -1,0 +1,65 @@
+================================================================================
+QUALITY REPORT FOR LEVEL B2
+================================================================================
+
+Total valid entries: 4224
+
+Skipped entries breakdown:
+  - Empty Greek words: 27
+  - Empty English translations: 23
+  - Corrupted data: 0
+  - Proper nouns (filtered): 68
+
+Total skipped: 118
+Success rate: 97.3%
+
+
+Empty Greek words (first 10):
+  Greek: '' | English: 'American'
+  Greek: '' | English: 'competitor'
+  Greek: '' | English: 'young king or prince, young queen or princess'
+  Greek: '' | English: 'Berber (an ethnic group indigenous to North Africa)'
+  Greek: '' | English: 'his'
+  Greek: '' | English: 'its'
+  Greek: '' | English: 'coordinator, organizer, host'
+  Greek: '' | English: 'renter, tenant'
+  Greek: '' | English: 'grower, farmer'
+  Greek: '' | English: 'consumer'
+
+
+Filtered proper nouns (first 20):
+  Αβορίγινας, ο/η = Aborigine
+  Αγγλία, η = England
+  Αθήνα, η = Athens
+  Αλβανία, η = Albania
+  Αμαζόνιος, ο = Amazon
+  Αμερική, η = USA, America
+  Αναγέννηση, η = Renaissance
+  Αποστόλης, ο = Apostolis
+  Απρίλης, ο = April
+  Άρης, ο = Mars
+  Αριζόνα, η = Arizona
+  Αύγουστος, ο = August
+  Αυστραλία, η = Australia
+  Αυστρία, η = Austria
+  Αφρική, η = Africa
+  Βόλος, ο = Volos
+  Βουλγαρία, η = Bulgaria
+  Βραζιλία, η = Brazil
+  Γαλλία, η = France
+  Γερμανία, η = Germany
+
+
+Sample valid entries (first 10):
+  αβγό/αυγό, το = egg
+  αβέβαιος, -η, -ο = uncertain
+  αβεβαιότητα, η = uncertainty
+  άβολος, -η, -ο = uncomfortable
+  άγαμος, -η, -ο = single, not married
+  αγανακτισμένος, -η, -ο = indignant
+  αγανακτώ = to be indignant, to get angry
+  αγαπάω & -ώ = to love
+  αγάπη, η = love
+  αγαπημένος, -η, -ο = favorite, beloved, dear
+
+================================================================================

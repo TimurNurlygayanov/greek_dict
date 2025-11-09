@@ -1,0 +1,65 @@
+================================================================================
+QUALITY REPORT FOR LEVEL A1
+================================================================================
+
+Total valid entries: 1340
+
+Skipped entries breakdown:
+  - Empty Greek words: 31
+  - Empty English translations: 25
+  - Corrupted data: 0
+  - Proper nouns (filtered): 152
+
+Total skipped: 208
+Success rate: 86.6%
+
+
+Empty Greek words (first 10):
+  Greek: '' | English: 'un known, unfamiliar'
+  Greek: '' | English: '���� ��� Al banian'
+  Greek: '' | English: 'contest, compe tition'
+  Greek: '' | English: '���� ��� Ar menian'
+  Greek: '' | English: 'policewoman, po lice officer'
+  Greek: '' | English: 'Brazilian'
+  Greek: '' | English: 'man ager, director'
+  Greek: '' | English: 'his'
+  Greek: 'tr.]' | English: 'its'
+  Greek: '' | English: '������������������ ����������������� workshop��������� , ������� labora tory'
+
+
+Filtered proper nouns (first 20):
+  Αγγελική, η = Angelica
+  Άγγελος, ο = Angelo
+  Αγγλία, η = England
+  Αθανασία, η = Athanassia
+  Αθηνά, η = Athina
+  Αίγινα, η = Aegina
+  Αίγυπτος, η = Egypt
+  Αιθιοπία, η = Ethiopia
+  Αιμιλία, η = Emilia
+  Αϊτή, η = Haiti
+  Άιφελ (Πύργος) = Eiffel Τower
+  Αλεξάνδρα, η = Alexandra
+  Αλεξάνδρεια, η = Alexandria
+  Αλεξανδρούπολη, η = Alexandroupoli
+  Αλέξης, ο = Alex
+  Αλεξία, η = Alexia
+  Αλίκη, η = Alice
+  Άμστερνταμ, το = Amsterdam
+  Αναστασία, η = Anastasia
+  Ανδριανούπολη, η = Andrianoupoli
+
+
+Sample valid entries (first 10):
+  αβγό, το = egg
+  αγαπάω, -ώ = to love
+  αγάπη, η = love
+  αγαπημένος, -η, -ο = favorite
+  αγαπητός, -ή, -ό = dear, darling
+  αγγελία, η = advertisement, ad
+  αγγλική γλώσσα (/αγγλικά) = Εnglish
+  αγγλικός, -ή, -ό = Εnglish
+  Άγγλος, -ίδα = English(man/-woman)
+  αγγούρι, το = cucumber
+
+================================================================================

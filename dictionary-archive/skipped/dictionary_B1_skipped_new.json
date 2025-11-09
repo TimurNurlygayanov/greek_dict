@@ -1,0 +1,773 @@
+{
+  "empty_greek": [
+    {
+      "greek": "",
+      "english": "buyer, purchaser, shopper, customer"
+    },
+    {
+      "greek": "",
+      "english": "Einstein, Albert (a famous physicist)"
+    },
+    {
+      "greek": "",
+      "english": "reader"
+    },
+    {
+      "greek": "",
+      "english": "grading"
+    },
+    {
+      "greek": "",
+      "english": "young king or prince, young queen or princess"
+    },
+    {
+      "greek": "",
+      "english": "decorator"
+    },
+    {
+      "greek": "",
+      "english": "his"
+    },
+    {
+      "greek": "",
+      "english": "its"
+    },
+    {
+      "greek": "",
+      "english": "Greek"
+    },
+    {
+      "greek": "",
+      "english": "consumer"
+    },
+    {
+      "greek": "",
+      "english": "cinema, movies"
+    },
+    {
+      "greek": "",
+      "english": "to close, to shut, to turn off"
+    },
+    {
+      "greek": "etc.]",
+      "english": "to book"
+    },
+    {
+      "greek": "",
+      "english": "(electric) stove, (electric) cooker"
+    },
+    {
+      "greek": "",
+      "english": "teaspoon"
+    },
+    {
+      "greek": "",
+      "english": "Constantinople/Istanbul"
+    },
+    {
+      "greek": "food]",
+      "english": "eggplant salad (in the form of a spread or dip)"
+    },
+    {
+      "greek": "",
+      "english": "translator"
+    },
+    {
+      "greek": "",
+      "english": "fashion designer, tailor, seamstress"
+    },
+    {
+      "greek": "O, o",
+      "english": "όμικρον"
+    },
+    {
+      "greek": "",
+      "english": "host, hostess"
+    },
+    {
+      "greek": "",
+      "english": "Papadiamantis, Alexander (Greek novelist, short-story writer and poet)"
+    },
+    {
+      "greek": "",
+      "english": "speaking"
+    },
+    {
+      "greek": "to “Thank you!”]",
+      "english": "You ’re welcome!"
+    },
+    {
+      "greek": "",
+      "english": "information, info"
+    },
+    {
+      "greek": "person]",
+      "english": "whom"
+    },
+    {
+      "greek": "",
+      "english": "much"
+    },
+    {
+      "greek": "",
+      "english": "director, chief, supervisor"
+    },
+    {
+      "greek": "",
+      "english": "rakomelo, usually made with the combination of raki and honey and other spices"
+    },
+    {
+      "greek": "",
+      "english": "electricity"
+    },
+    {
+      "greek": "",
+      "english": "cinema, movie theater"
+    },
+    {
+      "greek": "",
+      "english": "spanakorizo, a spinach and rice pilaf"
+    },
+    {
+      "greek": "",
+      "english": "classmate"
+    },
+    {
+      "greek": "",
+      "english": "singer"
+    },
+    {
+      "greek": "",
+      "english": "tsikoudia, raki"
+    },
+    {
+      "greek": "",
+      "english": "tsipouro (twice distilled, usually flavored with anise or fennel)"
+    },
+    {
+      "greek": "food]",
+      "english": "tyrosalata, a feta dip (sometimes spicy)"
+    }
+  ],
+  "empty_english": [
+    {
+      "greek": "Α, α",
+      "english": "άλφα"
+    },
+    {
+      "greek": "Β, β",
+      "english": "βήτα"
+    },
+    {
+      "greek": "Γ, γ",
+      "english": "γάμα"
+    },
+    {
+      "greek": "Δ, δ",
+      "english": "δέλτα"
+    },
+    {
+      "greek": "Ε, ε",
+      "english": "έψιλον"
+    },
+    {
+      "greek": "Ζ, ζ",
+      "english": "ζήτα"
+    },
+    {
+      "greek": "Η, η",
+      "english": "ήτα"
+    },
+    {
+      "greek": "Θ, θ",
+      "english": "θήτα"
+    },
+    {
+      "greek": "Ι, ι",
+      "english": "γιώτα"
+    },
+    {
+      "greek": "Κ, κ",
+      "english": "κάπα"
+    },
+    {
+      "greek": "Κως, η",
+      "english": "Κος"
+    },
+    {
+      "greek": "Λ, λ",
+      "english": "λάμδα"
+    },
+    {
+      "greek": "Μ, μ",
+      "english": "μι"
+    },
+    {
+      "greek": "Ν, ν",
+      "english": "νι"
+    },
+    {
+      "greek": "Ξ, ξ",
+      "english": "ξι"
+    },
+    {
+      "greek": "Π, π",
+      "english": "πι"
+    },
+    {
+      "greek": "Ρ, ρ",
+      "english": "ρο"
+    },
+    {
+      "greek": "Σ, σ",
+      "english": "σίγμα"
+    },
+    {
+      "greek": "Τ, τ",
+      "english": "ταυ"
+    },
+    {
+      "greek": "Υ, υ",
+      "english": "ύψιλον"
+    },
+    {
+      "greek": "Φ, φ",
+      "english": "φι"
+    },
+    {
+      "greek": "Χ, χ",
+      "english": "χι"
+    },
+    {
+      "greek": "Ψ, ψ",
+      "english": "ψι"
+    },
+    {
+      "greek": "Ω, ω",
+      "english": "ωμέγα"
+    }
+  ],
+  "corrupted": [],
+  "proper_nouns": [
+    {
+      "greek": "Άγιος Μαυρίκιος, ο",
+      "english": "Mauritius"
+    },
+    {
+      "greek": "Αγρίνιο, το",
+      "english": "Agrinio"
+    },
+    {
+      "greek": "Αθήνα, η",
+      "english": "Athens"
+    },
+    {
+      "greek": "Ακρόπολη, η",
+      "english": "Acropolis"
+    },
+    {
+      "greek": "Αλέξανδρος, ο",
+      "english": "Alexander"
+    },
+    {
+      "greek": "Αμερική, η",
+      "english": "America, USA"
+    },
+    {
+      "greek": "Αμοργός, η",
+      "english": "Amorgos"
+    },
+    {
+      "greek": "Άμστερνταμ, το",
+      "english": "Amsterdam"
+    },
+    {
+      "greek": "Άννα, η",
+      "english": "Anna"
+    },
+    {
+      "greek": "Αντώνης, o",
+      "english": "Anthony"
+    },
+    {
+      "greek": "Άνω Πορόια",
+      "english": "Ano Poroia"
+    },
+    {
+      "greek": "Αποστόλης, ο",
+      "english": "Apostolis"
+    },
+    {
+      "greek": "Αργεντινή, η",
+      "english": "Argentina"
+    },
+    {
+      "greek": "Άργος, το",
+      "english": "Argos"
+    },
+    {
+      "greek": "Άρης, ο",
+      "english": "Mars"
+    },
+    {
+      "greek": "Άρης, ο",
+      "english": "Aris, Ares"
+    },
+    {
+      "greek": "Αρίων, ο",
+      "english": "Arion"
+    },
+    {
+      "greek": "Άρτεμη, η",
+      "english": "Artemis"
+    },
+    {
+      "greek": "Ασία, η",
+      "english": "Asia"
+    },
+    {
+      "greek": "Αστυπάλαια, η",
+      "english": "Astypalaia"
+    },
+    {
+      "greek": "Αυστραλία, η",
+      "english": "Australia"
+    },
+    {
+      "greek": "Αφρική, η",
+      "english": "Africa"
+    },
+    {
+      "greek": "Βαρκελώνη, η",
+      "english": "Barcelona"
+    },
+    {
+      "greek": "Βασίλης, ο",
+      "english": "Vassilis"
+    },
+    {
+      "greek": "Βέλγιο, το",
+      "english": "Βelgium"
+    },
+    {
+      "greek": "Βουλγαρία, η",
+      "english": "Bulgaria βουλευτής, ο — βουλευτής/βουλευ-"
+    },
+    {
+      "greek": "Βραζιλία, η",
+      "english": "Brazil"
+    },
+    {
+      "greek": "Βρετανία, η",
+      "english": "Great Britain"
+    },
+    {
+      "greek": "Βρυξέλλες, οι",
+      "english": "Brussels"
+    },
+    {
+      "greek": "Γαλλία, η",
+      "english": "France"
+    },
+    {
+      "greek": "Γερμανία, η",
+      "english": "Germany"
+    },
+    {
+      "greek": "Γιάννης, ο",
+      "english": "John"
+    },
+    {
+      "greek": "Γυμνάσιο, το",
+      "english": "High school, Secondary school"
+    },
+    {
+      "greek": "Δευτέρα, η",
+      "english": "Monday"
+    },
+    {
+      "greek": "Δήλος, η",
+      "english": "Delos"
+    },
+    {
+      "greek": "Δημητρός, ο",
+      "english": "Dimitros"
+    },
+    {
+      "greek": "Δράμα, η",
+      "english": "Drama"
+    },
+    {
+      "greek": "Δωδεκάνησα, τα",
+      "english": "Dodekanisa"
+    },
+    {
+      "greek": "Έβρος, ο",
+      "english": "Evros"
+    },
+    {
+      "greek": "Εκουαδόρ, το",
+      "english": "Ecuador"
+    },
+    {
+      "greek": "Ελβετία, η",
+      "english": "Switzerland"
+    },
+    {
+      "greek": "Ελεγκάκη, η",
+      "english": "Elegaki (character from a novel)"
+    },
+    {
+      "greek": "Ελένη, η",
+      "english": "Helen"
+    },
+    {
+      "greek": "Ελλάδα, η",
+      "english": "Greece"
+    },
+    {
+      "greek": "Ελπίδα, η",
+      "english": "Elpida"
+    },
+    {
+      "greek": "Ευρυπίδης, ο",
+      "english": "Euripides"
+    },
+    {
+      "greek": "Ευρωπαϊκή Ενωση, η",
+      "english": "European Union"
+    },
+    {
+      "greek": "Ευρωπαίος,ο — Ευρωπαία, η",
+      "english": "European"
+    },
+    {
+      "greek": "Ευρώπη, η",
+      "english": "Europe"
+    },
+    {
+      "greek": "Ευχαριστώ!",
+      "english": "Thanks! / Thank you!"
+    },
+    {
+      "greek": "Ζωή, η",
+      "english": "Zoe"
+    },
+    {
+      "greek": "Θεόδωρος, ο",
+      "english": "Theodore"
+    },
+    {
+      "greek": "Θερμαϊκός, ο",
+      "english": "Thermaikos bay"
+    },
+    {
+      "greek": "Θεσσαλονίκη, η",
+      "english": "Thessaloniki"
+    },
+    {
+      "greek": "Θράκη, η",
+      "english": "Thrace"
+    },
+    {
+      "greek": "Ιανουάριος, ο — Γενάρης, ο",
+      "english": "January"
+    },
+    {
+      "greek": "Ιαπωνία, η",
+      "english": "Japan"
+    },
+    {
+      "greek": "Ιούλιος, ο",
+      "english": "July"
+    },
+    {
+      "greek": "Ιούνιος, ο",
+      "english": "June"
+    },
+    {
+      "greek": "Ισπανία, η",
+      "english": "Spain"
+    },
+    {
+      "greek": "Ιταλία, η",
+      "english": "Italy"
+    },
+    {
+      "greek": "Καβάλα, η",
+      "english": "Κavala"
+    },
+    {
+      "greek": "Κάιρο, το",
+      "english": "Cairo"
+    },
+    {
+      "greek": "Καλαμάτα, η",
+      "english": "Kalamata"
+    },
+    {
+      "greek": "Κάστρο, το",
+      "english": "Kastro"
+    },
+    {
+      "greek": "Κατερίνα, η",
+      "english": "Catherine"
+    },
+    {
+      "greek": "Κελσίου (βαθμοί)",
+      "english": "Celsius (degrees)"
+    },
+    {
+      "greek": "Κέρκυρα, η",
+      "english": "Corfu"
+    },
+    {
+      "greek": "Κηφισιά, η",
+      "english": "Kifisia"
+    },
+    {
+      "greek": "Κίνα, η",
+      "english": "China"
+    },
+    {
+      "greek": "Κοπεγχάγη, η",
+      "english": "Copenhagen"
+    },
+    {
+      "greek": "Κρήτη, η",
+      "english": "Crete"
+    },
+    {
+      "greek": "Κρητικός, -ιά, -ό",
+      "english": "Cretan / from Crete"
+    },
+    {
+      "greek": "Κρόνος, ο",
+      "english": "Saturn"
+    },
+    {
+      "greek": "Κυκλάδες, οι",
+      "english": "Cyclades"
+    },
+    {
+      "greek": "Κυριακή, η",
+      "english": "Sunday"
+    },
+    {
+      "greek": "Κώστας, ο",
+      "english": "Kostas"
+    },
+    {
+      "greek": "Λάρνακα, η",
+      "english": "Larnaca"
+    },
+    {
+      "greek": "Λευτέρης, ο",
+      "english": "Lefteris"
+    },
+    {
+      "greek": "Λωξάντρα, η",
+      "english": "Loxandra [character from a novel]"
+    },
+    {
+      "greek": "Μαίρη, η",
+      "english": "Mary"
+    },
+    {
+      "greek": "Μαλαισία, η",
+      "english": "Malaysia"
+    },
+    {
+      "greek": "Μαργαρίτα, η",
+      "english": "Margaret, Marguerite"
+    },
+    {
+      "greek": "Μαρία, η",
+      "english": "Maria"
+    },
+    {
+      "greek": "Μαρίνα, η",
+      "english": "Marina"
+    },
+    {
+      "greek": "Μαρόκο, το",
+      "english": "Morocco"
+    },
+    {
+      "greek": "Μάρτιος, ο",
+      "english": "March"
+    },
+    {
+      "greek": "Μογγολία, η",
+      "english": "Mongolia"
+    },
+    {
+      "greek": "Μπαξέδες, οι",
+      "english": "Baxedes"
+    },
+    {
+      "greek": "Ναύπακτος, η",
+      "english": "Nafpaktos"
+    },
+    {
+      "greek": "Νικολέτα, η",
+      "english": "Nikoleta"
+    },
+    {
+      "greek": "Νοέμβριος, ο",
+      "english": "November"
+    },
+    {
+      "greek": "Οκτώβριος, ο",
+      "english": "October"
+    },
+    {
+      "greek": "Όλγα, η",
+      "english": "Olga"
+    },
+    {
+      "greek": "Παναγιώτης, ο",
+      "english": "Panagiotis"
+    },
+    {
+      "greek": "Σε/Σας παρακαλώ!",
+      "english": "Please!"
+    },
+    {
+      "greek": "Παρασκευή, η",
+      "english": "Friday"
+    },
+    {
+      "greek": "Πάσχα, το",
+      "english": "Easter"
+    },
+    {
+      "greek": "Πεκίνο, το",
+      "english": "Beijing"
+    },
+    {
+      "greek": "Πελοπόννησος, η",
+      "english": "Peloponisos"
+    },
+    {
+      "greek": "Πέραν, το",
+      "english": "Peran"
+    },
+    {
+      "greek": "Περαστικά!",
+      "english": "Get well soon!"
+    },
+    {
+      "greek": "Περσεφόνη, η",
+      "english": "Persephone"
+    },
+    {
+      "greek": "Πέτρος, ο",
+      "english": "Peter"
+    },
+    {
+      "greek": "Πόπη, η",
+      "english": "Popi (usually short for Penelope)"
+    },
+    {
+      "greek": "Πρωτομαγιά, η",
+      "english": "May Day"
+    },
+    {
+      "greek": "Πρωτοχρονιά, η",
+      "english": "New Year’s Day"
+    },
+    {
+      "greek": "Ρωσία, η",
+      "english": "Russia"
+    },
+    {
+      "greek": "Σάββατο, το",
+      "english": "Saturday"
+    },
+    {
+      "greek": "Σαμοθράκη, η",
+      "english": "Samothraki"
+    },
+    {
+      "greek": "Σμύρνη, η",
+      "english": "Smyrna"
+    },
+    {
+      "greek": "Σποράδες, οι",
+      "english": "Sporades"
+    },
+    {
+      "greek": "Στέλιος, ο",
+      "english": "Stelios"
+    },
+    {
+      "greek": "Συγγνώμη!",
+      "english": "I’m sorry!"
+    },
+    {
+      "greek": "Συρία, η",
+      "english": "Syria"
+    },
+    {
+      "greek": "Σωτήρης, ο",
+      "english": "Sotiris"
+    },
+    {
+      "greek": "Ταϊλάνδη, η",
+      "english": "Thailand"
+    },
+    {
+      "greek": "Τάσος, o",
+      "english": "Tassos"
+    },
+    {
+      "greek": "Ταύρος, ο",
+      "english": "Taurus"
+    },
+    {
+      "greek": "Τορόντο, το",
+      "english": "Toronto"
+    },
+    {
+      "greek": "Τουρκία, η",
+      "english": "Turkey"
+    },
+    {
+      "greek": "Τρίπολη, η",
+      "english": "Tripoli"
+    },
+    {
+      "greek": "Υεμένη, η",
+      "english": "Yemen"
+    },
+    {
+      "greek": "Φανάρι, το",
+      "english": "Fanari, a neighborhood in Constantinople"
+    },
+    {
+      "greek": "Φιλανδία, η",
+      "english": "Finland"
+    },
+    {
+      "greek": "Χαλκιδική, η",
+      "english": "Chalkidiki"
+    },
+    {
+      "greek": "Χαρά, η",
+      "english": "Chara"
+    },
+    {
+      "greek": "Χίος, η",
+      "english": "Chios"
+    },
+    {
+      "greek": "Χονγκ Κονγκ, το",
+      "english": "Hong Kong"
+    },
+    {
+      "greek": "Χριστίνα",
+      "english": "Christina"
+    }
+  ]
+}

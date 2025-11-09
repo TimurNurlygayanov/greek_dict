@@ -1,0 +1,693 @@
+{
+  "empty_greek": [
+    {
+      "greek": "",
+      "english": "Higher Educational Institution"
+    },
+    {
+      "greek": "event]",
+      "english": "hall"
+    },
+    {
+      "greek": "",
+      "english": "German"
+    },
+    {
+      "greek": "",
+      "english": "Natural Gas Supply Companies"
+    },
+    {
+      "greek": "",
+      "english": "his"
+    },
+    {
+      "greek": "",
+      "english": "its"
+    },
+    {
+      "greek": "married]",
+      "english": "single"
+    },
+    {
+      "greek": "Thessaloniki]",
+      "english": "Galerius arch"
+    },
+    {
+      "greek": "",
+      "english": "to book"
+    },
+    {
+      "greek": "window, etc]",
+      "english": "closed, shut κλειστ-ός, ή, -ό [for eyes, windows etc]"
+    },
+    {
+      "greek": "",
+      "english": "shut, closed κλειστ-ός, ή, -ό [for the light,"
+    },
+    {
+      "greek": "electronic devices]",
+      "english": "turned off"
+    },
+    {
+      "greek": "appliance]",
+      "english": "(electric) stove, (electric) cooker"
+    },
+    {
+      "greek": "",
+      "english": "false, incorrect, wrong"
+    },
+    {
+      "greek": "",
+      "english": "to work, to function"
+    },
+    {
+      "greek": "Thessaloniki]",
+      "english": "White Tower"
+    },
+    {
+      "greek": "dent]",
+      "english": "Abraham Lincoln"
+    },
+    {
+      "greek": "Thessaloniki]",
+      "english": "Navarinou square"
+    },
+    {
+      "greek": "",
+      "english": "to overcome"
+    },
+    {
+      "greek": "by Arthur Miller]",
+      "english": "“Death of a Salesman” ΟΑΣΘ (Οργανισμός Αστικών Συ- γκοινωνιών Θεσσαλονί-"
+    },
+    {
+      "greek": "“Thank you!”]",
+      "english": "You ’re welcome!"
+    },
+    {
+      "greek": "",
+      "english": "whom"
+    },
+    {
+      "greek": "",
+      "english": "much"
+    },
+    {
+      "greek": "grammar]",
+      "english": "person"
+    },
+    {
+      "greek": "Paris]",
+      "english": "Eiffer Tower"
+    },
+    {
+      "greek": "William Shakespeare]",
+      "english": "“Romeo and Juliet”"
+    },
+    {
+      "greek": "",
+      "english": "cinema, movies"
+    },
+    {
+      "greek": "composer/singer of rebetiko]",
+      "english": "Vassilis Tsitsanis"
+    },
+    {
+      "greek": "work]",
+      "english": "to fix, to repair"
+    },
+    {
+      "greek": "",
+      "english": "separated, divorced"
+    }
+  ],
+  "empty_english": [
+    {
+      "greek": "συστημένο γράμμα, το",
+      "english": ""
+    }
+  ],
+  "corrupted": [],
+  "proper_nouns": [
+    {
+      "greek": "Αγγλία, η",
+      "english": "England"
+    },
+    {
+      "greek": "Άγγλος, ο / Αγγλίδα, η",
+      "english": "English(man/woman)"
+    },
+    {
+      "greek": "Αθανασία, η",
+      "english": "Athanassia"
+    },
+    {
+      "greek": "Αθήνα, η",
+      "english": "Athens"
+    },
+    {
+      "greek": "Αλέξανδρος, ο",
+      "english": "Alexander"
+    },
+    {
+      "greek": "Αλέξανδρος, ο Μέγας",
+      "english": "Alexanderthe Great"
+    },
+    {
+      "greek": "Αλέξης, ο",
+      "english": "Alex"
+    },
+    {
+      "greek": "Αλεξία, η",
+      "english": "Alexia"
+    },
+    {
+      "greek": "Αληθώς Ανέστη!",
+      "english": "Heis risen indeed!"
+    },
+    {
+      "greek": "Αλίκη, η",
+      "english": "Alice"
+    },
+    {
+      "greek": "Αννα, η",
+      "english": "Anna"
+    },
+    {
+      "greek": "Αναστασία, η",
+      "english": "Anastasia"
+    },
+    {
+      "greek": "Άννα, η",
+      "english": "Anna"
+    },
+    {
+      "greek": "Αντώνης, o",
+      "english": "Anthony"
+    },
+    {
+      "greek": "Απόκριες, οι",
+      "english": "Carnivaltime / Halloween"
+    },
+    {
+      "greek": "Αύγουστος, ο",
+      "english": "August"
+    },
+    {
+      "greek": "Βασίλης, ο",
+      "english": "Vassilis"
+    },
+    {
+      "greek": "Βασιλική, η",
+      "english": "Vassiliki"
+    },
+    {
+      "greek": "Βάσω, η",
+      "english": "Vasso"
+    },
+    {
+      "greek": "Βερολίνο, το",
+      "english": "Berlin"
+    },
+    {
+      "greek": "Βίκυ, η",
+      "english": "Vicky"
+    },
+    {
+      "greek": "Βουλγαρία, η",
+      "english": "Bulgaria"
+    },
+    {
+      "greek": "Γαλλία, η",
+      "english": "France"
+    },
+    {
+      "greek": "Γάλλος, ο / Γαλλίδα, η",
+      "english": "French"
+    },
+    {
+      "greek": "Γεράσιμος, ο",
+      "english": "Gerasimos"
+    },
+    {
+      "greek": "Γερμανία, η",
+      "english": "Germany γερμανική γλώσσα, η (/γερμανικά, τα)"
+    },
+    {
+      "greek": "Γιάννης, ο",
+      "english": "John"
+    },
+    {
+      "greek": "Γιώργος, ο",
+      "english": "George"
+    },
+    {
+      "greek": "Γρηγόρης, o",
+      "english": "Gregory"
+    },
+    {
+      "greek": "Γυμνάσιο, το",
+      "english": "High school, Secondary school"
+    },
+    {
+      "greek": "Δεκέμβριος, ο",
+      "english": "DecemberΔΕΗ (Δημόσια ΕπιχείρησηΗλε-"
+    },
+    {
+      "greek": "Δέσποινα, η",
+      "english": "Despina/Despoina"
+    },
+    {
+      "greek": "Δευτέρα, η",
+      "english": "Monday"
+    },
+    {
+      "greek": "Δημήτρης, ο",
+      "english": "Jim/Dimitris"
+    },
+    {
+      "greek": "Δημήτριος, ο",
+      "english": "Dimitrios"
+    },
+    {
+      "greek": "Δημοτικό σχολείο, το",
+      "english": "Elementary/ Primary School"
+    },
+    {
+      "greek": "Kαλή διασκέδαση!",
+      "english": "Havefun! / Enjoy! / Enjoy yourself!"
+    },
+    {
+      "greek": "Δράμα, η",
+      "english": "Drama"
+    },
+    {
+      "greek": "Ειρήνη, η",
+      "english": "Irene"
+    },
+    {
+      "greek": "Νατα εκατοστίσεις!",
+      "english": "Happy birthday!"
+    },
+    {
+      "greek": "Ελένη, η",
+      "english": "Helen"
+    },
+    {
+      "greek": "Ελίνα, η",
+      "english": "Elina"
+    },
+    {
+      "greek": "Ελλάδα, η",
+      "english": "Greece"
+    },
+    {
+      "greek": "Έλληνας, ο / Ελληνίδα, η",
+      "english": "Greek"
+    },
+    {
+      "greek": "ΕΛΤΑ (Ελληνικά Ταχυδρομεία)",
+      "english": "HellenicPost"
+    },
+    {
+      "greek": "Έλσα, η",
+      "english": "Elsa"
+    },
+    {
+      "greek": "Ελευθερία, η",
+      "english": "Eleftheria"
+    },
+    {
+      "greek": "Καλή επιτυχία!",
+      "english": "Goodluck!"
+    },
+    {
+      "greek": "Ευρωπαίος, ο / Ευρωπαία, η",
+      "english": "European"
+    },
+    {
+      "greek": "Ευρώπη, η",
+      "english": "Europe"
+    },
+    {
+      "greek": "Ευτυχισμένοςο καινούριος χρόνος!",
+      "english": "Happynew year!"
+    },
+    {
+      "greek": "Ευχαριστώ!",
+      "english": "Thanks! / Thankyou!"
+    },
+    {
+      "greek": "Zέτα, η",
+      "english": "Zeta"
+    },
+    {
+      "greek": "Ζήσης, ο",
+      "english": "Zisis"
+    },
+    {
+      "greek": "Να ζήσετε!",
+      "english": "Mayyou havea lifelong marriage! / Congratulations!"
+    },
+    {
+      "greek": "Ζυρίχη, η",
+      "english": "Zurich"
+    },
+    {
+      "greek": "Θανάσης, ο",
+      "english": "Thanassis"
+    },
+    {
+      "greek": "Θωμαή, η",
+      "english": "Thomais"
+    },
+    {
+      "greek": "Ιούνιος, ο",
+      "english": "June"
+    },
+    {
+      "greek": "Καβάλα, η",
+      "english": "Κavala"
+    },
+    {
+      "greek": "Καλές γιορτές!",
+      "english": "Happy holidays!"
+    },
+    {
+      "greek": "Καλή χρονιά!",
+      "english": "HappyNew Year!"
+    },
+    {
+      "greek": "Καλό Πάσχα!",
+      "english": "Happy Easter!"
+    },
+    {
+      "greek": "Καλή Ανάσταση!",
+      "english": "Happy Easter!"
+    },
+    {
+      "greek": "Καλή όρεξη!",
+      "english": "Bon appetite! / Enjoyyour meal!"
+    },
+    {
+      "greek": "Καλλιόπη, η",
+      "english": "Kalliopi"
+    },
+    {
+      "greek": "Πόσο κάνει;",
+      "english": "Howmuch doesit cost?"
+    },
+    {
+      "greek": "Κάρμεν, η",
+      "english": "Carmen"
+    },
+    {
+      "greek": "Κατερίνα, η",
+      "english": "Catherine"
+    },
+    {
+      "greek": "Κάτια, η",
+      "english": "Katja"
+    },
+    {
+      "greek": "Κέρκυρα, η",
+      "english": "Corfu"
+    },
+    {
+      "greek": "Κομοτηνή, η",
+      "english": "Komotimi"
+    },
+    {
+      "greek": "Κρήτη, η",
+      "english": "Crete"
+    },
+    {
+      "greek": "Κρητικ-ός, -ιά, -ό",
+      "english": "Cretan / from Crete"
+    },
+    {
+      "greek": "Κυριακή, η",
+      "english": "Sunday"
+    },
+    {
+      "greek": "Κυριακή, η",
+      "english": "Kyriaki"
+    },
+    {
+      "greek": "Κυριάκος, ο",
+      "english": "Kyriakos"
+    },
+    {
+      "greek": "Κωνσταντινούπολη, η",
+      "english": "Constantinople/Istanbul"
+    },
+    {
+      "greek": "Κώστας, ο",
+      "english": "Kostas"
+    },
+    {
+      "greek": "Λάρισα, η",
+      "english": "Larissa"
+    },
+    {
+      "greek": "Λίτσα, η",
+      "english": "Litsa"
+    },
+    {
+      "greek": "Λονδίνο, το",
+      "english": "London"
+    },
+    {
+      "greek": "Λούβρο, το",
+      "english": "Louvre"
+    },
+    {
+      "greek": "Λύκειο, το",
+      "english": "High school"
+    },
+    {
+      "greek": "Μαθηματικά, τα",
+      "english": "Mathematics, Maths"
+    },
+    {
+      "greek": "Μάιος, ο",
+      "english": "May"
+    },
+    {
+      "greek": "Μανόλης, ο",
+      "english": "Manolis"
+    },
+    {
+      "greek": "Μαίρη, η",
+      "english": "Mary"
+    },
+    {
+      "greek": "Μάρθα, η",
+      "english": "Martha"
+    },
+    {
+      "greek": "Μαρία, η",
+      "english": "Maria, Mary"
+    },
+    {
+      "greek": "Μαρίνα, η",
+      "english": "Marina"
+    },
+    {
+      "greek": "Μαριάννα, η",
+      "english": "Marianna"
+    },
+    {
+      "greek": "Μάριος, ο",
+      "english": "Marios"
+    },
+    {
+      "greek": "Μάρτιος, ο",
+      "english": "March"
+    },
+    {
+      "greek": "Μίρκα, η",
+      "english": "Mirka"
+    },
+    {
+      "greek": "Μιχάλης, ο",
+      "english": "Michael"
+    },
+    {
+      "greek": "Μπάμπης, ο",
+      "english": "Babis"
+    },
+    {
+      "greek": "Να ζήσεις!",
+      "english": "Happy birthday! Ναβαρίνου (πλατεία), η [in"
+    },
+    {
+      "greek": "Νεκτάριος, ο",
+      "english": "Nektarios"
+    },
+    {
+      "greek": "Νίκη, η",
+      "english": "Niki"
+    },
+    {
+      "greek": "Νίκος, o",
+      "english": "Nick"
+    },
+    {
+      "greek": "Ντίνα, η",
+      "english": "Ntina"
+    },
+    {
+      "greek": "Ξάνθη, η",
+      "english": "Xanthi"
+    },
+    {
+      "greek": "Οκτώβριος, ο",
+      "english": "October"
+    },
+    {
+      "greek": "Όσκαρ βραβείο, το",
+      "english": "Oscar award"
+    },
+    {
+      "greek": "Πανεπιστήμιο, το",
+      "english": "University"
+    },
+    {
+      "greek": "Σας παρακαλώ!",
+      "english": "Please!"
+    },
+    {
+      "greek": "Παρασκευή, η",
+      "english": "Friday"
+    },
+    {
+      "greek": "Πάσχα, το",
+      "english": "Easter"
+    },
+    {
+      "greek": "Πέμπτη, η",
+      "english": "Thursday"
+    },
+    {
+      "greek": "Περαστικά!",
+      "english": "Getwell soon!"
+    },
+    {
+      "greek": "Πέτρος, ο",
+      "english": "Peter"
+    },
+    {
+      "greek": "Πόσων χρονών είσαι;",
+      "english": "Howold areyou?"
+    },
+    {
+      "greek": "Aπόπού είσαι/είστε?",
+      "english": "Whereare youfrom?"
+    },
+    {
+      "greek": "Πρωτοχρονιά, η",
+      "english": "NewYear’sEve"
+    },
+    {
+      "greek": "Πώςσε/σαςλένε;",
+      "english": "What’syour name?"
+    },
+    {
+      "greek": "Σάββατο, το",
+      "english": "Saturday"
+    },
+    {
+      "greek": "Σαμ, ο",
+      "english": "Sam"
+    },
+    {
+      "greek": "Σαίξπηρ Ουίλιαμ, o",
+      "english": "Shakespeare William"
+    },
+    {
+      "greek": "Σεπτέμβριος, ο",
+      "english": "September"
+    },
+    {
+      "greek": "Σοφία, η",
+      "english": "Sofia"
+    },
+    {
+      "greek": "Συγγνώμη!",
+      "english": "I’m sorry!"
+    },
+    {
+      "greek": "Πλατεία Συντάγματος, η",
+      "english": "Syntagma/Constitution Square"
+    },
+    {
+      "greek": "Σωτηρία, η",
+      "english": "Sotiria"
+    },
+    {
+      "greek": "Τάνια, η",
+      "english": "Tania"
+    },
+    {
+      "greek": "Τάσος, o",
+      "english": "Tassos"
+    },
+    {
+      "greek": "Τασούλα, η",
+      "english": "Tassoula"
+    },
+    {
+      "greek": "Τετάρτη, η",
+      "english": "Wednesday"
+    },
+    {
+      "greek": "Τουρκία, η",
+      "english": "Turkey"
+    },
+    {
+      "greek": "Τρίτη, η",
+      "english": "Tuesday"
+    },
+    {
+      "greek": "Τρίπολη, η",
+      "english": "Tripoli"
+    },
+    {
+      "greek": "Τροχαία, η",
+      "english": "Traffic police"
+    },
+    {
+      "greek": "Φάμπιο, ο",
+      "english": "Fabio"
+    },
+    {
+      "greek": "Φεβρουάριος, ο",
+      "english": "February"
+    },
+    {
+      "greek": "Χαράλαμπος, ο",
+      "english": "Charalambos"
+    },
+    {
+      "greek": "Χαρίκλεια, η",
+      "english": "Chariklia"
+    },
+    {
+      "greek": "Χριστός Ανέστη!",
+      "english": "Christis risen!"
+    },
+    {
+      "greek": "Χριστούγεννα, τα",
+      "english": "Christmas"
+    },
+    {
+      "greek": "Χρόνια πολλά !",
+      "english": "Merry Christmas!"
+    },
+    {
+      "greek": "Χρόνια πολλά !",
+      "english": "Happy birthday!"
+    }
+  ]
+}
