@@ -36,6 +36,17 @@ const DailyPracticeWidget = ({ onSelectDailyPractice }) => {
       const data = await setupDailyPractice(level)
       setDailyData(data)
       setShowLevelModal(false)
+
+      // Automatically navigate to flashcard game after setup
+      if (data && data.words && data.words.length > 0) {
+        const dailyList = {
+          id: 'daily-practice',
+          name: `Today's ${data.level} Practice`,
+          words: data.words,
+          learnedWords: []
+        }
+        onSelectDailyPractice(dailyList)
+      }
     } catch (error) {
       alert(error.message || 'Failed to setup daily practice')
     }

@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo, useRef } from 'react'
 import dictionaryData from '../dictionary.json'
 import AddToListModal from '../components/AddToListModal'
 import AddCustomWordModal from '../components/AddCustomWordModal'
+import UploadWordsModal from '../components/UploadWordsModal'
 import GreekDecoration from '../components/GreekDecoration'
 import Card from '../components/common/Card'
 import Button from '../components/common/Button'
@@ -16,6 +17,7 @@ const Dictionary = () => {
   const [suggestions, setSuggestions] = useState([])
   const [showAddToListModal, setShowAddToListModal] = useState(false)
   const [showAddCustomWordModal, setShowAddCustomWordModal] = useState(false)
+  const [showUploadModal, setShowUploadModal] = useState(false)
   const [highlightedIndex, setHighlightedIndex] = useState(-1)
   const [customWords, setCustomWords] = useState([])
   const inputRef = useRef(null)
@@ -313,17 +315,39 @@ const Dictionary = () => {
               We couldn't find "{searchTerm}" in our dictionary.
             </p>
           </div>
-          <Button
-            variant="primary"
-            size="lg"
-            onClick={() => setShowAddCustomWordModal(true)}
-          >
-            Add as Custom Word
-          </Button>
+          <div className="flex gap-3 justify-center flex-wrap">
+            <Button
+              variant="primary"
+              size="lg"
+              onClick={() => setShowAddCustomWordModal(true)}
+            >
+              Add as Custom Word
+            </Button>
+            <Button
+              variant="outline"
+              size="lg"
+              onClick={() => setShowUploadModal(true)}
+              icon={<span>📤</span>}
+            >
+              Upload Custom Words
+            </Button>
+          </div>
           <p className="text-xs text-secondary mt-6">
             Custom words are saved to your personal dictionary and work just like regular words.
           </p>
         </Card>
+      )}
+
+      {showUploadModal && (
+        <UploadWordsModal
+          onClose={() => setShowUploadModal(false)}
+          onSuccess={async () => {
+            // Reload custom words after successful upload
+            const words = await getCustomWords()
+            setCustomWords(words)
+            setShowUploadModal(false)
+          }}
+        />
       )}
     </div>
   )

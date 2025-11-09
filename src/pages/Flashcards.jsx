@@ -462,7 +462,7 @@ const Flashcards = () => {
             </h2>
           </div>
 
-          <div className="flex flex-col gap-3 mb-10" style={{ maxWidth: '600px', margin: '0 auto' }}>
+          <div className="flex flex-col gap-3" style={{ maxWidth: '600px', margin: '0 auto', marginBottom: 'var(--space-12)' }}>
             {multipleChoiceOptions.map((option, index) => {
               let variant = 'outline'
               if (selectedAnswer === option) {
@@ -493,7 +493,7 @@ const Flashcards = () => {
           </div>
 
           {selectedAnswer !== null && (
-            <div className="flex gap-4 mt-8 mb-4 justify-center flex-wrap animate-fade-in">
+            <div className="flex gap-4 mt-8 justify-center flex-wrap animate-fade-in" style={{ marginBottom: 'var(--space-10)' }}>
               {isCorrect && (
                 <Button
                   variant="success"

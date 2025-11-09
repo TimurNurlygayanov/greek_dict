@@ -110,7 +110,7 @@ const UploadWordsModal = ({ onClose, onSuccess }) => {
       <form onSubmit={handleUpload} className="flex flex-col gap-4">
         <div>
           <label className="block text-sm font-medium mb-2">
-            List Name
+            Words List Name
           </label>
           <Input
             type="text"
@@ -128,22 +128,49 @@ const UploadWordsModal = ({ onClose, onSuccess }) => {
             Choose File (CSV or Excel)
           </label>
           <input
+            id="file-upload"
             type="file"
             accept=".csv,.xlsx,.xls"
             onChange={handleFileChange}
-            className="block w-full text-sm text-secondary
-              file:mr-4 file:py-2 file:px-4
-              file:rounded-lg file:border-0
-              file:text-sm file:font-semibold
-              file:bg-primary-50 file:text-primary-700
-              hover:file:bg-primary-100
-              cursor-pointer"
+            style={{ display: 'none' }}
           />
-          {file && (
-            <p className="text-xs text-success-600 mt-1">
-              Selected: {file.name}
-            </p>
-          )}
+          <label
+            htmlFor="file-upload"
+            style={{
+              display: 'block',
+              padding: 'var(--space-4)',
+              borderRadius: 'var(--border-radius-md)',
+              border: '2px dashed var(--color-primary-300)',
+              backgroundColor: 'var(--color-primary-50)',
+              cursor: 'pointer',
+              textAlign: 'center',
+              transition: 'all 0.2s ease',
+              color: 'var(--color-primary-700)',
+              fontWeight: '500'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundColor = 'var(--color-primary-100)'
+              e.currentTarget.style.borderColor = 'var(--color-primary-500)'
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = 'var(--color-primary-50)'
+              e.currentTarget.style.borderColor = 'var(--color-primary-300)'
+            }}
+          >
+            {file ? (
+              <div>
+                <div style={{ fontSize: '2rem', marginBottom: '8px' }}>📄</div>
+                <div style={{ fontSize: '0.875rem', fontWeight: '600' }}>{file.name}</div>
+                <div style={{ fontSize: '0.75rem', color: 'var(--color-success-600)', marginTop: '4px' }}>✓ File selected</div>
+              </div>
+            ) : (
+              <div>
+                <div style={{ fontSize: '2rem', marginBottom: '8px' }}>📤</div>
+                <div style={{ fontSize: '0.875rem', fontWeight: '600', marginBottom: '4px' }}>Click to upload file</div>
+                <div style={{ fontSize: '0.75rem', opacity: 0.7 }}>CSV or Excel (.csv, .xlsx, .xls)</div>
+              </div>
+            )}
+          </label>
         </div>
 
         {error && (

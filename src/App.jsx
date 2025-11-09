@@ -1,7 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { lazy, Suspense } from 'react'
 import Navigation from './components/Navigation'
-import Footer from './components/Footer'
 import ErrorBoundary from './components/ErrorBoundary'
 import './App.css'
 
@@ -55,7 +54,6 @@ function App() {
               </Routes>
             </Suspense>
           </main>
-          <Footer />
         </div>
       </ErrorBoundary>
     </Router>
