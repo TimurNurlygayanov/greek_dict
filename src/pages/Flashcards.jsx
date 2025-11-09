@@ -29,7 +29,6 @@ const Flashcards = () => {
   const [selectedAnswer, setSelectedAnswer] = useState(null)
   const [isCorrect, setIsCorrect] = useState(null)
   const [showAddToListModal, setShowAddToListModal] = useState(false)
-  const [countdown, setCountdown] = useState(null)
 
   // Touch/Swipe state
   const [touchStart, setTouchStart] = useState(null)
@@ -56,27 +55,6 @@ const Flashcards = () => {
       refreshLists()
     }
   }, [selectedList, showAuthModal, refreshLists])
-
-  // Auto-advance countdown for multiple choice
-  useEffect(() => {
-    if (mode === MODES.MULTIPLE_CHOICE && selectedAnswer !== null) {
-      setCountdown(5)
-      const interval = setInterval(() => {
-        setCountdown(prev => {
-          if (prev <= 1) {
-            clearInterval(interval)
-            handleNextQuestion()
-            return null
-          }
-          return prev - 1
-        })
-      }, 1000)
-
-      return () => clearInterval(interval)
-    } else {
-      setCountdown(null)
-    }
-  }, [selectedAnswer, mode])
 
   // Get available words (excluding learned ones)
   const getAvailableWords = () => {
@@ -140,7 +118,13 @@ const Flashcards = () => {
   }
 
   const handleCardClick = async () => {
-    if (mode === MODES.MULTIPLE_CHOICE) return
+    // For multiple choice mode, only advance after answer is selected
+    if (mode === MODES.MULTIPLE_CHOICE) {
+      if (selectedAnswer === null) return
+      // Move to next question
+      handleNextQuestion()
+      return
+    }
 
     if (!showTranslation) {
       setShowTranslation(true)
@@ -176,7 +160,6 @@ const Flashcards = () => {
     setShowTranslation(false)
     setSelectedAnswer(null)
     setIsCorrect(null)
-    setCountdown(null)
     const wrongAnswers = getRandomWords(2, word)
     const options = [word.english, ...wrongAnswers].sort(() => 0.5 - Math.random())
     setMultipleChoiceOptions(options)
@@ -507,7 +490,17 @@ const Flashcards = () => {
       </div>
 
       {mode === MODES.MULTIPLE_CHOICE ? (
-        <Card variant="elevated" padding="xl" className="animate-scale-in" style={{ maxWidth: '1000px', margin: '0 auto' }}>
+        <Card
+          variant="elevated"
+          padding="xl"
+          className="animate-scale-in"
+          style={{
+            maxWidth: '1000px',
+            margin: '0 auto',
+            cursor: selectedAnswer !== null ? 'pointer' : 'default'
+          }}
+          onClick={handleCardClick}
+        >
           <div className="text-center mb-8">
             <h2 className="font-bold mb-6" style={{ margin: 0, color: 'var(--color-primary-600)', fontSize: 'clamp(3rem, 10vw, 8rem)', lineHeight: '1.2' }}>
               {currentWord.greek}
@@ -528,7 +521,10 @@ const Flashcards = () => {
                   key={index}
                   variant={variant}
                   size="lg"
-                  onClick={() => handleAnswerClick(option)}
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    handleAnswerClick(option)
+                  }}
                   disabled={selectedAnswer !== null}
                   fullWidth
                   style={{
@@ -545,12 +541,15 @@ const Flashcards = () => {
           </div>
 
           {selectedAnswer !== null && (
-            <div className="flex gap-4 mt-8 justify-center flex-wrap animate-fade-in" style={{ marginBottom: 'var(--space-10)' }}>
+            <div className="flex gap-4 mt-8 justify-center flex-wrap animate-fade-in">
               {isCorrect && (
                 <Button
                   variant="success"
                   size="lg"
-                  onClick={handleMarkAsLearned}
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    handleMarkAsLearned()
+                  }}
                   icon={<span>✓</span>}
                 >
                   Mark as Learned
@@ -559,20 +558,30 @@ const Flashcards = () => {
               <Button
                 variant="outline"
                 size="lg"
-                onClick={() => setShowAddToListModal(true)}
+                onClick={(e) => {
+                  e.stopPropagation()
+                  setShowAddToListModal(true)
+                }}
                 icon={<span>+</span>}
               >
                 Add to List
               </Button>
-              <Button
-                variant="primary"
-                size="lg"
-                onClick={handleNextQuestion}
-              >
-                {countdown !== null ? `Next Word (${countdown}s)` : 'Next Word'}
-              </Button>
             </div>
           )}
+
+          <div
+            className="text-tertiary mt-8"
+            style={{
+              fontSize: 'clamp(1rem, 2.5vw, 1.5rem)',
+              minHeight: '2rem',
+              transition: 'opacity 0.3s ease',
+              opacity: 1,
+              textAlign: 'center'
+            }}
+          >
+            {selectedAnswer === null && 'Choose the correct translation'}
+            {selectedAnswer !== null && (isTouchDevice ? 'Tap anywhere to continue' : 'Click anywhere to continue')}
+          </div>
         </Card>
       ) : (
         <Card

@@ -110,7 +110,7 @@ const AddToListModal = ({ word, onClose, onSuccess }) => {
 
       {customLists.length > 0 && !showCreateForm && (
         <>
-          <div className="flex flex-col gap-3 mb-4" style={{ maxHeight: '400px', overflowY: 'auto' }}>
+          <div className="flex flex-col gap-3 mb-6" style={{ maxHeight: '400px', overflowY: 'auto', padding: '2px' }}>
             {customLists.map((list) => {
               const isWordInList = list.words.some(w => w.greek === word.greek)
 
@@ -123,7 +123,9 @@ const AddToListModal = ({ word, onClose, onSuccess }) => {
                   onClick={() => !isWordInList && !loading && handleAddToList(list.id)}
                   style={{
                     cursor: isWordInList || loading ? 'default' : 'pointer',
-                    opacity: loading ? 0.6 : 1
+                    opacity: loading ? 0.6 : 1,
+                    border: '1px solid var(--color-gray-200)',
+                    marginBottom: '8px'
                   }}
                 >
                   <div className="flex items-center justify-between">
@@ -132,12 +134,11 @@ const AddToListModal = ({ word, onClose, onSuccess }) => {
                         <span className="text-lg font-semibold" style={{ margin: 0 }}>
                           {list.name}
                         </span>
-                        {isWordInList && <Badge variant="success" size="sm">Added</Badge>}
                       </div>
                       <div className="text-sm text-secondary">{list.words.length} words</div>
                     </div>
                     {isWordInList ? (
-                      <span className="text-success-600 text-2xl" style={{ marginLeft: '12px' }}>✓</span>
+                      <Badge variant="success" size="sm" style={{ marginLeft: '12px' }}>Added</Badge>
                     ) : (
                       <Button
                         variant="primary"
