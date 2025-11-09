@@ -287,7 +287,7 @@ const WordLists = () => {
                     fullWidth
                   />
                   <div className="flex gap-2">
-                    <Button type="submit" variant="primary" disabled={!newListName.trim()} fullWidth>
+                    <Button type="submit" variant="secondary" disabled={!newListName.trim()} fullWidth>
                       Create
                     </Button>
                     <Button

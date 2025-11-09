@@ -253,6 +253,10 @@ const Flashcards = () => {
 
   // Show list selection
   if (!selectedList) {
+    // Separate custom and default lists
+    const customLists = lists.filter(l => !l.isDefault).sort((a, b) => a.name.localeCompare(b.name))
+    const defaultLists = lists.filter(l => l.isDefault).sort((a, b) => a.name.localeCompare(b.name))
+
     return (
       <div className="container" style={{ paddingTop: 'var(--space-8)', paddingBottom: 'var(--space-20)' }}>
         {showAuthModal && <AuthModal onClose={closeAuthModal} />}
@@ -269,40 +273,88 @@ const Flashcards = () => {
             <p className="text-secondary">Go to Dictionary and add words to lists to start practicing!</p>
           </Card>
         ) : (
-          <div className="card-grid">
-            {lists.map((list) => {
-              const availableCount = list.words.filter(
-                w => !list.learnedWords.includes(w.greek)
-              ).length
-              const isDefault = list.isDefault || list.id === 'unstudied' || list.id === 'learned'
+          <>
+            {/* Custom Lists Section */}
+            {customLists.length > 0 && (
+              <div className="card-grid">
+                {customLists.map((list) => {
+                  const availableCount = list.words.filter(
+                    w => !list.learnedWords.includes(w.greek)
+                  ).length
 
-              return (
-                <Card
-                  key={list.id}
-                  variant="elevated"
-                  padding="lg"
-                  hoverable
-                  onClick={() => handleListSelect(list)}
-                  className="animate-fade-in-up"
-                >
-                  <div className="flex items-center gap-2 mb-3">
-                    <h3 className="text-xl font-semibold flex-1" style={{ margin: 0 }}>
-                      {list.name}
-                    </h3>
-                    {isDefault && <Badge variant="info" size="sm">Default</Badge>}
-                  </div>
-                  <div className="flex flex-col gap-2">
-                    <div className="text-lg font-medium" style={{ color: 'var(--color-primary-600)' }}>
-                      {availableCount} words to learn
-                    </div>
-                    <div className="text-sm text-secondary">
-                      {list.words.length} total words
-                    </div>
-                  </div>
-                </Card>
-              )
-            })}
-          </div>
+                  return (
+                    <Card
+                      key={list.id}
+                      variant="elevated"
+                      padding="lg"
+                      hoverable
+                      onClick={() => handleListSelect(list)}
+                      className="animate-fade-in-up"
+                    >
+                      <div className="flex items-center gap-2 mb-3">
+                        <h3 className="text-xl font-semibold flex-1" style={{ margin: 0 }}>
+                          {list.name}
+                        </h3>
+                      </div>
+                      <div className="flex flex-col gap-2">
+                        <div className="text-lg font-medium" style={{ color: 'var(--color-primary-600)' }}>
+                          {availableCount} words to learn
+                        </div>
+                        <div className="text-sm text-secondary">
+                          {list.words.length} total words
+                        </div>
+                      </div>
+                    </Card>
+                  )
+                })}
+              </div>
+            )}
+
+            {/* Separator */}
+            {customLists.length > 0 && defaultLists.length > 0 && (
+              <div style={{
+                borderTop: '2px solid rgba(255, 255, 255, 0.2)',
+                margin: 'var(--space-8) 0'
+              }} />
+            )}
+
+            {/* Default Lists Section */}
+            {defaultLists.length > 0 && (
+              <div className="card-grid">
+                {defaultLists.map((list) => {
+                  const availableCount = list.words.filter(
+                    w => !list.learnedWords.includes(w.greek)
+                  ).length
+
+                  return (
+                    <Card
+                      key={list.id}
+                      variant="elevated"
+                      padding="lg"
+                      hoverable
+                      onClick={() => handleListSelect(list)}
+                      className="animate-fade-in-up"
+                    >
+                      <div className="flex items-center gap-2 mb-3">
+                        <h3 className="text-xl font-semibold flex-1" style={{ margin: 0 }}>
+                          {list.name}
+                        </h3>
+                        <Badge variant="info" size="sm">Default</Badge>
+                      </div>
+                      <div className="flex flex-col gap-2">
+                        <div className="text-lg font-medium" style={{ color: 'var(--color-primary-600)' }}>
+                          {availableCount} words to learn
+                        </div>
+                        <div className="text-sm text-secondary">
+                          {list.words.length} total words
+                        </div>
+                      </div>
+                    </Card>
+                  )
+                })}
+              </div>
+            )}
+          </>
         )}
       </div>
     )
