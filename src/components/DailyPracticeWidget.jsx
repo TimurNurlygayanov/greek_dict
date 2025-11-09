@@ -38,15 +38,18 @@ const DailyPracticeWidget = ({ onSelectDailyPractice }) => {
       setShowLevelModal(false)
 
       // Automatically navigate to flashcard game after setup
-      if (data && data.words && data.words.length > 0) {
-        const dailyList = {
-          id: 'daily-practice',
-          name: `Today's ${data.level} Practice`,
-          words: data.words,
-          learnedWords: []
+      // Use setTimeout to ensure modal closes before navigation
+      setTimeout(() => {
+        if (data && data.words && data.words.length > 0) {
+          const dailyList = {
+            id: 'daily-practice',
+            name: `Today's ${data.level} Practice`,
+            words: data.words,
+            learnedWords: []
+          }
+          onSelectDailyPractice(dailyList)
         }
-        onSelectDailyPractice(dailyList)
-      }
+      }, 100)
     } catch (error) {
       alert(error.message || 'Failed to setup daily practice')
     }
@@ -343,24 +346,29 @@ const DailyPracticeWidget = ({ onSelectDailyPractice }) => {
           ×
         </button>
 
-        <div style={{ position: 'relative', zIndex: 1, padding: '10px 0' }}>
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-3">
-              <div style={{ fontSize: '3rem', filter: 'drop-shadow(0 2px 8px rgba(0,0,0,0.3))' }}>🏛️</div>
-              <div>
-                <h3 className="text-2xl font-bold" style={{ margin: 0, color: 'white', textShadow: '0 2px 8px rgba(0,0,0,0.3)' }}>
-                  Today's Practice
-                </h3>
-                <div className="flex items-center gap-2 mt-1">
-                  <Badge variant="secondary" size="sm" style={{ backgroundColor: 'white', color: '#0066cc', fontWeight: 'bold' }}>
-                    {dailyData.level}
-                  </Badge>
-                  <span className="text-sm font-medium" style={{ color: 'rgba(255, 255, 255, 0.95)', textShadow: '0 1px 4px rgba(0,0,0,0.2)' }}>
-                    {dailyData.topic}
-                  </span>
-                </div>
+        <div style={{ position: 'relative', zIndex: 1, padding: '20px 0' }}>
+          <div className="flex items-center gap-3 mb-4">
+            <div style={{ fontSize: '3rem', filter: 'drop-shadow(0 2px 8px rgba(0,0,0,0.3))' }}>🏛️</div>
+            <div style={{ flex: 1 }}>
+              <h3 className="text-2xl font-bold" style={{ margin: 0, color: 'white', textShadow: '0 2px 8px rgba(0,0,0,0.3)' }}>
+                Today's Practice
+              </h3>
+              <div className="flex items-center gap-2 mt-1">
+                <Badge variant="secondary" size="sm" style={{ backgroundColor: 'white', color: '#0066cc', fontWeight: 'bold' }}>
+                  {dailyData.level}
+                </Badge>
+                <span className="text-sm font-medium" style={{ color: 'rgba(255, 255, 255, 0.95)', textShadow: '0 1px 4px rgba(0,0,0,0.2)' }}>
+                  {dailyData.topic}
+                </span>
               </div>
             </div>
+          </div>
+
+          <p className="text-base mb-4" style={{ color: 'rgba(255, 255, 255, 0.95)', textShadow: '0 1px 4px rgba(0,0,0,0.2)', fontWeight: '500' }}>
+            {wordsCount} {wordsCount === 10 ? 'new words' : 'words'} to practice today
+          </p>
+
+          <div style={{ marginBottom: '16px' }}>
             <Button
               variant="ghost"
               size="sm"
@@ -372,16 +380,13 @@ const DailyPracticeWidget = ({ onSelectDailyPractice }) => {
                 color: 'white',
                 border: '2px solid rgba(255, 255, 255, 0.5)',
                 background: 'rgba(255, 255, 255, 0.1)',
-                fontWeight: '600'
+                fontWeight: '600',
+                padding: '8px 16px'
               }}
             >
               Change Level
             </Button>
           </div>
-
-          <p className="text-base mb-5" style={{ color: 'rgba(255, 255, 255, 0.95)', textShadow: '0 1px 4px rgba(0,0,0,0.2)', fontWeight: '500' }}>
-            {wordsCount} {wordsCount === 10 ? 'new words' : 'words'} to practice today
-          </p>
 
           <div
             style={{
