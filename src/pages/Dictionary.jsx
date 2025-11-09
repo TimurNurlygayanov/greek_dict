@@ -130,37 +130,24 @@ const Dictionary = () => {
 
   return (
     <div className="dictionary">
-      <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
-        <div style={{ flex: 1 }}>
-          <Input
-            ref={inputRef}
-            type="text"
-            placeholder="Start typing a word in Greek or English..."
-            value={searchTerm}
-            onChange={handleInputChange}
-            onKeyDown={handleKeyDown}
-            autoFocus
-            fullWidth
-            size="lg"
-            role="combobox"
-            aria-autocomplete="list"
-            aria-controls="search-suggestions"
-            aria-expanded={suggestions.length > 0 && !selectedWord}
-            aria-activedescendant={
-              highlightedIndex >= 0 ? `suggestion-${highlightedIndex}` : undefined
-            }
-          />
-        </div>
-        <Button
-          variant="outline"
-          size="lg"
-          onClick={() => setShowUploadModal(true)}
-          icon={<span>📤</span>}
-          style={{ flexShrink: 0 }}
-        >
-          Upload
-        </Button>
-      </div>
+      <Input
+        ref={inputRef}
+        type="text"
+        placeholder="Start typing a word in Greek or English..."
+        value={searchTerm}
+        onChange={handleInputChange}
+        onKeyDown={handleKeyDown}
+        autoFocus
+        fullWidth
+        size="lg"
+        role="combobox"
+        aria-autocomplete="list"
+        aria-controls="search-suggestions"
+        aria-expanded={suggestions.length > 0 && !selectedWord}
+        aria-activedescendant={
+          highlightedIndex >= 0 ? `suggestion-${highlightedIndex}` : undefined
+        }
+      />
 
       <div className="dictionary-search" style={{ position: 'relative' }}>
         {suggestions.length > 0 && !selectedWord && (
