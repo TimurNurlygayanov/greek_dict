@@ -1,0 +1,25 @@
+.learning-progress-bar {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+}
+
+.progress-cube {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.progress-cube.active {
+  transform: scale(1.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+@media (min-width: 768px) {
+  .progress-cube {
+    width: 20px;
+    height: 20px;
+  }
+}

@@ -12,6 +12,7 @@ const PROGRESS_FILE = path.join(DATA_DIR, 'progress.json')
 const LISTS_FILE = path.join(DATA_DIR, 'word-lists.json')
 const CUSTOM_WORDS_FILE = path.join(DATA_DIR, 'custom-words.json')
 const DAILY_PRACTICE_FILE = path.join(DATA_DIR, 'daily-practice.json')
+const LEARNING_POINTS_FILE = path.join(DATA_DIR, 'learning-points.json')
 
 // Ensure data directory exists
 if (!fs.existsSync(DATA_DIR)) {
@@ -142,6 +143,47 @@ const writeDailyPractice = (data) => {
   }
 }
 
+// Helper functions for reading/writing learning points
+const readLearningPoints = () => {
+  if (!fs.existsSync(LEARNING_POINTS_FILE)) {
+    return {}
+  }
+  try {
+    const data = fs.readFileSync(LEARNING_POINTS_FILE, 'utf8')
+    return JSON.parse(data)
+  } catch (error) {
+    console.error('Error reading learning points file:', error)
+    return {}
+  }
+}
+
+const writeLearningPoints = (data) => {
+  try {
+    fs.writeFileSync(LEARNING_POINTS_FILE, JSON.stringify(data, null, 2), 'utf8')
+  } catch (error) {
+    console.error('Error writing learning points file:', error)
+    throw error
+  }
+}
+
+// Add learning points for a user on a specific date
+const addLearningPoints = (userId, points) => {
+  const allData = readLearningPoints()
+  if (!allData[userId]) {
+    allData[userId] = {}
+  }
+
+  const today = new Date().toISOString().split('T')[0] // YYYY-MM-DD format
+  if (!allData[userId][today]) {
+    allData[userId][today] = 0
+  }
+
+  allData[userId][today] += points
+  writeLearningPoints(allData)
+
+  return allData[userId][today]
+}
+
 // Load dictionary at server start
 let dictionary = []
 try {
@@ -191,23 +233,46 @@ const groupWordsByTopic = (words) => {
 }
 
 // Generate daily practice words for a user
-const generateDailyWords = (level, learnedWords = []) => {
-  // Get words for the specified level
-  const levelWords = dictionary.filter(w => w.level === level)
+const generateDailyWords = (userId, level, learnedWords = []) => {
+  // First, try to get words from topic lists
+  const listsData = readWordLists()
+  const userLists = listsData[userId] || []
 
-  // Filter out learned words
+  // Get all topic lists
+  const topicLists = userLists.filter(list => list.isTopic === true)
+
+  // Collect all unlearned words from topic lists
+  let topicUnlearnedWords = []
+  topicLists.forEach(topicList => {
+    const unlearnedInList = topicList.words.filter(w => !learnedWords.includes(w.greek))
+    topicUnlearnedWords = topicUnlearnedWords.concat(unlearnedInList)
+  })
+
+  // If we have unlearned topic words, prioritize them
+  if (topicUnlearnedWords.length > 0) {
+    const shuffled = [...topicUnlearnedWords].sort(() => Math.random() - 0.5)
+    const selectedWords = shuffled.slice(0, 10)
+
+    return {
+      words: selectedWords,
+      topic: 'Topic-Based Practice'
+    }
+  }
+
+  // Otherwise, fall back to level-based words
+  const levelWords = dictionary.filter(w => w.level === level)
   const unlearnedWords = levelWords.filter(w => !learnedWords.includes(w.greek))
 
   if (unlearnedWords.length === 0) {
-    return { words: [] }
+    return { words: [], topic: null }
   }
 
-  // Shuffle and pick 10 random words
   const shuffled = [...unlearnedWords].sort(() => Math.random() - 0.5)
   const selectedWords = shuffled.slice(0, 10)
 
   return {
-    words: selectedWords
+    words: selectedWords,
+    topic: `${level} Level Practice`
   }
 }
 
@@ -224,6 +289,123 @@ const ensureDefaultLists = (userId, userLists) => {
     console.log(`Removed deprecated lists for user ${userId}`)
   }
 
+  // Migrate existing lists to use wordLearningPoints
+  userLists.forEach(list => {
+    if (!list.wordLearningPoints) {
+      list.wordLearningPoints = {}
+      // Migrate learned words to learning points (4 = completely learned)
+      if (list.learnedWords && list.learnedWords.length > 0) {
+        list.learnedWords.forEach(wordGreek => {
+          list.wordLearningPoints[wordGreek] = 4
+        })
+      }
+      updated = true
+    }
+    // Keep learnedWords for backwards compatibility (computed from wordLearningPoints)
+    const computedLearnedWords = Object.keys(list.wordLearningPoints).filter(
+      wordGreek => list.wordLearningPoints[wordGreek] >= 4
+    )
+    if (JSON.stringify(list.learnedWords) !== JSON.stringify(computedLearnedWords)) {
+      list.learnedWords = computedLearnedWords
+      updated = true
+    }
+  })
+
+  // Create topic-based lists for beginners
+  const topicLists = [
+    {
+      id: 'topic-numbers',
+      name: '📊 Numbers 1-20',
+      greekWords: ['ένας, μία, ένα', 'δύο', 'τρεις, τρία', 'τέσσερις, τέσσερα', 'πέντε', 'έξι', 'επτά (εφτά)', 'οχτώ (οκτώ)', 'εννέα (εννιά)', 'δέκα', 'έντεκα', 'δώδεκα', 'δεκατρείς, δεκατρία', 'δεκατέσσερις, δεκατέσσερα', 'δεκαπέντε', 'δεκαέξι', 'δεκαεπτά (δεκαεφτά)', 'δεκαοχτώ (δεκαοκτώ)', 'δεκαεννέα (δεκαεννιά)', 'είκοσι']
+    },
+    {
+      id: 'topic-colors',
+      name: '🎨 Colors',
+      greekWords: ['άσπρος, -η, -ο', 'μαύρος, -η, -ο', 'κόκκινος, -η, -ο', 'γαλανός, -ή, -ό', 'πράσινο, το', 'κίτρινος, -η, -ο', 'πορτοκαλής, -ιά (/-ιά), -ί', 'ροζ', 'μωβ', 'καφέ', 'χρώμα, το']
+    },
+    {
+      id: 'topic-family',
+      name: '👨‍👩‍👧‍👦 Family',
+      greekWords: ['μητέρα, η', 'μαμά, η', 'μπαμπάς, ο', 'αδερφός, ο', 'αδερφή, η', 'γιος, ο', 'κόρη, η', 'παιδί, το', 'οικογένεια, η', 'γιαγιά, η', 'παππούς, ο']
+    },
+    {
+      id: 'topic-greetings',
+      name: '👋 Greetings',
+      greekWords: ['Γεια!', 'Γεια σας!', 'Γεια σου!', 'αντίο, το', 'Ευχαριστώ!', 'παρακαλώ', 'ναι', 'όχι', 'Συγνώμη!', 'Καλημέρα!', 'Καληνύχτα!']
+    },
+    {
+      id: 'topic-food-drinks',
+      name: '🍴 Food & Drinks',
+      greekWords: ['ψωμί, το', 'νερό, το', 'γάλα, το', 'καφές, ο', 'τσάι, το', 'τυρί, το', 'κρέας, το', 'ψάρι, το', 'κοτόπουλο, το', 'ρύζι, το', 'σαλάτα, η', 'μήλο, το', 'μπανάνα, η', 'πορτοκάλι, το', 'λεμόνι, το', 'σταφύλι, το', 'φρούτο, το']
+    },
+    {
+      id: 'topic-home',
+      name: '🏠 Home',
+      greekWords: ['σπίτι, το', 'κατοικία, η', 'δωμάτιο, το', 'κουζίνα, η', 'υπνοδωμάτιο, το', 'μπάνιο, το', 'πόρτα, η', 'παράθυρο, το', 'τραπέζι, το']
+    },
+    {
+      id: 'topic-clothes',
+      name: '👕 Clothes',
+      greekWords: ['πουκάμισο, το', 'φόρεμα, το', 'παπούτσι, το', 'παντελόνι, το', 'μπουφάν, το', 'παλτό, το', 'καπέλο, το', 'φούστα, η', 'σακάκι, το', 'φανελάκι, το']
+    },
+    {
+      id: 'topic-travel',
+      name: '✈️ Travel',
+      greekWords: ['ξενοδοχείο, το', 'αεροδρόμιο, το', 'τρένο, το', 'λεωφορείο, το', 'αυτοκίνητο, το', 'ταξί, το', 'εισιτήριο, το', 'διαβατήριο, το', 'βαλίτσα, η']
+    },
+    {
+      id: 'topic-time-days',
+      name: '📅 Time & Days',
+      greekWords: ['Δευτέρα, η', 'Τρίτη, η', 'Τετάρτη, η', 'Πέμπτη, η', 'Παρασκευή, η', 'Σάββατο, το', 'Κυριακή, η', 'σήμερα', 'αύριο', 'χτες', '(ε)βδομάδα, η', 'μήνας, ο', 'χρόνος, ο', 'ημέρα, η', 'ώρα, η', 'μέρα, η']
+    },
+    {
+      id: 'topic-verbs',
+      name: '⚡ Basic Verbs',
+      greekWords: ['είμαι', 'έχω', 'πηγαίνω', 'έρχομαι', 'τρώω, τρώγω', 'πίνω', 'μιλάω, -ώ', 'γράφω', 'διαβάζω', 'βλέπω', 'ακούω', 'ξέρω', 'θέλω', 'μ\' αρέσει', 'χρειάζομαι', 'κάνω', 'δίνω', 'παίρνω']
+    },
+    {
+      id: 'topic-health',
+      name: '🏥 Hospital & Health',
+      greekWords: ['νοσοκομείο, το', 'γιατρός, ο/η', 'νοσοκόμος/-α, ο/η', 'ασθενής, ο/η', 'άρρωστος, -η, -ο', 'γερός, -ή, -ό', 'υγεία, η', 'υγιεινός, -ή, -ό', 'ιατρική, η', 'χάπι, το', 'φαρμακείο, το', 'πόνος, ο', 'πυρετός, ο', 'ραντεβού, το', 'θεραπεία, η']
+    },
+    {
+      id: 'topic-shopping',
+      name: '🛒 Shopping',
+      greekWords: ['μαγαζί, το', 'αγοράζω', 'πουλάω', 'τιμή, η', 'χρήματα, τα', 'ευρώ, το', 'σούπερ μάρκετ, το', 'πληρώνω', 'μετρητά, τα', 'κάρτα, η', 'ακριβός, -ή, -ό', 'φτηνός, -ή, -ό', 'ανοιχτ-ός, -ή, -ό', 'πωλητής/-τρια, ο/η']
+    },
+    {
+      id: 'topic-body',
+      name: '👤 Body Parts',
+      greekWords: ['κεφάλι, το', 'χέρι, το', 'πόδι/πόδια, το/τα', 'μάτι, το', 'αυτί, το', 'μύτη, η', 'στόμα, το', 'σώμα, το', 'μαλλιά, τα', 'πρόσωπο, το']
+    }
+  ]
+
+  topicLists.forEach(topicDef => {
+    // Check if topic list already exists
+    let topicList = userLists.find(list => list.id === topicDef.id)
+
+    if (!topicList) {
+      // Create new topic list
+      const words = topicDef.greekWords
+        .map(greekWord => dictionary.find(w => w.greek === greekWord))
+        .filter(w => w != null)
+
+      if (words.length > 0) {
+        topicList = {
+          id: topicDef.id,
+          name: topicDef.name,
+          words: words.map(word => ({ ...word })),
+          learnedWords: [],
+          wordLearningPoints: {},
+          isTopic: true,
+          isReadOnly: true // Can't add/remove words, but can delete whole list
+        }
+        userLists.push(topicList)
+        updated = true
+      }
+    }
+  })
+
   // Create level-based lists (A1, A2, B1, B2)
   const levels = ['A1', 'A2', 'B1', 'B2']
   levels.forEach(level => {
@@ -235,6 +417,7 @@ const ensureDefaultLists = (userId, userLists) => {
         name: `${level} Words`,
         words: levelWords.map(word => ({ ...word })),
         learnedWords: [],
+        wordLearningPoints: {},
         isDefault: true,
         isReadOnly: true // Can't remove words from level lists
       }
@@ -331,22 +514,71 @@ app.get('/api/progress/:userId/memorized', (req, res) => {
   const { userId } = req.params
   const progress = readProgress()
   const userProgress = progress[userId] || { memorizedWords: [] }
-  
+
   res.json({ memorizedWords: userProgress.memorizedWords })
+})
+
+// API Route for learning points history
+app.get('/api/progress/:userId/learning-points', (req, res) => {
+  const { userId } = req.params
+  const allData = readLearningPoints()
+  const userPoints = allData[userId] || {}
+
+  // Generate last 30 days
+  const days = []
+  const today = new Date()
+
+  for (let i = 29; i >= 0; i--) {
+    const date = new Date(today)
+    date.setDate(date.getDate() - i)
+    const dateStr = date.toISOString().split('T')[0]
+
+    days.push({
+      date: dateStr,
+      points: userPoints[dateStr] || 0
+    })
+  }
+
+  // Calculate total learning points
+  const totalPoints = Object.values(userPoints).reduce((sum, points) => sum + points, 0)
+
+  res.json({
+    history: days,
+    totalPoints
+  })
 })
 
 // API Routes for word lists
 app.get('/api/lists/:userId', (req, res) => {
-  const { userId } = req.params
+  const { userId} = req.params
   let allData = readWordLists()
   if (!allData[userId]) allData[userId] = []
-  
+
   const updated = ensureDefaultLists(userId, allData[userId])
   if (updated) {
     writeWordLists(allData)
   }
-  
-  res.json({ lists: allData[userId] })
+
+  // Sort lists: custom → topic → level
+  const sortedLists = allData[userId].sort((a, b) => {
+    // Custom lists (no isTopic, no isDefault) come first
+    const aIsCustom = !a.isTopic && !a.isDefault
+    const bIsCustom = !b.isTopic && !b.isDefault
+    if (aIsCustom && !bIsCustom) return -1
+    if (!aIsCustom && bIsCustom) return 1
+
+    // Topic lists come second
+    const aIsTopic = a.isTopic === true
+    const bIsTopic = b.isTopic === true
+    if (aIsTopic && !bIsTopic) return -1
+    if (!aIsTopic && bIsTopic) return 1
+
+    // Level lists come last (both have isDefault=true)
+    // Keep their original order (A1, A2, B1, B2)
+    return 0
+  })
+
+  res.json({ lists: sortedLists })
 })
 
 app.post('/api/lists/:userId', (req, res) => {
@@ -380,13 +612,14 @@ app.post('/api/lists/:userId', (req, res) => {
     name: name.trim(),
     words: [],
     learnedWords: [],
+    wordLearningPoints: {},
     createdAt: new Date().toISOString(),
     isDefault: false
   }
-  
+
   allData[userId].push(newList)
   writeWordLists(allData)
-  
+
   res.json({ list: newList })
 })
 
@@ -499,44 +732,66 @@ app.delete('/api/lists/:userId/:listId/words/:wordGreek', (req, res) => {
 app.post('/api/lists/:userId/:listId/learned', (req, res) => {
   const { userId, listId } = req.params
   const { wordGreek } = req.body
-  
+
   if (!wordGreek) {
     return res.status(400).json({ error: 'Word is required' })
   }
-  
+
   const allData = readWordLists()
   if (!allData[userId]) allData[userId] = []
-  
+
   ensureDefaultLists(userId, allData[userId])
-  
+
   const list = allData[userId].find(l => l.id === listId)
   if (!list) {
     return res.status(404).json({ error: 'List not found' })
   }
-  
-  if (!list.learnedWords.includes(wordGreek)) {
-    list.learnedWords.push(wordGreek)
+
+  // Initialize wordLearningPoints if it doesn't exist
+  if (!list.wordLearningPoints) {
+    list.wordLearningPoints = {}
   }
 
+  // Increment learning points (max 4)
+  const currentPoints = list.wordLearningPoints[wordGreek] || 0
+  const newPoints = Math.min(currentPoints + 1, 4)
+  list.wordLearningPoints[wordGreek] = newPoints
+
+  // Track daily learning points (+1 point for each mark as learned action)
+  addLearningPoints(userId, 1)
+
+  // Update learnedWords for backwards compatibility (words with 4+ points)
+  list.learnedWords = Object.keys(list.wordLearningPoints).filter(
+    word => list.wordLearningPoints[word] >= 4
+  )
+
   writeWordLists(allData)
-  
+
   res.json({ list })
 })
 
 app.delete('/api/lists/:userId/:listId/learned/:wordGreek', (req, res) => {
   const { userId, listId, wordGreek } = req.params
   const allData = readWordLists()
-  
+
   if (!allData[userId]) {
     return res.status(404).json({ error: 'User not found' })
   }
-  
+
   const list = allData[userId].find(l => l.id === listId)
   if (!list) {
     return res.status(404).json({ error: 'List not found' })
   }
-  
-  list.learnedWords = list.learnedWords.filter(w => w !== decodeURIComponent(wordGreek))
+
+  const decodedWord = decodeURIComponent(wordGreek)
+
+  // Reset learning points to 0
+  if (list.wordLearningPoints) {
+    delete list.wordLearningPoints[decodedWord]
+  }
+
+  // Update learnedWords for backwards compatibility
+  list.learnedWords = list.learnedWords.filter(w => w !== decodedWord)
   writeWordLists(allData)
 
   res.json({ list })
@@ -684,12 +939,13 @@ app.post('/api/custom-words/:userId/upload', upload.single('file'), (req, res) =
       name: listName.trim(),
       words: words,
       learnedWords: [],
+      wordLearningPoints: {},
       isDefault: false,
       createdAt: new Date().toISOString()
     }
 
     allLists[userId].push(newList)
-    writeLists(allLists)
+    writeWordLists(allLists)
 
     res.json({
       success: true,
@@ -777,7 +1033,7 @@ app.get('/api/daily-practice/:userId', (req, res) => {
     })
 
     // Generate new daily words
-    const { words, topic } = generateDailyWords(userData.level, Array.from(allLearnedWords))
+    const { words, topic } = generateDailyWords(userId, userData.level, Array.from(allLearnedWords))
 
     userData.words = words
     userData.topic = topic
@@ -821,7 +1077,7 @@ app.post('/api/daily-practice/:userId/setup', (req, res) => {
   })
 
   // Generate initial daily words
-  const { words, topic } = generateDailyWords(level, Array.from(allLearnedWords))
+  const { words, topic } = generateDailyWords(userId, level, Array.from(allLearnedWords))
 
   allData[userId] = {
     level,
@@ -871,7 +1127,7 @@ app.put('/api/daily-practice/:userId/level', (req, res) => {
     }
   })
 
-  const { words, topic } = generateDailyWords(level, Array.from(allLearnedWords))
+  const { words, topic } = generateDailyWords(userId, level, Array.from(allLearnedWords))
 
   userData.words = words
   userData.topic = topic

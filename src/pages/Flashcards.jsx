@@ -5,6 +5,7 @@ import { getUserLists, markWordAsLearned } from '../utils/wordLists'
 import AuthModal from '../components/AuthModal'
 import AddToListModal from '../components/AddToListModal'
 import DailyPracticeWidget from '../components/DailyPracticeWidget'
+import LearningProgressBar from '../components/LearningProgressBar'
 import Card from '../components/common/Card'
 import Button from '../components/common/Button'
 import Badge from '../components/common/Badge'
@@ -30,6 +31,10 @@ const Flashcards = () => {
   const [isCorrect, setIsCorrect] = useState(null)
   const [showAddToListModal, setShowAddToListModal] = useState(false)
 
+  // Word order tracking for consistent practice
+  const [wordOrder, setWordOrder] = useState([])
+  const [currentWordIndex, setCurrentWordIndex] = useState(0)
+
   // Touch/Swipe state
   const [touchStart, setTouchStart] = useState(null)
   const [touchEnd, setTouchEnd] = useState(null)
@@ -47,6 +52,82 @@ const Flashcards = () => {
     if (length > 20) return 'clamp(2.5rem, 6vw, 4.5rem)'
     if (length > 15) return 'clamp(3rem, 7vw, 5.5rem)'
     return 'clamp(3.5rem, 8vw, 6.5rem)'
+  }
+
+  // Get learning points for a word
+  const getLearningPoints = (wordGreek) => {
+    if (!selectedList || !wordGreek) return 0
+    return selectedList.wordLearningPoints?.[wordGreek] || 0
+  }
+
+  // Load word order from localStorage or create new shuffled order
+  const loadOrCreateWordOrder = () => {
+    if (!selectedList) return []
+
+    const availableWords = getAvailableWords()
+    if (availableWords.length === 0) return []
+
+    const storageKey = `wordOrder_${selectedList.id}`
+    const stored = localStorage.getItem(storageKey)
+
+    // Try to load stored order
+    if (stored) {
+      try {
+        const storedOrder = JSON.parse(stored)
+        // Validate that stored order still matches available words
+        const storedGreekWords = storedOrder.map(w => w.greek)
+        const availableGreekWords = availableWords.map(w => w.greek)
+
+        // Check if the word lists match (same words available)
+        const sameWords = storedGreekWords.length === availableGreekWords.length &&
+          storedGreekWords.every(greek => availableGreekWords.includes(greek))
+
+        if (sameWords) {
+          return storedOrder
+        }
+      } catch (e) {
+        console.error('Error loading word order:', e)
+      }
+    }
+
+    // Create new shuffled order
+    const shuffled = [...availableWords].sort(() => Math.random() - 0.5)
+    localStorage.setItem(storageKey, JSON.stringify(shuffled))
+    return shuffled
+  }
+
+  // Shuffle word order manually
+  const shuffleWordOrder = () => {
+    if (!selectedList) return
+
+    const availableWords = getAvailableWords()
+    if (availableWords.length === 0) return
+
+    const shuffled = [...availableWords].sort(() => Math.random() - 0.5)
+    const storageKey = `wordOrder_${selectedList.id}`
+    localStorage.setItem(storageKey, JSON.stringify(shuffled))
+
+    setWordOrder(shuffled)
+    setCurrentWordIndex(0)
+    setCurrentWord(shuffled[0])
+    setShowTranslation(false)
+    setSelectedAnswer(null)
+    setIsCorrect(null)
+
+    if (mode === MODES.MULTIPLE_CHOICE) {
+      const wrongAnswers = getRandomWords(2, shuffled[0])
+      const options = [shuffled[0].english, ...wrongAnswers].sort(() => 0.5 - Math.random())
+      setMultipleChoiceOptions(options)
+    }
+  }
+
+  // Get next word from the order
+  const getNextWordFromOrder = () => {
+    if (wordOrder.length === 0) return null
+
+    const nextIndex = (currentWordIndex + 1) % wordOrder.length
+    setCurrentWordIndex(nextIndex)
+    return wordOrder[nextIndex]
   }
 
   // Reload lists when returning to list selection
@@ -103,11 +184,17 @@ const Flashcards = () => {
     setShowTranslation(false)
     setSelectedAnswer(null)
     setIsCorrect(null)
-    const word = getRandomWord()
-    if (!word) {
+
+    // Load or create word order
+    const order = loadOrCreateWordOrder()
+    if (order.length === 0) {
       alert('No words available in this list!')
       return
     }
+
+    setWordOrder(order)
+    setCurrentWordIndex(0)
+    const word = order[0]
     setCurrentWord(word)
 
     if (selectedMode === MODES.MULTIPLE_CHOICE) {
@@ -131,7 +218,7 @@ const Flashcards = () => {
       await incrementTodayExercises()
     } else {
       // Move to next word
-      const word = getRandomWord()
+      const word = getNextWordFromOrder()
       if (!word) {
         alert('No more words available!')
         return
@@ -151,7 +238,7 @@ const Flashcards = () => {
   }
 
   const handleNextQuestion = () => {
-    const word = getRandomWord()
+    const word = getNextWordFromOrder()
     if (!word) {
       alert('No more words available!')
       return
@@ -179,7 +266,7 @@ const Flashcards = () => {
         setSelectedList(updatedList)
       }
       // Move to next word
-      const word = getRandomWord()
+      const word = getNextWordFromOrder()
       if (!word) {
         alert('No more words available!')
         setCurrentWord(null)
@@ -484,8 +571,19 @@ const Flashcards = () => {
         >
           Back to modes
         </Button>
-        <div className="text-lg" style={{ color: 'rgba(255, 255, 255, 0.9)' }}>
-          {selectedList.name} • {getAvailableWords().length} words left
+        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)' }}>
+          <div className="text-lg" style={{ color: 'rgba(255, 255, 255, 0.9)' }}>
+            {selectedList.name} • {getAvailableWords().length} words left
+          </div>
+          <Button
+            variant="outline"
+            size="md"
+            onClick={shuffleWordOrder}
+            icon={<span>🔀</span>}
+            title="Shuffle word order"
+          >
+            Shuffle
+          </Button>
         </div>
       </div>
 
@@ -541,31 +639,51 @@ const Flashcards = () => {
           </div>
 
           {selectedAnswer !== null && (
-            <div className="flex gap-4 mt-8 justify-center flex-wrap animate-fade-in">
-              {isCorrect && (
+            <div style={{ position: 'relative' }}>
+              <div className="flex gap-4 mt-8 justify-center items-center flex-wrap animate-fade-in">
+                <LearningProgressBar learningPoints={getLearningPoints(currentWord.greek)} />
+                {isCorrect && (
+                  <Button
+                    variant="success"
+                    size="lg"
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      handleMarkAsLearned()
+                    }}
+                    icon={<span>✓</span>}
+                  >
+                    Mark as Learned
+                  </Button>
+                )}
+              </div>
+              <div style={{
+                position: 'absolute',
+                bottom: '-60px',
+                right: '0',
+                zIndex: 10
+              }}>
                 <Button
-                  variant="success"
-                  size="lg"
+                  variant="primary"
+                  size="sm"
                   onClick={(e) => {
                     e.stopPropagation()
-                    handleMarkAsLearned()
+                    setShowAddToListModal(true)
                   }}
-                  icon={<span>✓</span>}
+                  style={{
+                    width: '48px',
+                    height: '48px',
+                    borderRadius: '50%',
+                    padding: 0,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: '24px'
+                  }}
+                  title="Add to Words List"
                 >
-                  Mark as Learned
+                  +
                 </Button>
-              )}
-              <Button
-                variant="outline"
-                size="lg"
-                onClick={(e) => {
-                  e.stopPropagation()
-                  setShowAddToListModal(true)
-                }}
-                icon={<span>+</span>}
-              >
-                Add to List
-              </Button>
+              </div>
             </div>
           )}
 
@@ -611,11 +729,12 @@ const Flashcards = () => {
                 {currentWord.greek}
               </h2>
               {showTranslation && (
-                <div className="animate-fade-in">
+                <div className="animate-fade-in" style={{ position: 'relative' }}>
                   <div className="font-bold mb-6 text-secondary" style={{ fontSize: getFontSize(currentWord.english), lineHeight: '1.2' }}>
                     {currentWord.english}
                   </div>
-                  <div className="flex gap-4 justify-center flex-wrap">
+                  <div className="flex gap-4 justify-center items-center flex-wrap">
+                    <LearningProgressBar learningPoints={getLearningPoints(currentWord.greek)} />
                     <Button
                       variant="success"
                       size="lg"
@@ -627,16 +746,33 @@ const Flashcards = () => {
                     >
                       Mark as Learned
                     </Button>
+                  </div>
+                  <div style={{
+                    position: 'absolute',
+                    bottom: '-80px',
+                    right: '-20px',
+                    zIndex: 10
+                  }}>
                     <Button
-                      variant="outline"
-                      size="lg"
+                      variant="primary"
+                      size="sm"
                       onClick={(e) => {
                         e.stopPropagation()
                         setShowAddToListModal(true)
                       }}
-                      icon={<span>+</span>}
+                      style={{
+                        width: '48px',
+                        height: '48px',
+                        borderRadius: '50%',
+                        padding: 0,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        fontSize: '24px'
+                      }}
+                      title="Add to Words List"
                     >
-                      Add to List
+                      +
                     </Button>
                   </div>
                 </div>
@@ -648,11 +784,12 @@ const Flashcards = () => {
                 {currentWord.english}
               </h2>
               {showTranslation && (
-                <div className="animate-fade-in">
+                <div className="animate-fade-in" style={{ position: 'relative' }}>
                   <div className="font-bold mb-6 text-secondary" style={{ fontSize: getFontSize(currentWord.greek), lineHeight: '1.2' }}>
                     {currentWord.greek}
                   </div>
-                  <div className="flex gap-4 justify-center flex-wrap">
+                  <div className="flex gap-4 justify-center items-center flex-wrap">
+                    <LearningProgressBar learningPoints={getLearningPoints(currentWord.greek)} />
                     <Button
                       variant="success"
                       size="lg"
@@ -664,16 +801,33 @@ const Flashcards = () => {
                     >
                       Mark as Learned
                     </Button>
+                  </div>
+                  <div style={{
+                    position: 'absolute',
+                    bottom: '-80px',
+                    right: '-20px',
+                    zIndex: 10
+                  }}>
                     <Button
-                      variant="outline"
-                      size="lg"
+                      variant="primary"
+                      size="sm"
                       onClick={(e) => {
                         e.stopPropagation()
                         setShowAddToListModal(true)
                       }}
-                      icon={<span>+</span>}
+                      style={{
+                        width: '48px',
+                        height: '48px',
+                        borderRadius: '50%',
+                        padding: 0,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        fontSize: '24px'
+                      }}
+                      title="Add to Words List"
                     >
-                      Add to List
+                      +
                     </Button>
                   </div>
                 </div>

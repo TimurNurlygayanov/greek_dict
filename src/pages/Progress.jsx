@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import dictionaryData from '../dictionary.json'
-import { getTodayExercises, getMemorizedWords } from '../utils/storage'
+import { getTodayExercises, getMemorizedWords, getUserId } from '../utils/storage'
 import AuthModal from '../components/AuthModal'
 import Card from '../components/common/Card'
 import Badge from '../components/common/Badge'
@@ -14,6 +14,7 @@ const Progress = () => {
   const [exercisesToday, setExercisesToday] = useState(0)
   const [memorizedCount, setMemorizedCount] = useState(0)
   const [memorizedWords, setMemorizedWords] = useState([])
+  const [learningPointsData, setLearningPointsData] = useState(null)
   const totalWords = dictionaryData.length
 
   useEffect(() => {
@@ -23,6 +24,20 @@ const Progress = () => {
       setExercisesToday(exercises)
       setMemorizedCount(memorized.length)
       setMemorizedWords(memorized)
+
+      // Fetch learning points data
+      const userId = getUserId()
+      if (userId && !userId.startsWith('user_')) {
+        try {
+          const response = await fetch(`/api/progress/${userId}/learning-points`)
+          if (response.ok) {
+            const data = await response.json()
+            setLearningPointsData(data)
+          }
+        } catch (error) {
+          console.error('Error fetching learning points:', error)
+        }
+      }
     }
 
     updateProgress()
@@ -239,24 +254,132 @@ const Progress = () => {
     </Card>
   )
 
+  // Learning Points Chart Component
+  const LearningPointsChart = ({ data, exercisesToday }) => {
+    const maxPoints = Math.max(...data.history.map(d => d.points), 10)
+
+    return (
+      <Card variant="elevated" padding="lg" className="mb-8">
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <h2 className="text-2xl font-semibold" style={{ margin: 0 }}>Learning Progress</h2>
+            <div className="text-sm text-secondary mt-1">Last 30 days</div>
+          </div>
+          <div className="text-right">
+            <div className="text-xs text-secondary">Exercises Today</div>
+            <div className="text-3xl font-bold" style={{ color: 'var(--color-primary-500)' }}>
+              {exercisesToday}
+            </div>
+          </div>
+        </div>
+
+        <div style={{ display: 'flex', gap: '4px', alignItems: 'flex-end', height: '200px' }}>
+          {data.history.map((day, index) => {
+            const height = maxPoints > 0 ? (day.points / maxPoints) * 100 : 0
+            const isToday = index === data.history.length - 1
+
+            return (
+              <div
+                key={day.date}
+                style={{
+                  flex: 1,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'flex-end',
+                  alignItems: 'center',
+                  gap: '4px'
+                }}
+              >
+                <div
+                  style={{
+                    width: '100%',
+                    height: `${height}%`,
+                    minHeight: day.points > 0 ? '4px' : '0',
+                    backgroundColor: isToday ? 'var(--color-primary-500)' : 'var(--color-primary-400)',
+                    borderRadius: '4px 4px 0 0',
+                    transition: 'all 0.3s ease',
+                    boxShadow: day.points > 0 ? '0 2px 4px rgba(0,0,0,0.1)' : 'none'
+                  }}
+                  title={`${day.date}: ${day.points} points`}
+                />
+                {(index === 0 || index === 14 || index === 29) && (
+                  <div className="text-xs text-secondary" style={{ fontSize: '10px' }}>
+                    {new Date(day.date).getDate()}
+                  </div>
+                )}
+              </div>
+            )
+          })}
+        </div>
+
+        <div className="text-center mt-4">
+          <div className="text-sm text-secondary">Total Learning Points</div>
+          <div className="text-4xl font-bold" style={{ color: 'var(--color-success-500)' }}>
+            {data.totalPoints}
+          </div>
+        </div>
+      </Card>
+    )
+  }
+
   return (
     <div className="container" style={{ paddingTop: 'var(--space-8)', paddingBottom: 'var(--space-20)' }}>
       {showAuthModal && <AuthModal onClose={closeAuthModal} />}
 
-      {/* Main Stats Grid */}
-      <div className="grid grid-cols-2 gap-4 mb-8">
-        <StatCard
-          title="EXERCISES TODAY"
-          value={exercisesToday}
-          subtitle="Words practiced in all game modes"
-        />
-        <StatCard
-          title="WORDS MASTERED"
-          value={`${memorizedCount} / ${totalWords}`}
-          subtitle="Correctly answered in multiple choice"
-          progress={{ value: memorizedCount, max: totalWords }}
-        />
-      </div>
+      {/* Learning Points Chart or Placeholder */}
+      {learningPointsData && learningPointsData.totalPoints >= 10 ? (
+        <LearningPointsChart data={learningPointsData} exercisesToday={exercisesToday} />
+      ) : (
+        <Card variant="elevated" padding="lg" className="mb-8">
+          <div className="text-center" style={{ padding: 'var(--space-8) 0' }}>
+            <div style={{ fontSize: '4rem', marginBottom: 'var(--space-4)' }}>📊</div>
+            <h2 className="text-2xl font-semibold mb-3" style={{ margin: 0, marginBottom: 'var(--space-3)' }}>
+              Start Your Learning Journey
+            </h2>
+            <p className="text-secondary mb-4" style={{ maxWidth: '500px', margin: '0 auto', marginBottom: 'var(--space-4)' }}>
+              Get your first 10 learning points to see detailed statistics about your progress!
+            </p>
+            <Card variant="outlined" padding="md" style={{ maxWidth: '600px', margin: '0 auto', backgroundColor: 'rgba(255,255,255,0.05)' }}>
+              <div className="text-sm text-secondary text-left">
+                <div className="font-semibold mb-2" style={{ color: 'var(--color-text-primary)' }}>How to earn learning points:</div>
+                <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+                  <li style={{ marginBottom: 'var(--space-2)' }}>
+                    ✓ Click "Mark as Learned" on any flashcard to earn 1 learning point
+                  </li>
+                  <li style={{ marginBottom: 'var(--space-2)' }}>
+                    ✓ Each word has 4 levels (4 learning points max)
+                  </li>
+                  <li style={{ marginBottom: 'var(--space-2)' }}>
+                    ✓ Practice regularly to build your progress chart
+                  </li>
+                </ul>
+              </div>
+            </Card>
+            {learningPointsData && (
+              <div className="mt-4 text-lg font-semibold" style={{ color: 'var(--color-primary-500)' }}>
+                Current progress: {learningPointsData.totalPoints} / 10 learning points
+              </div>
+            )}
+          </div>
+        </Card>
+      )}
+
+      {/* Exercises Today - Only show if not shown in chart */}
+      {(!learningPointsData || learningPointsData.totalPoints < 10) && (
+        <div className="grid grid-cols-2 gap-4 mb-8">
+          <StatCard
+            title="EXERCISES TODAY"
+            value={exercisesToday}
+            subtitle="Words practiced in all game modes"
+          />
+          <StatCard
+            title="WORDS MASTERED"
+            value={`${memorizedCount} / ${totalWords}`}
+            subtitle="Correctly answered in multiple choice"
+            progress={{ value: memorizedCount, max: totalWords }}
+          />
+        </div>
+      )}
 
       {/* Level Distribution */}
       <div className="mb-8">
