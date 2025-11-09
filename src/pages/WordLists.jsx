@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { createList, deleteList, removeWordFromList, unmarkWordAsLearned, getUserLists, updateListName } from '../utils/wordLists'
+import { createList, deleteList, removeWordFromList, unmarkWordAsLearned, getUserLists, updateListName, addWordToList } from '../utils/wordLists'
+import dictionaryData from '../dictionary.json'
 import AuthModal from '../components/AuthModal'
 import Card from '../components/common/Card'
 import Button from '../components/common/Button'
@@ -18,6 +19,9 @@ const WordLists = () => {
   const [selectedListModal, setSelectedListModal] = useState(null)
   const [isRenamingModal, setIsRenamingModal] = useState(false)
   const [modalListName, setModalListName] = useState('')
+  const [showAddWordsMode, setShowAddWordsMode] = useState(false)
+  const [searchQuery, setSearchQuery] = useState('')
+  const [searchResults, setSearchResults] = useState([])
 
   const handleCreateList = async (e) => {
     e.preventDefault()
@@ -141,6 +145,48 @@ const WordLists = () => {
     if (freshList) {
       setSelectedListModal(freshList)
     }
+  }
+
+  const handleSearchWords = (query) => {
+    setSearchQuery(query)
+    if (!query.trim()) {
+      setSearchResults([])
+      return
+    }
+
+    const lowerQuery = query.toLowerCase()
+    const results = dictionaryData
+      .filter(word =>
+        word.greek.toLowerCase().includes(lowerQuery) ||
+        word.english.toLowerCase().includes(lowerQuery)
+      )
+      .slice(0, 20) // Limit to 20 results
+
+    setSearchResults(results)
+  }
+
+  const handleAddWordToList = async (word) => {
+    if (!selectedListModal) return
+
+    try {
+      await addWordToList(selectedListModal.id, word)
+      await refreshLists()
+
+      // Update modal data
+      const updatedLists = await getUserLists(false)
+      const updatedList = updatedLists.find(l => l.id === selectedListModal.id)
+      if (updatedList) {
+        setSelectedListModal(updatedList)
+      }
+    } catch (error) {
+      alert(error.message || 'Failed to add word to list')
+    }
+  }
+
+  const handleToggleAddWordsMode = () => {
+    setShowAddWordsMode(!showAddWordsMode)
+    setSearchQuery('')
+    setSearchResults([])
   }
 
   // Separate custom and default lists
@@ -375,6 +421,9 @@ const WordLists = () => {
             setSelectedListModal(null)
             setIsRenamingModal(false)
             setModalListName('')
+            setShowAddWordsMode(false)
+            setSearchQuery('')
+            setSearchResults([])
           }}
           size="lg"
           title={
@@ -439,13 +488,79 @@ const WordLists = () => {
             </div>
           )}
 
-          <div>
-            {selectedListModal.words.length === 0 ? (
-              <div className="text-center py-8 text-secondary">
-                This list is empty. Add words from the Dictionary!
-              </div>
-            ) : (
-              <div className="flex flex-col gap-2" style={{ maxHeight: '60vh', overflowY: 'auto' }}>
+          {/* Add Words Button for custom lists */}
+          {!selectedListModal.isReadOnly && !isRenamingModal && (
+            <div className="mb-4">
+              <Button
+                variant={showAddWordsMode ? "secondary" : "primary"}
+                size="md"
+                onClick={handleToggleAddWordsMode}
+                fullWidth
+              >
+                {showAddWordsMode ? 'View List' : '+ Add Words'}
+              </Button>
+            </div>
+          )}
+
+          {/* Add Words Mode - Search and Results */}
+          {showAddWordsMode && !isRenamingModal && (
+            <div className="mb-4">
+              <Input
+                type="text"
+                placeholder="Search words in Greek or English..."
+                value={searchQuery}
+                onChange={(e) => handleSearchWords(e.target.value)}
+                autoFocus
+                fullWidth
+              />
+              {searchResults.length > 0 && (
+                <div className="flex flex-col gap-2 mt-3" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
+                  {searchResults.map((word) => {
+                    const isWordInList = selectedListModal.words.some(w => w.greek === word.greek)
+                    return (
+                      <div
+                        key={word.greek}
+                        className="flex items-center justify-between p-3 rounded-lg border bg-white"
+                        style={{ borderColor: 'var(--color-border)' }}
+                      >
+                        <div className="flex-1">
+                          <div className="font-semibold">{word.greek}</div>
+                          {word.pos && <div className="text-xs text-tertiary italic">{word.pos}</div>}
+                          <div className="text-sm text-secondary">{word.english}</div>
+                        </div>
+                        {isWordInList ? (
+                          <Badge variant="success" size="sm">Added</Badge>
+                        ) : (
+                          <Button
+                            variant="primary"
+                            size="sm"
+                            onClick={() => handleAddWordToList(word)}
+                          >
+                            Add
+                          </Button>
+                        )}
+                      </div>
+                    )
+                  })}
+                </div>
+              )}
+              {searchQuery && searchResults.length === 0 && (
+                <div className="text-center py-4 text-secondary">
+                  No words found matching "{searchQuery}"
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Word List Display - hidden when in Add Words mode */}
+          {!showAddWordsMode && (
+            <div>
+              {selectedListModal.words.length === 0 ? (
+                <div className="text-center py-8 text-secondary">
+                  This list is empty. {!selectedListModal.isReadOnly && 'Click "+ Add Words" to add words to this list!'}
+                </div>
+              ) : (
+                <div className="flex flex-col gap-2" style={{ maxHeight: '60vh', overflowY: 'auto' }}>
                 {selectedListModal.words.map((word, index) => {
                   const isLearned = selectedListModal.learnedWords.includes(word.greek)
                   return (
@@ -476,9 +591,10 @@ const WordLists = () => {
                     </div>
                   )
                 })}
-              </div>
-            )}
-          </div>
+                </div>
+              )}
+            </div>
+          )}
         </Modal>
       )}
     </div>

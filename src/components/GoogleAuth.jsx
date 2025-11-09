@@ -5,7 +5,7 @@ import { preloadWordLists } from '../utils/wordLists'
 import Button from './common/Button'
 import './GoogleAuth.css'
 
-const GoogleAuth = () => {
+const GoogleAuth = ({ onSuccess }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [user, setUser] = useState(null)
   const [userProfile, setUserProfile] = useState(null)
@@ -53,12 +53,17 @@ const GoogleAuth = () => {
           // Preload word lists in background for fast access later
           console.log('Preloading word lists after authentication')
           await preloadWordLists()
+
+          // Call onSuccess callback if provided (e.g., to close auth modal)
+          if (onSuccess) {
+            onSuccess()
+          }
         })
         .catch((err) => {
           console.error('Error fetching user profile:', err)
         })
     }
-  }, [user])
+  }, [user, onSuccess])
 
   const handleGoogleSignIn = useGoogleLogin({
     onSuccess: (tokenResponse) => {

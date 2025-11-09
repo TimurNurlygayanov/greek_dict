@@ -1,7 +1,7 @@
 import Modal from './common/Modal'
 import GoogleAuth from './GoogleAuth'
 
-const AuthModal = ({ onClose }) => {
+const AuthModal = ({ onClose, onSuccess }) => {
   return (
     <Modal
       isOpen={true}
@@ -16,7 +16,7 @@ const AuthModal = ({ onClose }) => {
           To save your progress and learning statistics, you need to authorize.
           We will never send you emails or use your data in any other way.
         </p>
-        <GoogleAuth />
+        <GoogleAuth onSuccess={onSuccess} />
       </div>
     </Modal>
   )

@@ -3,12 +3,14 @@ import dictionaryData from '../dictionary.json'
 import AddToListModal from '../components/AddToListModal'
 import AddCustomWordModal from '../components/AddCustomWordModal'
 import UploadWordsModal from '../components/UploadWordsModal'
+import AuthModal from '../components/AuthModal'
 import GreekDecoration from '../components/GreekDecoration'
 import Card from '../components/common/Card'
 import Button from '../components/common/Button'
 import Input from '../components/common/Input'
 import Badge from '../components/common/Badge'
 import { getCustomWords } from '../utils/customWords'
+import { getUserId } from '../utils/storage'
 import './Dictionary.css'
 
 const Dictionary = () => {
@@ -18,6 +20,7 @@ const Dictionary = () => {
   const [showAddToListModal, setShowAddToListModal] = useState(false)
   const [showAddCustomWordModal, setShowAddCustomWordModal] = useState(false)
   const [showUploadModal, setShowUploadModal] = useState(false)
+  const [showAuthModal, setShowAuthModal] = useState(false)
   const [highlightedIndex, setHighlightedIndex] = useState(-1)
   const [customWords, setCustomWords] = useState([])
   const inputRef = useRef(null)
@@ -275,13 +278,33 @@ const Dictionary = () => {
           <Button
             variant="primary"
             size="lg"
-            onClick={() => setShowAddToListModal(true)}
+            onClick={() => {
+              const userId = getUserId()
+              if (userId.startsWith('user_')) {
+                // User is not authenticated, show auth modal
+                setShowAuthModal(true)
+              } else {
+                // User is authenticated, show add to list modal
+                setShowAddToListModal(true)
+              }
+            }}
             icon={<span>+</span>}
             className="add-to-list-button"
           >
             Add to List
           </Button>
         </Card>
+      )}
+
+      {showAuthModal && (
+        <AuthModal
+          onClose={() => setShowAuthModal(false)}
+          onSuccess={() => {
+            // Close auth modal and open add to list modal
+            setShowAuthModal(false)
+            setShowAddToListModal(true)
+          }}
+        />
       )}
 
       {showAddToListModal && selectedWord && (
