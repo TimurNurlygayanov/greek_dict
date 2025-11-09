@@ -6,6 +6,7 @@ import Button from '../components/common/Button'
 import Input from '../components/common/Input'
 import Badge from '../components/common/Badge'
 import Modal from '../components/common/Modal'
+import UploadWordsModal from '../components/UploadWordsModal'
 import useAuthGuard from '../hooks/useAuthGuard'
 import useWordLists from '../hooks/useWordLists'
 
@@ -18,6 +19,7 @@ const WordLists = () => {
   const [selectedListModal, setSelectedListModal] = useState(null)
   const [isRenamingModal, setIsRenamingModal] = useState(false)
   const [modalListName, setModalListName] = useState('')
+  const [showUploadModal, setShowUploadModal] = useState(false)
 
   const handleCreateList = async (e) => {
     e.preventDefault()
@@ -150,6 +152,18 @@ const WordLists = () => {
   return (
     <div className="container" style={{ paddingTop: 'var(--space-6)', paddingBottom: 'var(--space-20)' }}>
       {showAuthModal && <AuthModal onClose={closeAuthModal} />}
+
+      {/* Upload Button */}
+      <div className="flex justify-end mb-6">
+        <Button
+          variant="outline"
+          size="md"
+          onClick={() => setShowUploadModal(true)}
+          icon={<span>📤</span>}
+        >
+          Upload Custom Words
+        </Button>
+      </div>
 
       {lists.length === 0 ? (
         <Card variant="elevated" padding="lg" className="text-center">
@@ -486,6 +500,15 @@ const WordLists = () => {
             )}
           </div>
         </Modal>
+      )}
+
+      {showUploadModal && (
+        <UploadWordsModal
+          onClose={() => setShowUploadModal(false)}
+          onSuccess={async () => {
+            await refreshLists()
+          }}
+        />
       )}
     </div>
   )

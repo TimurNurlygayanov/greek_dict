@@ -2,6 +2,8 @@
 import express from 'express'
 import fs from 'fs'
 import path from 'path'
+import multer from 'multer'
+import xlsx from 'xlsx'
 
 const app = express()
 const PORT = process.env.PORT || 10000
@@ -27,6 +29,26 @@ if (!fs.existsSync(DATA_DIR)) {
 // Middleware
 app.use(express.json())
 app.use(express.static(path.join(process.cwd(), 'dist')))
+
+// Configure multer for file uploads
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: {
+    fileSize: 5 * 1024 * 1024 // 5MB limit
+  },
+  fileFilter: (req, file, cb) => {
+    const allowedTypes = [
+      'text/csv',
+      'application/vnd.ms-excel',
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    ]
+    if (allowedTypes.includes(file.mimetype) || file.originalname.endsWith('.csv') || file.originalname.endsWith('.xlsx')) {
+      cb(null, true)
+    } else {
+      cb(new Error('Invalid file type. Only CSV and Excel files are allowed.'))
+    }
+  }
+})
 
 // Helper functions for reading/writing progress
 const readProgress = () => {
@@ -603,6 +625,105 @@ app.delete('/api/custom-words/:userId/:greekWord', (req, res) => {
   res.json({ success: true })
 })
 
+// Upload custom words from CSV/Excel file
+app.post('/api/custom-words/:userId/upload', upload.single('file'), (req, res) => {
+  const { userId } = req.params
+  const { listName } = req.body
+
+  if (!req.file) {
+    return res.status(400).json({ error: 'No file uploaded' })
+  }
+
+  if (!listName || !listName.trim()) {
+    return res.status(400).json({ error: 'List name is required' })
+  }
+
+  try {
+    let words = []
+
+    // Parse the file based on type
+    if (req.file.originalname.endsWith('.csv') || req.file.mimetype === 'text/csv') {
+      // Parse CSV
+      const csvData = req.file.buffer.toString('utf8')
+      const lines = csvData.split(/\r?\n/).filter(line => line.trim())
+
+      for (const line of lines) {
+        // Split by comma, handling quoted values
+        const parts = line.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g) || []
+        if (parts.length >= 2) {
+          const greek = parts[0].replace(/^"|"$/g, '').trim()
+          const english = parts[1].replace(/^"|"$/g, '').trim()
+
+          if (greek && english) {
+            words.push({ greek, english, pos: '' })
+          }
+        }
+      }
+    } else {
+      // Parse Excel
+      const workbook = xlsx.read(req.file.buffer, { type: 'buffer' })
+      const sheetName = workbook.SheetNames[0]
+      const sheet = workbook.Sheets[sheetName]
+      const data = xlsx.utils.sheet_to_json(sheet, { header: 1 })
+
+      for (const row of data) {
+        if (row.length >= 2 && row[0] && row[1]) {
+          const greek = String(row[0]).trim()
+          const english = String(row[1]).trim()
+
+          if (greek && english) {
+            words.push({ greek, english, pos: '' })
+          }
+        }
+      }
+    }
+
+    if (words.length === 0) {
+      return res.status(400).json({ error: 'No valid words found in file. Please ensure the file has two columns: Greek word and English translation.' })
+    }
+
+    // Add all words to custom words
+    const allCustomWords = readCustomWords()
+    if (!allCustomWords[userId]) {
+      allCustomWords[userId] = []
+    }
+
+    // Add words (allow duplicates)
+    for (const word of words) {
+      allCustomWords[userId].push(word)
+    }
+
+    writeCustomWords(allCustomWords)
+
+    // Create a new list with these words
+    const allLists = readLists()
+    if (!allLists[userId]) {
+      allLists[userId] = []
+    }
+
+    const newList = {
+      id: `list-${Date.now()}`,
+      name: listName.trim(),
+      words: words,
+      learnedWords: [],
+      isDefault: false,
+      createdAt: new Date().toISOString()
+    }
+
+    allLists[userId].push(newList)
+    writeLists(allLists)
+
+    res.json({
+      success: true,
+      wordsAdded: words.length,
+      list: newList
+    })
+  } catch (error) {
+    console.error('Error processing upload:', error)
+    res.status(500).json({ error: 'Failed to process file. Please check the file format.' })
+  }
+})
+
 // Translation API endpoint
 app.post('/api/translate', async (req, res) => {
   const { text, from, to } = req.body
@@ -612,30 +733,33 @@ app.post('/api/translate', async (req, res) => {
   }
 
   try {
-    // Use LibreTranslate (free, no API key required)
-    const url = 'https://libretranslate.com/translate'
+    // Use MyMemory Translation API (free, no API key required)
+    const langpair = `${from || 'en'}|${to || 'el'}`
+    const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text.trim())}&langpair=${langpair}`
 
     const response = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        q: text.trim(),
-        source: from || 'en',
-        target: to || 'el',
-        format: 'text'
-      })
+      method: 'GET',
+      headers: { 'Accept': 'application/json' }
     })
 
     if (!response.ok) {
-      throw new Error('Translation failed')
+      const errorText = await response.text()
+      console.error(`MyMemory Translation API error (${response.status}):`, errorText)
+      throw new Error(`Translation API returned ${response.status}`)
     }
 
     const data = await response.json()
-    const translation = data.translatedText || ''
+    console.log('MyMemory Translation response:', data)
+
+    if (data.responseStatus !== 200) {
+      throw new Error(`Translation failed: ${data.responseDetails || 'Unknown error'}`)
+    }
+
+    const translation = data.responseData?.translatedText || ''
 
     res.json({ translation })
   } catch (error) {
-    console.error('LibreTranslate error:', error)
+    console.error('Translation error:', error.message)
 
     // Fallback: Allow manual entry
     res.json({

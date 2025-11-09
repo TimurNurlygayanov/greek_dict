@@ -19,11 +19,7 @@ const Dictionary = () => {
   const [highlightedIndex, setHighlightedIndex] = useState(-1)
   const [customWords, setCustomWords] = useState([])
   const inputRef = useRef(null)
-  const [showGuide, setShowGuide] = useState(() => {
-    // Check if user has seen the guide before
-    const hasSeenGuide = localStorage.getItem('hasSeenDictionaryGuide')
-    return !hasSeenGuide
-  })
+  const [showGuide, setShowGuide] = useState(true)
 
   // Load custom words on mount
   useEffect(() => {
@@ -36,7 +32,6 @@ const Dictionary = () => {
 
   const handleDismissGuide = () => {
     setShowGuide(false)
-    localStorage.setItem('hasSeenDictionaryGuide', 'true')
   }
 
   const filteredSuggestions = useMemo(() => {
@@ -86,8 +81,8 @@ const Dictionary = () => {
     setHighlightedIndex(-1)
     // Clear suggestions when user starts typing again
     setSuggestions([])
-    // Hide guide when user starts typing
-    if (showGuide && e.target.value.trim()) {
+    // Hide guide when user starts interacting with the field
+    if (showGuide) {
       handleDismissGuide()
     }
   }

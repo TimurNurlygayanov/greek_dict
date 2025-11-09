@@ -462,7 +462,7 @@ const Flashcards = () => {
             </h2>
           </div>
 
-          <div className="flex flex-col gap-3 mb-6" style={{ maxWidth: '600px', margin: '0 auto' }}>
+          <div className="flex flex-col gap-3 mb-10" style={{ maxWidth: '600px', margin: '0 auto' }}>
             {multipleChoiceOptions.map((option, index) => {
               let variant = 'outline'
               if (selectedAnswer === option) {
@@ -619,18 +619,20 @@ const Flashcards = () => {
               )}
             </>
           )}
-          {!showTranslation && (
-            <div className="text-tertiary mt-8 animate-fade-in" style={{ fontSize: 'clamp(1rem, 2.5vw, 1.5rem)' }}>
-              {isTouchDevice ? 'Tap to reveal translation' : 'Click to reveal translation'}
-            </div>
-          )}
-          {showTranslation && (
-            <div className="text-tertiary mt-4 animate-fade-in" style={{ fontSize: 'clamp(0.875rem, 2vw, 1.125rem)', animationDelay: '0.3s' }}>
-              {isTouchDevice
-                ? 'Swipe horizontally for next • Swipe up to mark as learned'
-                : 'Click anywhere to continue'}
-            </div>
-          )}
+          <div
+            className="text-tertiary mt-8"
+            style={{
+              fontSize: showTranslation ? 'clamp(0.875rem, 2vw, 1.125rem)' : 'clamp(1rem, 2.5vw, 1.5rem)',
+              minHeight: '2rem',
+              transition: 'opacity 0.3s ease',
+              opacity: 1
+            }}
+          >
+            {!showTranslation && (isTouchDevice ? 'Tap to reveal translation' : 'Click to reveal translation')}
+            {showTranslation && (isTouchDevice
+              ? 'Swipe horizontally for next • Swipe up to mark as learned'
+              : 'Click anywhere to continue')}
+          </div>
         </Card>
       )}
 
